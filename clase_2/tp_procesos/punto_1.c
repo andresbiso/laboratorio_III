@@ -27,6 +27,6 @@ int main(int argc, char *argv[]) {
 		printf("numero aleatorio %d \n", nums[n]);
 		n++;
 	}
-	
+	free(nums);
 	return 0;
 }
