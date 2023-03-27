@@ -8,9 +8,9 @@ int main(int argc, char *argv[]) {  int cantProd;
   char nom[32+1];
   FILE *cfptr;
   memset(nom,0x00,sizeof(nom));
-  if ((cfptr=fopen(RUTA_ARCHIVO_PRODUCTO,"w"))==NULL)
+  if (abrirArchivo(RUTA_ARCHIVO_PRODUCTO,"w",&cfptr))
   {
-      printf("Hubo un error al querer abrir el archivo\n");
+    printf("Hubo un error al querer abrir el archivo\n");
   }
   else
   {
@@ -25,7 +25,7 @@ int main(int argc, char *argv[]) {  int cantProd;
       memset(nom,0x00,sizeof(nom));
       i++;
     }
-  }  fclose(cfptr);
+  }  cerrarArchivo(cfptr);
   return 0;
 }
 
