@@ -3,7 +3,7 @@
 
 int abrirArchivo(char* ruta, char* modo, FILE** fp)
 {
-  return (*fp=fopen(ruta,modo))==0;
+  return (*fp=fopen(ruta,modo))!=0;
 }
 
 void cerrarArchivo(FILE* fp)
