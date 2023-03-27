@@ -11,4 +11,4 @@ consumidor: defines.h gestionararchivos.h
 	$(CC) -o consumidor consumidor.c gestionararchivos.c $(CFLAGS) $(HEADERS)
 
 clean: 
-	rm -rf *o productor consumidor 
+	rm -rf *o productor consumidor producto.txt
