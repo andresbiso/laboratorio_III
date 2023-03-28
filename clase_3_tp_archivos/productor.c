@@ -3,17 +3,11 @@
 #include "defines.h"
 #include "gestionararchivos.h"
 
-int main(int argc, char *argv[]) {
+void escribirProductos(FILE *cfptr)
+{
   int cantProd;
   int i;
   char nom[32+1];
-  FILE *cfptr;
-  memset(nom,0x00,sizeof(nom));
-  if (!abrirArchivo(RUTA_ARCHIVO_PRODUCTO,"w",&cfptr))
-  {
-    printf("Hubo un error al querer abrir el archivo\n");
-    return 0;
-  }
   printf("Ingrese cantidad de productos:");
   scanf("%d",&cantProd);
   i = 1;
@@ -25,8 +19,21 @@ int main(int argc, char *argv[]) {
     memset(nom,0x00,sizeof(nom));
     i++;
   }
+}
+
+int main(int argc, char *argv[]) {
+  FILE *cfptr;
+  memset(nom,0x00,sizeof(nom));
+  if (!abrirArchivo(RUTA_ARCHIVO_PRODUCTO,"w",&cfptr))
+  {
+    printf("Hubo un error al querer abrir el archivo\n");
+    return 0;
+  }
+  escribirProductos(cfptr);
   cerrarArchivo(cfptr);
   return 0;
 }
+
+
 
 
