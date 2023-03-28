@@ -10,6 +10,7 @@ void escribirProductos(FILE *cfptr)
   char nom[32+1];
   printf("Ingrese cantidad de productos:");
   scanf("%d",&cantProd);
+  memset(nom,0x00,sizeof(nom));
   i = 1;
   while(i <= cantProd)
   {
