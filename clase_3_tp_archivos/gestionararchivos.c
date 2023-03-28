@@ -10,6 +10,7 @@ void cerrarArchivo(FILE* fp)
 {
   fclose(fp);
 }
+
 int esFinArchivo(FILE* fp)
 {
   return feof(fp);
