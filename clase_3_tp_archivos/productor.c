@@ -23,7 +23,6 @@ void escribirProductos(FILE *cfptr)
 
 int main(int argc, char *argv[]) {
   FILE *cfptr;
-  memset(nom,0x00,sizeof(nom));
   if (!abrirArchivo(RUTA_ARCHIVO_PRODUCTO,"w",&cfptr))
   {
     printf("Hubo un error al querer abrir el archivo\n");
