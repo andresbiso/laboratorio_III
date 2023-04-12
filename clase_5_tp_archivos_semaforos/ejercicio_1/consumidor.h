@@ -1,5 +1,5 @@
 #ifndef _CONSUMIDOR_H
 #define _CONSUMIDOR_H
-void leerReservas();
+int leerReservas();
 void backupLote(int);
 #endif

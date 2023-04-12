@@ -13,9 +13,9 @@ void escribirArchivo(char* linea)
   fprintf(cfptr,linea);
 }
 
-void leerArchivo(char* linea)
+int leerArchivo(char* linea)
 {
-  fscanf(cfptr,"%s",linea);
+  return fscanf(cfptr,"%s\n",linea);
 }
 
 void cerrarArchivo()

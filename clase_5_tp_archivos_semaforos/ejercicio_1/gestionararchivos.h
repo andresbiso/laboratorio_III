@@ -2,7 +2,7 @@
 #define _GESTIONAR_ARCHIVOS_H
 int abrirArchivo(char*, char*);
 void escribirArchivo(char*);
-void leerArchivo(char*);
+int leerArchivo(char*);
 void cerrarArchivo();
 int abrirLectura(char* ruta);
 int abrirEscritura(char* ruta);

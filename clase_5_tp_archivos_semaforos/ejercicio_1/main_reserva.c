@@ -30,13 +30,20 @@ int main(int argc, char *argv[])
       return 0;
     }
     printf("Reserva: Acceso Obtenido...\n");
-    leerReservas();
-    cerrarArchivo();
-    if (numLote <= 999)
+    if (leerReservas()==0)
     {
-      backupLote(numLote);
-      numLote++;
+      cerrarArchivo();
+      if (numLote <= 999)
+      {
+        backupLote(numLote);
+        numLote++;
+      }
     }
+    else
+    {
+      cerrarArchivo();
+    }
+ 
     levantaSemaforo(idSemaforo);
     usleep(INTERVALO_RESERVA_MS*10000);
   }

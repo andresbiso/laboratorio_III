@@ -6,7 +6,7 @@
 #include "funciones.h"
 #include "gestionararchivos.h"
 
-void leerReservas()
+int leerReservas()
 {
   char reserva[100+1];
   int pasajeros[11];
@@ -26,15 +26,20 @@ void leerReservas()
   } 
   while(!esFinArchivo())
   {
-    printf("leyendo archivo\n");
-    leerArchivo(reserva);
-    printf("%s\n",reserva);
+    if (leerArchivo(reserva) == 0)
+    {
+      return -1;
+    }
 
     if (strstr(reserva, "VUELO")!=0)
     {
       numero = 0;
-      sscanf(reserva,"%s %d\n",texto,&numero);
-      /*  pasajeros[numero-NUM_VUELO_MIN]++;*/
+      leerArchivo(reserva);
+      sscanf(reserva,"%d\n",&numero);
+      if (numero >= 1000 && numero <= 1010)
+      {
+        pasajeros[numero-NUM_VUELO_MIN]++;
+      }
     }
     memset(reserva,0x00,sizeof(reserva));
   }
@@ -46,6 +51,7 @@ void leerReservas()
   }
   free(texto);
   free(destino);
+  return 0;
 }
 
 void backupLote(int numLote)
