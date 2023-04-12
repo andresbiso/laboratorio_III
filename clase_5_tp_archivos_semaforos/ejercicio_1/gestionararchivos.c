@@ -48,3 +48,8 @@ int esFinArchivo()
 {
   return feof(cfptr);
 }
+
+int renombrarArchivo(char* ruta, char* rutaNuevoNombre);
+{
+  return rename(ruta, rutaNuevoNombre);
+} 

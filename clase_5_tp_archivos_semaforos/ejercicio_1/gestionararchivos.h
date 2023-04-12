@@ -9,4 +9,5 @@ int abrirEscritura(char* ruta);
 int abrirAdicion(char* ruta);
 void limpiarArchivo(char*);
 int esFinArchivo();
+int renombrarArchivo(char*, char*);
 #endif

@@ -11,4 +11,4 @@ reserva: defines.h gestionararchivos.h claves.h semaforos.h funciones.h producto
 	$(CC) -o reserva main_reserva.c gestionararchivos.c claves.c semaforos.c funciones.c productor.c consumidor.c $(CFLAGS) $(HEADERS)
 
 clean: 
-	rm -rf *o carga reserva lote.dat
+	rm -rf *o carga reserva lote.dat lote.*.dat

@@ -8,7 +8,7 @@
 #include "consumidor.h"
 int main(int argc, char *argv[])
 {
-/*
+  int numLote;
   int idSemaforo;
   if (argc != 1)
   {
@@ -16,8 +16,8 @@ int main(int argc, char *argv[])
     return 0;
   }
   
+  numLote = 0;
   idSemaforo = creoSemaforo();
-  
   iniciaSemaforo(idSemaforo, VERDE);
   
   while(1)
@@ -32,8 +32,18 @@ int main(int argc, char *argv[])
     printf("Acceso Obtenido...\n");
     leerReservas();
     cerrarArchivo();
+    backupLote(numLote);
+    numLote++;
     levantaSemaforo(idSemaforo);
     sleep(10);
-  }*/
+  }
   return 0;
+}
+
+void backupLote(int numLote)
+{
+  char[12+1] nuevoLote;
+  sprintf(nuevoLote, RUTA_ARCHIVO_LOTE_BACK, numLote);
+  renombrarArchivo(RUTA_ARCHIVO_LOTE);
+  limpiarARchivo();
 }

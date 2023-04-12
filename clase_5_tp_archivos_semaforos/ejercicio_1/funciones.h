@@ -5,4 +5,5 @@
 #define HASTA 10
 int obtenerNumeroAleatorio(int, int);
 void obtenerNumerosAleatorios(int, int, int, int*);
+char* obtenerDestino(int numVuelo);
 #endif
