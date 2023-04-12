@@ -10,4 +10,6 @@
 #define CLAVE_BASE 33
 #define INTERVALO_RESERVA_MS 300
 #define LARGO_LINEA 100
+#define NUM_VUELO_MIN 1000
+#define NUM_VUELO_MAX 1010
 #endif

@@ -22,28 +22,23 @@ int main(int argc, char *argv[])
   
   while(1)
   {
-    printf("Esperando Acceso...\n");
+    printf("Reserva: Esperando Acceso...\n");
     esperaSemaforo(idSemaforo);
     if (!abrirLectura(RUTA_ARCHIVO_LOTE))
     {
       printf("Hubo un error al querer abrir el archivo\n");
       return 0;
     }
-    printf("Acceso Obtenido...\n");
+    printf("Reserva: Acceso Obtenido...\n");
     leerReservas();
     cerrarArchivo();
-    backupLote(numLote);
-    numLote++;
+    if (numLote <= 999)
+    {
+      backupLote(numLote);
+      numLote++;
+    }
     levantaSemaforo(idSemaforo);
-    sleep(10);
+    usleep(INTERVALO_RESERVA_MS*10000);
   }
   return 0;
-}
-
-void backupLote(int numLote)
-{
-  char[12+1] nuevoLote;
-  sprintf(nuevoLote, RUTA_ARCHIVO_LOTE_BACK, numLote);
-  renombrarArchivo(RUTA_ARCHIVO_LOTE);
-  limpiarARchivo();
 }

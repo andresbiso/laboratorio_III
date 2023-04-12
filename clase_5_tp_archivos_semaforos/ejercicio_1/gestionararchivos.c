@@ -15,7 +15,7 @@ void escribirArchivo(char* linea)
 
 void leerArchivo(char* linea)
 {
-  fscanf(cfptr,"%s\n",linea);
+  fscanf(cfptr,"%s",linea);
 }
 
 void cerrarArchivo()
@@ -49,7 +49,7 @@ int esFinArchivo()
   return feof(cfptr);
 }
 
-int renombrarArchivo(char* ruta, char* rutaNuevoNombre);
+int renombrarArchivo(char* ruta, char* rutaNuevoNombre)
 {
   return rename(ruta, rutaNuevoNombre);
 } 

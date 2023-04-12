@@ -1,6 +1,8 @@
 #include "stdio.h"
+#include "stdlib.h"
 #include "string.h"
 #include "unistd.h"
+#include "time.h"
 #include "defines.h"
 #include "gestionararchivos.h"
 #include "semaforos.h"
@@ -9,11 +11,15 @@
 int main(int argc, char *argv[])
 {
   int idSemaforo;
+  int espera;
+
   if (argc != 1)
   {
     printf("Uso: ./carga \n");
     return 0;
   }
+  
+  srand(time(0));
   
   idSemaforo = creoSemaforo();
   
@@ -21,18 +27,19 @@ int main(int argc, char *argv[])
   
   while(1)
   {
-    printf("Esperando Acceso...\n");
+    printf("Carga: Esperando Acceso...\n");
     esperaSemaforo(idSemaforo);
     if (!abrirAdicion(RUTA_ARCHIVO_LOTE))
     {
       printf("Hubo un error al querer abrir el archivo\n");
       return 0;
     }
-    printf("Acceso Obtenido...\n");
+    printf("Carga: Acceso Obtenido...\n");
     escribirReservas();
     cerrarArchivo();
     levantaSemaforo(idSemaforo);
-    sleep(10);
+    espera = obtenerNumeroAleatorio(DESDE, HASTA);
+    sleep(espera);
   }
   return 0;
 }
