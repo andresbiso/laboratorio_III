@@ -13,7 +13,27 @@ void leerPanel()
  while(!esFinArchivo())
  {
    leerArchivo(mensaje);
-   printf("%s\n", mensaje);
+   printf("valor actual: %s\n", mensaje);
    memset(mensaje,0x00,sizeof(mensaje));
  }
+}
+
+void renderPanel(char* mensajeActual)
+{
+ char* mensaje;
+ mensaje = (char*)malloc((LARGO_LINEA+1)*sizeof(char));
+ memset(mensaje,0x00,sizeof(mensaje));
+
+ while(!esFinArchivo())
+ {
+   leerArchivo(mensaje);
+   if (strstr(mensajeActual, mensaje)==0)
+   {
+    strcpy(mensajeActual, mensaje);
+    limpiarPantalla();
+    printf("%s\n", mensaje);
+   }
+   memset(mensaje,0x00,sizeof(mensaje));
+ }
+ free(mensaje);
 }

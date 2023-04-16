@@ -7,27 +7,7 @@
 #include "gestionararchivos.h"
 #include "semaforos.h"
 #include "funciones.h"
-#include "productor.h"
-
-void renderPanel(char* mensajeActual)
-{
- char* mensaje;
- mensaje = (char*)malloc((LARGO_LINEA+1)*sizeof(char));
- memset(mensaje,0x00,sizeof(mensaje));
-
- while(!esFinArchivo())
- {
-   leerArchivo(mensaje);
-   if (strstr(mensajeActual, mensaje)==0)
-   {
-    strcpy(mensajeActual, mensaje);
-    limpiarPantalla();
-    printf("%s\n", mensaje);
-   }
-   memset(mensaje,0x00,sizeof(mensaje));
- }
- free(mensaje);
-}
+#include "consumidor.h"
 
 int main(int argc, char *argv[])
 {
@@ -60,7 +40,7 @@ int main(int argc, char *argv[])
     esperaSemaforo(idSemaforoPanel);
     while (!abrirLectura(rutaArchivo))
     {
-      printf("PANEL: Hubo un error al querer abrir el archivo lec\n");
+      printf("PANEL: Hubo un error al querer abrir el archivo\n");
       levantaSemaforo(idSemaforoPanel);
       usleep(INTERVALO_CCI_MS*10000);
       esperaSemaforo(idSemaforoPanel);
@@ -69,7 +49,6 @@ int main(int argc, char *argv[])
     renderPanel(mensajeActual);
     cerrarArchivo();
     levantaSemaforo(idSemaforoPanel);
-    memset(rutaArchivo,0x00,sizeof(rutaArchivo));
     memset(mensajeActual,0x00,sizeof(mensajeActual));
     usleep(INTERVALO_PANEL_MS * 1000);
   }

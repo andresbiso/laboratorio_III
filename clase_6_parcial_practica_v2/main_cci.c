@@ -8,27 +8,7 @@
 #include "semaforos.h"
 #include "funciones.h"
 #include "productor.h"
-#include "consumidor.h"
-
-void inicializarPanel(int numeroPanel, int idSemaforoPanel)
-{
-  char* rutaArchivo;
-  rutaArchivo = (char*)malloc(100*sizeof(char));
-  memset(rutaArchivo,0x00,sizeof(rutaArchivo));
-  strcpy(rutaArchivo, obtenerRutaArchivoPanel(numeroPanel));
-  esperaSemaforo(idSemaforoPanel);
-  while (!abrirEscritura(rutaArchivo))
-  {
-    printf("CCI: Hubo un error al querer abrir el archivo\n");
-    levantaSemaforo(idSemaforoPanel);
-    usleep(INTERVALO_CCI_MS*10000);
-    esperaSemaforo(idSemaforoPanel);
-  }
-  escribirMensajeDefaultPanel();
-  cerrarArchivo();
-  levantaSemaforo(idSemaforoPanel);
-  free(rutaArchivo);
-}
+#include "consumidor.h"
 int main(int argc, char *argv[])
 {
   int idSemaforoPanel;
@@ -78,19 +58,18 @@ int main(int argc, char *argv[])
     strcpy(rutaArchivo, obtenerRutaArchivoPanel(panelElegido));
     esperaSemaforo(idSemaforoPanel);
 
-    if (opcionElegida == 1)
+    while (!abrirLectura(rutaArchivo))
     {
-      while (!abrirLectura(rutaArchivo))
-      {
-        printf("CCI: Hubo un error al querer abrir el archivo\n");
-        levantaSemaforo(idSemaforoPanel);
-        usleep(INTERVALO_CCI_MS*10000);
-        esperaSemaforo(idSemaforoPanel);
-      }
-      /*printf("CCI: Acceso Obtenido...\n");*/
-      leerPanel();
+      printf("CCI: Hubo un error al querer abrir el archivo\n");
+      levantaSemaforo(idSemaforoPanel);
+      usleep(INTERVALO_CCI_MS*10000);
+      esperaSemaforo(idSemaforoPanel);
     }
-    else
+    /*printf("CCI: Acceso Obtenido...\n");*/
+    leerPanel();
+    cerrarArchivo();
+    
+    if (opcionElegida == 2)
     {
       while (!abrirEscritura(rutaArchivo))
       {
@@ -99,10 +78,22 @@ int main(int argc, char *argv[])
         usleep(INTERVALO_CCI_MS*10000);
         esperaSemaforo(idSemaforoPanel);
       }
-      /*printf("CCI: Acceso Obtenido...\n");*/
       escribirPanel();
+      cerrarArchivo();
+      
+      /*Leo nuevamente el archivo para verificar*/
+      /*que los cambios hayan impactado correctamente*/
+      while (!abrirLectura(rutaArchivo))
+      {
+        printf("CCI: Hubo un error al querer abrir el archivo\n");
+        levantaSemaforo(idSemaforoPanel);
+        usleep(INTERVALO_CCI_MS*10000);
+        esperaSemaforo(idSemaforoPanel);
+      }
+      leerPanel();
+      cerrarArchivo();
     }
-    cerrarArchivo();
+
     levantaSemaforo(idSemaforoPanel);
     memset(rutaArchivo,0x00,sizeof(rutaArchivo));
     usleep(INTERVALO_CCI_MS * 30000);

@@ -2,4 +2,5 @@
 #define _PRODUCTOR_H
 void escribirPanel();
 void escribirMensajeDefaultPanel();
+void inicializarPanel(int, int);
 #endif
