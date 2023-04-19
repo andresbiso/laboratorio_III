@@ -6,7 +6,6 @@
 #include "gestionararchivos.h"
 #include "semaforos.h"
 #include "funciones.h"
-#include "productor.h"
 #include "consumidor.h"
 int main(int argc, char *argv[])
 {
@@ -19,11 +18,11 @@ int main(int argc, char *argv[])
     printf("Uso: ./tesorero \n");
     return 0;
   }
-  
-  idSemaforoCajero = creoSemaforo();
-  iniciaSemaforo(idSemaforoPanel, VERDE);
 
-  rutaArchivo = (char*)malloc(100*sizeof(char));
+  idSemaforoCajero = creoSemaforo();
+  iniciaSemaforo(idSemaforoCajero, VERDE);
+
+  rutaArchivo = (char*)malloc(LARGO_LINEA*sizeof(char));
   memset(rutaArchivo,0x00,sizeof(rutaArchivo));
   cajeroActual = 1;
 
@@ -31,16 +30,12 @@ int main(int argc, char *argv[])
 
   while(1)
   {
-    strcpy(rutaArchivo, obtenerRutaArchivoPanel(cajeroActual));
-    esperaSemaforo(idSemaforoPanel);
+    strcpy(rutaArchivo, obtenerRutaArchivoCajero(cajeroActual));
+    esperaSemaforo(idSemaforoCajero);
 
     if (abrirLectura(rutaArchivo))
     {
-      while(!esFinArchivo())
-      {
-        leerDepositosCajero(cajeroActual);
-      }  
-      cerrarArchivo();
+      leerDepositosCajero(cajeroActual);
     }
 
     imprimirResumen();
@@ -51,11 +46,11 @@ int main(int argc, char *argv[])
     }
     else
     {
-      cajeroACtual = 1;
+      cajeroActual = 1;
     }
-    levantaSemaforo(idSemaforoPanel);
+    levantaSemaforo(idSemaforoCajero);
     memset(rutaArchivo,0x00,sizeof(rutaArchivo));
-    usleep(INTERVALO_TESORERO_MS * 1000);
+    usleep(INTERVALO_TESORERO_MS * 10000);
   }
   free(rutaArchivo);
   return 0;

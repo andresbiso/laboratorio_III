@@ -4,6 +4,5 @@ int obtenerNumeroAleatorio(int, int);
 void obtenerNumerosAleatorios(int, int, int, int*);
 void limpiarPantalla();
 char* obtenerRutaArchivoCajero(int);
-char* obtenerRutaArchivoBakCajero(int);
-int esCheque(int);
+char* obtenerRutaArchivoBakCajero(int, int);
 #endif

@@ -1,5 +1,6 @@
 #include "stdio.h"
 #include "stdlib.h"
+#include "string.h"
 #include "defines.h"
 #include "funciones.h"
 
@@ -39,17 +40,12 @@ char* obtenerRutaArchivoCajero(int valor)
   return ruta;
 }
 
-char* obtenerRutaArchivoBakCajero(int valor)
+char* obtenerRutaArchivoBakCajero(int cajero, int numLote)
 {
   char* rutaBak;
 
   rutaBak = (char*)malloc((LARGO_LINEA+1)*sizeof(char));
   memset(rutaBak,0x00,sizeof(rutaBak));
-  sprintf(rutaBak,RUTA_BACKUP,valor);
+  sprintf(rutaBak,RUTA_BACKUP,cajero,numLote);
   return rutaBak;
-}
-
-int esCheque(int valor)
-{
-  return esCheque == 0 ? 1 : 0;
 }

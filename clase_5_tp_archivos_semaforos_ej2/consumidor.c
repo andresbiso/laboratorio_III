@@ -11,10 +11,25 @@ resumen resumenCajeroDos;
 resumen resumenCajeroTres;
 resumen resumenTotal;
 
+void backupLote(int numLote, int numCajero)
+{
+  char* nuevoLote;
+  if (numLote < CANT_MAX_BAK)
+  {
+    nuevoLote = (char*)malloc(LARGO_LINEA*sizeof(char));
+    memset(nuevoLote,0x00,sizeof(nuevoLote));
+    sprintf(nuevoLote, obtenerRutaArchivoBakCajero(numCajero,numLote), numCajero, numLote);
+    renombrarArchivo(obtenerRutaArchivoCajero(numCajero), nuevoLote);
+    limpiarArchivo(obtenerRutaArchivoCajero(numCajero));
+    printf("Generado Backup: %s\n", nuevoLote);
+    free(nuevoLote);
+  }
+}
+
 void leerDepositosCajero(int cajeroActual)
 {
   int monto;
-  int esCheque;
+  int valorCheque;
   monto = 0;
   valorCheque = 0;
   while(!esFinArchivo())
@@ -22,55 +37,67 @@ void leerDepositosCajero(int cajeroActual)
     leerNumeroArchivo(&monto);
     leerNumeroArchivo(&valorCheque);    if (cajeroActual == 1)
     {
-      resumenCajeroUno.tcEfect ++;
-      resumenCajeroUno.tsEfect += monto;
-      resumenCajeroUno.tcCheq ++;
-      resumenCajeroUno.tsCheq += esCheque(valorCheque);
-      resumenTotal.tcEfect ++;
-      resumenTotal.tsEfect += monto;
-      resumenTotal.tcCheq ++;
-      resumenTotal.tsCheq += esCheque(valorCheque);
-      backupLote(resumenCajeroUno.lote, cajeroActual);
-      resumenCajeroUno.lote++;
+      resumenCajeroUno.tcEfect++;
+      resumenCajeroUno.tsEfect+=monto;
+      if (valorCheque == 0)
+      {
+        resumenCajeroUno.tcCheq++;
+        resumenCajeroUno.tsCheq+=monto;
+      }
     }
 
     if (cajeroActual == 2)
     {
-      resumenCajeroDos.tcEfect ++;
-      resumenCajeroDos.tsEfect += monto;
-      resumenCajeroDos.tcCheq ++;
-      resumenCajeroDos.tsCheq += esCheque(valorCheque);
-      resumenTotal.tcEfect ++;
-      resumenTotal.tsEfect += monto;
-      resumenTotal.tcCheq ++;
-      resumenTotal.tsCheq += esCheque(valorCheque);
-      backupLote(resumenCajeroDos.lote, cajeroActual);
-      resumenCajeroDos.lote++;
+      resumenCajeroDos.tcEfect++;
+      resumenCajeroDos.tsEfect+=monto;
+      if (valorCheque == 0)
+      {
+        resumenCajeroDos.tcCheq++;
+        resumenCajeroDos.tsCheq+=monto;
+      }
     }
 
     if (cajeroActual == 3)
     {
-      resumenCajeroTres.tcEfect ++;
-      resumenCajeroTres.tsEfect += monto;
-      resumenCajeroTres.tcCheq ++;
-      resumenCajeroTres.tsCheq += esCheque(valorCheque);
-      resumenTotal.tcEfect ++;
-      resumenTotal.tsEfect += monto;
-      resumenTotal.tcCheq ++;
-      resumenTotal.tsCheq += esCheque(valorCheque);
-      backupLote(resumenCajeroTres.lote, cajeroActual);
-      resumenCajeroTres.lote++;
+      resumenCajeroTres.tcEfect++;
+      resumenCajeroTres.tsEfect+=monto;
+      if (valorCheque == 0)
+      {
+        resumenCajeroTres.tcCheq++;
+        resumenCajeroTres.tsCheq+=monto;
+      }
     }
-  }
-}
 
-void backupLote(int numLote, int numCajero)
-{
-  char nuevoLote[32+1];
-  sprintf(nuevoLote, RUTA_ARCHIVO_LOTE_BAK, numCajero, numLote);
-  renombrarArchivo(RUTA_ARCHIVO_LOTE, nuevoLote);
-  limpiarArchivo(RUTA_ARCHIVO_LOTE);
-  printf("Generado Backup: %s\n", nuevoLote);
+    resumenTotal.tcEfect++;
+    resumenTotal.tsEfect+=monto;
+    resumenTotal.tcCheq++;
+    resumenTotal.tsCheq+=monto;
+  }
+
+  if (cajeroActual == 1)
+  {
+      backupLote(resumenCajeroUno.lote, cajeroActual);
+      if (resumenCajeroUno.lote < CANT_MAX_BAK)
+      {
+        resumenCajeroUno.lote++;
+      }
+  }
+  if (cajeroActual == 2)
+  {
+      backupLote(resumenCajeroDos.lote, cajeroActual);
+      if (resumenCajeroDos.lote < CANT_MAX_BAK)
+      {
+        resumenCajeroDos.lote++;
+      }
+  }
+  if (cajeroActual == 3)
+  {
+      backupLote(resumenCajeroTres.lote, cajeroActual);
+      if (resumenCajeroTres.lote < CANT_MAX_BAK)
+      {
+        resumenCajeroTres.lote++;
+      }
+  }
 }
 
 void inicializarResumenes()

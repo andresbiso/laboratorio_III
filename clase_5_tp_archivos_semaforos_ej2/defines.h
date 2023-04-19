@@ -18,10 +18,12 @@
 #define RUTA_BACKUP "./cajero%d.%03d.dat"
 #define IMPORTE_MIN 100
 #define IMPORTE_MAX 500
-#define CHEQUE_EFECTIVO_VAL 2
+#define VAL_CHEQUE 0
+#define VAL_EFECTIVO 1
 #define CANT_DEPOSITOS_MIN 10
 #define CANT_DEPOSITOS_MAX 20
 #define FORMATO_DEPOSITO "%d %d"
+#define CANT_MAX_BAK 999
 struct Resumen
 {
   int tcEfect;
@@ -29,6 +31,6 @@ struct Resumen
   int tcCheq;
   int tsCheq;
   int lote;
-}
+};
 typedef struct Resumen resumen;
 #endif

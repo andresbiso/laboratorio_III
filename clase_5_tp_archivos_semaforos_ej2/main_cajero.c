@@ -7,13 +7,18 @@
 #include "gestionararchivos.h"
 #include "semaforos.h"
 #include "funciones.h"
-#include "consumidor.h"
+#include "productor.h"
 
 int main(int argc, char *argv[])
 {
   int idSemaforoCajero;
   int cajeroElegido;
   char* rutaArchivo;
+  int cantidad;  
+  int monto;
+  int esCheque;
+  int intervalo;
+  int i;
 
   if (argc != 2)
   {
@@ -27,27 +32,38 @@ int main(int argc, char *argv[])
   rutaArchivo = (char*)malloc((LARGO_RUTA+1)*sizeof(char));
   memset(rutaArchivo,0x00,sizeof(rutaArchivo));
 
-  strcpy(rutaArchivo, obtenerRutaArchivoPanel(panelElegido));
+  strcpy(rutaArchivo, obtenerRutaArchivoCajero(cajeroElegido));
 
   idSemaforoCajero = creoSemaforo();
+  
+  i = 1;
+  cantidad = 0;
+  monto = 0;
+  esCheque = 0;
+  intervalo = 0;
 
   while(1)
   {
-    /*printf("PANEL: Esperando Acceso...\n");*/
-    esperaSemaforo(idSemaforoPanel);
-    if (abrirLectura(rutaArchivo))
+    esperaSemaforo(idSemaforoCajero);
+    if (abrirAdicion(rutaArchivo))
     {
-      printf("PANEL: Hubo un error al querer abrir el archivo\n");
-      levantaSemaforo(idSemaforoPanel);
-      usleep(INTERVALO_CCI_MS*10000);
-      esperaSemaforo(idSemaforoPanel);
+      cantidad = obtenerNumeroAleatorio(CANT_DEPOSITOS_MIN, CANT_DEPOSITOS_MAX);
+      limpiarPantalla();
+      i = 1;
+      while (i <= cantidad)
+      {
+        monto = obtenerNumeroAleatorio(IMPORTE_MIN, IMPORTE_MAX);
+        esCheque = obtenerNumeroAleatorio(VAL_CHEQUE, VAL_EFECTIVO);
+        escribirDeposito(monto, esCheque);
+        i++;
+      } 
     }
 
     cerrarArchivo();
-    levantaSemaforo(idSemaforoPanel);
-    usleep(INTERVALO_PANEL_MS * 1000);
+    levantaSemaforo(idSemaforoCajero);
+    intervalo = obtenerNumeroAleatorio(INTERVALO_CAJERO_MIN_MS, INTERVALO_CAJERO_MAX_MS);
+    usleep(intervalo * 10000);
   }
   free(rutaArchivo);
-  free(mensajeActual);
   return 0;
 }
