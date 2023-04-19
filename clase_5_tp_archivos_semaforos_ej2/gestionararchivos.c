@@ -21,6 +21,11 @@ int leerArchivo(char* linea)
   return fscanf(cfptr,"%s\n",linea);
 }
 
+int leerNumeroArchivo(int* numero)
+{
+  return fscanf(cfptr,"%d",numero);
+}
+
 void cerrarArchivo()
 {
   fclose(cfptr);

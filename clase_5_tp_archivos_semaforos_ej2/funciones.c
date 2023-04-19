@@ -48,3 +48,8 @@ char* obtenerRutaArchivoBakCajero(int valor)
   sprintf(rutaBak,RUTA_BACKUP,valor);
   return rutaBak;
 }
+
+int esCheque(int valor)
+{
+  return esCheque == 0 ? 1 : 0;
+}

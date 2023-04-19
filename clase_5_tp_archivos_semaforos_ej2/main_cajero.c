@@ -31,29 +31,20 @@ int main(int argc, char *argv[])
 
   idSemaforoCajero = creoSemaforo();
 
-  /* Inicializo Archivos */
-
-  inicializarCajero(1, idSemaforoCajero);
-  inicializarCajero(2, idSemaforoCajero);
-  inicializarCajero(3, idSemaforoCajero);
-
-
   while(1)
   {
     /*printf("PANEL: Esperando Acceso...\n");*/
     esperaSemaforo(idSemaforoPanel);
-    while (!abrirLectura(rutaArchivo))
+    if (abrirLectura(rutaArchivo))
     {
       printf("PANEL: Hubo un error al querer abrir el archivo\n");
       levantaSemaforo(idSemaforoPanel);
       usleep(INTERVALO_CCI_MS*10000);
       esperaSemaforo(idSemaforoPanel);
     }
-    /*printf("PANEL: Acceso Obtenido...\n");*/
-    renderPanel(mensajeActual);
+
     cerrarArchivo();
     levantaSemaforo(idSemaforoPanel);
-    memset(mensajeActual,0x00,sizeof(mensajeActual));
     usleep(INTERVALO_PANEL_MS * 1000);
   }
   free(rutaArchivo);

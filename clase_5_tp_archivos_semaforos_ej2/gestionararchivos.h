@@ -3,6 +3,7 @@
 int abrirArchivo(char*, char*);
 void escribirArchivo(char*);
 int leerArchivo(char*);
+int leerNumeroArchivo(int* numero);
 void cerrarArchivo();
 int abrirLectura(char* ruta);
 int abrirEscritura(char* ruta);
