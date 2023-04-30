@@ -9,6 +9,7 @@
 #define CLAVE_BASE 33
 #define ROJO 0
 #define VERDE 1
+#define LINEAS_PANTALLA 80
 #define INTERVALO_SDC_MS 100
 #define INTERVALO_RESTO_MS 500
 #define LARGO_LINEA 100
