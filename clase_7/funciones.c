@@ -58,34 +58,20 @@ char letraMinuscula(char valor)
   return valor;
 }
 
-char* cadenaMayuscula(char* cadena)
+void cadenaMayuscula(char* cadena, char* cadenaMayusc)
 {
-  int largo;
   int i;
-  char* cadenaMayusc;
-  largo = strlen(cadena);
-  cadenaMayusc = (char*)malloc((largo+1)*sizeof(char));
-  memset(cadenaMayusc,0x00,sizeof(cadenaMayusc));
-  cadenaMayusc[largo] = '\0';
-  for (i = 0; i < largo; i++)
+  for (i = 0; i < strlen(cadena); i++)
   {
     cadenaMayusc[i] = letraMayuscula(cadena[i]);
   }
-  return cadenaMayusc;
 }
 
-char* cadenaMinuscula(char* cadena)
+void cadenaMinuscula(char* cadena, char* cadenaMinusc)
 {
-  int largo;
   int i;
-  char* cadenaMinusc;
-  largo = strlen(cadena);
-  cadenaMinusc = (char*)malloc((largo+1)*sizeof(char));
-  memset(cadenaMinusc,0x00,sizeof(cadenaMinusc));
-  cadenaMinusc[largo] = '\0';
-  for (i = 0; i < largo; i++)
+  for (i = 0; i < strlen(cadena); i++)
   {
     cadenaMinusc[i] = letraMinuscula(cadena[i]);
   }
-  return cadenaMinusc;
 }

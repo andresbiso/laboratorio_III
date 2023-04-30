@@ -18,14 +18,5 @@ int main(int argc, char *argv[])
   getchar();
   limpiarPantalla();
 
-  printf("%c", letraMayuscula('a'));
-  printf("\n");
-  printf("%c", letraMinuscula('A'));
-  printf("\n");
-  printf(cadenaMayuscula("hola"));
-  printf("\n");
-  printf(cadenaMinuscula("HOLA"));
-  printf("\n");
-
   return 0;
 }

@@ -6,6 +6,6 @@ void obtenerNumerosAleatorios(int, int, int, int*);
 void limpiarPantalla();
 char letraMayuscula(char);
 char letraMinuscula(char);
-char* cadenaMayuscula(char*);
-char* cadenaMinuscula(char*);
+void cadenaMayuscula(char*, char*);
+void cadenaMinuscula(char*, char*);
 #endif
