@@ -39,7 +39,7 @@ dos - lee la memoria compartida
 ## DESCRIPCIÓN
 **dos** se encarga de levantar un proceso que lee la memoria compartida
 
-### Requisitos Previos
+### PASOS PREVIOS
 Para que instancias del proceso **dos** puedan leer el contenido, el proceso "uno"
 debe estar en ejecución
 
