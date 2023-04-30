@@ -5,7 +5,7 @@
 #include "claves.h"
 #include "memoria.h"
 
-void* creoMemoria(int size, int* r_idMemoria, int claveBase)
+void* creoMemoria(int size, int* extIdMemoria, int claveBase)
 {
   void* ptrMemoria;
   int idMemoria;
@@ -25,6 +25,12 @@ void* creoMemoria(int size, int* r_idMemoria, int claveBase)
     printf("Error: no se ha podido conseguir memoria compartida\n");
     return 0;
   }
-  *r_idMemoria = idMemoria;
+  *extIdMemoria = idMemoria;
   return ptrMemoria;
+}
+
+void liberoMemoria(int idMemoria, char* memoria)
+{
+  shmdt(memoria);
+  shmctl(idMemoria, IPC_RMID, (struct shmid_ds*) 0);
 }

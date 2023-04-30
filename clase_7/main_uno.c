@@ -13,8 +13,9 @@ int main(int argc, char *argv[])
   int idMemoria;
   int i;
   int aleatorio;
+  dato* memoria;
  
-  dato* memoria = 0;
+  memoria = 0; /*NULL*/
   idMemoria = 0;
   i = 0;
   aleatorio = 0;
@@ -43,6 +44,6 @@ int main(int argc, char *argv[])
     printf("Dejamos de escribir en la memoria\n");
     sleep(10);
   }
-  /*liberar memoria*/
+  liberoMemoria(idMemoria, (char*)memoria);
   return 0;
 }
