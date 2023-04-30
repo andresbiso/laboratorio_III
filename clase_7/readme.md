@@ -23,12 +23,6 @@ que instancias del proceso **dos** puedan leer el contenido
 **0**
 : Éxito
 
-# AUTOR
-Escrito por Andrés Isaac Biso
-
-# COPYRIGHT
-Copyright 2023 Andrés Isaac Biso
-
 ---
 
 % DOS(1) dos 1.0.0
@@ -58,9 +52,3 @@ debe estar en ejecución
 # VALORES DE SALIDA
 **0**
 : Éxito
-
-# AUTOR
-Escrito por Andrés Isaac Biso
-
-# COPYRIGHT
-Copyright 2023 Andrés Isaac Biso
