@@ -6,25 +6,25 @@
 #include "defines.h"
 #include "globals.h"
 #include "semaforos.h"
+#include "memoria.h"
 #include "funciones.h"
 int main(int argc, char *argv[])
 {
+  int idMemoria;
+  int i;
+  int aleatorio;
+ 
+  dato* memoria = 0;
+  idMemoria = 0;
+  i = 0;
+  aleatorio = 0;
+  memoria = (dato*)creoMemoria(sizeof(dato)*CANTIDAD, &idMemoria, CLAVE_BASE);
+
   if (argc != 1)
   {
     printf("Uso: ./uno \n");
     return 0;
   }
-
-  int idMemoria;
-  int i;
-  int aleatorio;
-  dato* memoria = 0;
-
-  idMemoria = 0;
-  i = 0;
-  aleatorio = 0;
-
-  memoria = (dato*)creoMemoria(sizeof(dato)*CANTIDAD, &idMemoria, CLAVE_BASE);
   
   srand(time(0));
 
@@ -36,7 +36,7 @@ int main(int argc, char *argv[])
       aleatorio = obtenerNumeroAleatorio(DESDE, HASTA);
       memoria[i].numero = aleatorio;
       memoria[i].letra = 0x41 + aleatorio;
-      // 0x41: 'A' en ASCII
+      /* 0x41: 'A' en ASCII */
       printf("Escrito %d %c\n", memoria[i].numero, memoria[i].letra);
       sleep(1);
     }
