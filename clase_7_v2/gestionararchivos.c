@@ -77,12 +77,13 @@ int renombrarArchivo(char* ruta, char* rutaNuevoNombre)
 
 int backupArchivo(char* ruta, char* rutaNuevoNombre)
 {
+  int cantLineasCopiadas;
   char* mensaje;
-  char* mensajeConFormato;
-  mensaje = (char*)malloc((LARGO_LINEA+1)*sizeof(char));
+  FILE* cfptrBak;
+
+  cantLineasCopiadas = 0;
+  mensaje = (char*)malloc((LARGO_LINEA)*sizeof(char));
   memset(mensaje,0x00,sizeof(mensaje));
-  mensajeConFormato = (char*)malloc((LARGO_LINEA+1)*sizeof(char));
-  memset(mensajeConFormato,0x00,sizeof(mensajeConFormato));
 
   if (!abrirLectura(ruta))
   {
@@ -90,29 +91,25 @@ int backupArchivo(char* ruta, char* rutaNuevoNombre)
    return -1;
   }
 
-  while(!esFinArchivo())
+  if ((cfptrBak=fopen(rutaNuevoNombre,"a"))==0)
   {
-    leerLineaArchivo(mensaje);
-    cerrarArchivo();
-    if (!abrirAdicion(rutaNuevoNombre))
-    {
-      printf("Hubo un error al querer abrir el archivo\n");
-      return -1;
-    }
-    sprintf(mensajeConFormato,"%s\n",mensaje);
-    escribirArchivo(mensajeConFormato);
-    cerrarArchivo();
-    memset(mensaje,0x00,sizeof(mensaje));
-    memset(mensajeConFormato,0x00,sizeof(mensaje));
-    if (!abrirLectura(ruta))
-    {
-     printf("Hubo un error al querer abrir el archivo\n");
+     printf("Hubo un error al querer abrir el archivo de backup\n");
      return -1;
-    }
   }
-  limpiarArchivo(ruta);
-  printf("Ruta Backup: %s\n", rutaNuevoNombre);
+
+  while(leerLineaArchivo(mensaje) != 0)
+  {
+    fprintf(cfptrBak,mensaje);
+    cantLineasCopiadas++;
+    memset(mensaje,0x00,sizeof(mensaje));
+  }
+
+  cerrarArchivo();
+  fclose(cfptrBak);
+  if (cantLineasCopiadas > 0)
+  {
+    printf("Ruta Backup: %s\n", rutaNuevoNombre);
+  }
   free(mensaje);
-  free(mensajeConFormato);
   return 0;
-} 
+}  
