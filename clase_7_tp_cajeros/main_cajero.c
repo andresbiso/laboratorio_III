@@ -8,7 +8,8 @@
 #include "semaforos.h"
 #include "memoria.h"
 #include "funciones.h"
-#include "productor.h"
+#include "productor.h"
+#include "consumidor.h"
 int main(int argc, char *argv[])
 {
   int idMemoria;
@@ -28,8 +29,7 @@ int main(int argc, char *argv[])
   srand(time(0));
   memoria = (dato*)creoMemoria(sizeof(dato)*CANTIDAD, &idMemoria, CLAVE_BASE);
 
-  /*iniciarMemoria(memoria);*/
-
+  verificarMemoriaIni(memoria);
   while(1)
   {
     printf("Escribimos en la memoria\n");

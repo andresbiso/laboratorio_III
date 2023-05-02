@@ -12,8 +12,10 @@ void iniciarMemoria(dato* memoria)
   int i;
   for (i = 0; i < CANTIDAD; i++)
   {
-    memoria[i].numero = 0;
-    memoria[i].letra = 0x00;
+    memoria[i].cajero = 0;
+    memoria[i].importe = 0;
+    memoria[i].cheque = 0;
+    memoria[i].listo = 0;
     memoria[i].inicializado = 1;
   }
 }

@@ -7,6 +7,7 @@
 #include "semaforos.h"
 #include "memoria.h"
 #include "funciones.h"
+#include "productor.h"
 #include "consumidor.h"
 
 int main(int argc, char *argv[])
@@ -18,22 +19,6 @@ int main(int argc, char *argv[])
   int j;
   int posicion;
   dato* memoria;
-
-  int totalCantidadDepositos;
-  int totalCantidadEfectivos;
-  int totalCantidadCheques;
-
-  int totalPesosDepositos;
-  int totalPesosEfectivos;
-  int totalPesosCheques;
-
-  int vTotalCantidadDepositos[CANT_MAX_CAJEROS];
-  int vTotalCantidadEfectivos[CANT_MAX_CAJEROS];
-  int vTotalCantidadCheques[CANT_MAX_CAJEROS];
-
-  int vTotalPesosDepositos[CANT_MAX_CAJEROS];
-  int vTotalPesosEfectivos[CANT_MAX_CAJEROS];
-  int vTotalPesosCheques[CANT_MAX_CAJEROS];
 
   if (argc != 1)
   {
@@ -49,29 +34,13 @@ int main(int argc, char *argv[])
   j = 0;
   posicion = 0;
 
-  totalCantidadDepositos = 0;
-  totalCantidadEfectivos = 0;
-  totalCantidadCheques = 0;
-
-  totalPesosDepositos = 0;
-  totalPesosEfectivos = 0;
-  totalPesosCheques = 0;
-
-  vTotalCantidadDepositos = {0};
-  vTotalCantidadEfectivos = {0};
-  vTotalCantidadCheques = {0};
-
-  vTotalPesosDepositos = {0};
-  vTotalPesosEfectivos = {0};
-  vTotalPesosCheques = {0};
-
   srand(time(0));
 
   idSemaforo = creoSemaforo();
   iniciaSemaforo(idSemaforo, VERDE);
-  memoria = (dato*)creoMemoria(sizeof(dato)*CANTIDAD_DEPOSITOS, &idMemoria, CLAVE_BASE);
+  memoria = (dato*)creoMemoria(sizeof(dato)*CANTIDAD, &idMemoria, CLAVE_BASE);
 
- /* verificarMemoriaIni(memoria);*/
+  iniciarMemoria(memoria);
 
   while(1)
   {

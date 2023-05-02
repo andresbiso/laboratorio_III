@@ -2,7 +2,7 @@
 #define _DEFINES_H_
 #define FALSE 0
 #define TRUE 1
-#define CANTIDAD 10
+#define CANTIDAD 100
 #define DESDE 0
 #define HASTA 10
 #define RUTA_ARCHIVO_FTOK "/bin/ls"
@@ -14,7 +14,6 @@
 #define INTERVALO_CAJERO_MAX_MS 2500
 #define INTERVALO_TESORERO_MS 500
 #define LARGO_LINEA 100
-#define CANTIDAD_DEPOSITOS 100
 #define IMPORTE_MIN 100
 #define IMPORTE_MAX 1000
 #define CHEQUE_MIN 0
