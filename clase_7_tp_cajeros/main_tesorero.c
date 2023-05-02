@@ -41,11 +41,15 @@ int main(int argc, char *argv[])
   memoria = (dato*)creoMemoria(sizeof(dato)*CANTIDAD, &idMemoria, CLAVE_BASE);
 
   iniciarMemoria(memoria);
+  inicializarResumenes();
 
   while(1)
   {
-    leerMemoria(memoria);
-    sleep(INTERVALO_DOS_S);
+    esperaSemaforo(idSemaforo);
+    leerDepositosCajeros();
+    imprimirResumen();
+    levantaSemaforo(idSemaforo);
+    usleep(INTERVALO_TESORERO_MS * 1000);
   }
   liberoMemoria(idMemoria, (char*)memoria);
   return 0;

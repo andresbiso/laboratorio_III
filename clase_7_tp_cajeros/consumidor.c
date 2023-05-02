@@ -84,4 +84,28 @@ void imprimirResumen()
 
 void leerDepositosCajeros()
 {
+  int i;
+  i = 0;
+  while (i < CANTIDAD)
+  {
+    if (memoria[i].listo == 1)
+    {
+      if (memoria[i].cajero <= CANT_MAX_CAJEROS)
+      {
+        memoria[i].listo = 0;
+        totalCantidadDepositos++;
+        totalPesosDepositos += memoria[i].importe;
+        vTotalCantidadDepositos[memoria[i].cajero - 1]++; 
+        vTotalPesosDepositos[memoria[i].cajero - 1] += memoria[i].importe;
+
+      if (memoria[i].cheque == 0)
+      {
+        totalCantidadEfectivos++;
+      }
+      else
+      {
+      } 
+      }
+    }
+  }
 }
