@@ -28,23 +28,11 @@ void verificarMemoriaIni(dato* memoria)
   i = 0;
   while (memoria[i].inicializado != 1)
   {
-    printf("Atención: Recuerde levantar el programa inicial \"uno\". Presione \"enter\" para continuar...\n");
+    printf("Atención: Recuerde levantar el programa inicial \"tesorero\". Presione \"enter\" para continuar...\n");
     getchar();
   }
 
   limpiarPantalla();
-}
-
-void leerMemoria(dato* memoria)
-{
-  int i;
-  printf("Leemos en la memoria\n");
-  for (i=0; i < CANTIDAD; i++)
-  {
-    printf("Leído %d %c\n", memoria[i].numero, memoria[i].letra);
-    sleep(1);
-  }
-  printf("Dejamos de leer la memoria\n");
 }
 
 void inicializarResumenes()
@@ -56,33 +44,54 @@ void inicializarResumenes()
   totalPesosDepositos = 0;
   totalPesosEfectivos = 0;
   totalPesosCheques = 0;
-  /*{0}: inicializa todo los elementos del array en 0*/
-  vTotalCantidadDepositos = {0};
-  vTotalCantidadEfectivos = {0};
-  vTotalCantidadCheques = {0};
 
-  vTotalPesosDepositos = {0};
-  vTotalPesosEfectivos = {0};
-  vTotalPesosCheques = {0};
+  vTotalCantidadDepositos[0] = 0;
+  vTotalCantidadEfectivos[0] = 0;
+  vTotalCantidadCheques[0] = 0;
+  vTotalCantidadDepositos[1] = 0;
+  vTotalCantidadEfectivos[1] = 0;
+  vTotalCantidadCheques[1] = 0;
+  vTotalCantidadDepositos[2] = 0;
+  vTotalCantidadEfectivos[2] = 0;
+  vTotalCantidadCheques[2] = 0;
+
+  vTotalPesosDepositos[0] = 0;
+  vTotalPesosEfectivos[0] = 0;
+  vTotalPesosCheques[0] = 0;
+  vTotalPesosDepositos[1] = 0;
+  vTotalPesosEfectivos[1] = 0;
+  vTotalPesosCheques[1] = 0;
+  vTotalPesosDepositos[2] = 0;
+  vTotalPesosEfectivos[2] = 0;
+  vTotalPesosCheques[2] = 0;
 }
 
 void imprimirResumen()
 {
+  int i;
   printf("TOTAL\n");
-  printf("TC-EFEC T$-EFEC TC-CHEQ T$-CHEQ\n");
-  printf("%d\t%d\t%d\t%d\n", resumenTotal.tcEfect, resumenTotal.tsEfect, resumenTotal.tcCheq, resumenTotal.tsCheq);
-  printf("CAJERO1\n");
-  printf("TC-EFEC T$-EFEC TC-CHEQ T$-CHEQ\n");
-  printf("%d\t%d\t%d\t%d\n", resumenCajeroUno.tcEfect, resumenCajeroUno.tsEfect, resumenCajeroUno.tcCheq, resumenCajeroUno.tsCheq);
-  printf("CAJERO2\n");
-  printf("TC-EFEC T$-EFEC TC-CHEQ T$-CHEQ\n");
-  printf("%d\t%d\t%d\t%d\n", resumenCajeroDos.tcEfect, resumenCajeroDos.tsEfect, resumenCajeroDos.tcCheq, resumenCajeroDos.tsCheq);
-  printf("CAJERO3\n");
-  printf("TC-EFEC T$-EFEC TC-CHEQ T$-CHEQ\n");
-  printf("%d\t%d\t%d\t%d\n", resumenCajeroTres.tcEfect, resumenCajeroTres.tsEfect, resumenCajeroTres.tcCheq, resumenCajeroTres.tsCheq);
+  printf("TCD\t%d\tT$D\t%d\tTCE\t%d\tT$E\t%d\tTCC\t%d\tT$C\t%d\n",
+  totalCantidadDepositos,
+  totalPesosDepositos,
+  totalCantidadEfectivos,
+  totalPesosEfectivos,
+  totalCantidadCheques,
+  totalPesosCheques);
+  
+  for (i = 0; i < CANT_MAX_CAJEROS; i++)
+  {
+    printf("CAJERO\t%d\n", i + 1);
+    printf("TCD\t%d\tT$D\t%d\tTCE\t%d\tT$E\t%d\tTCC\t%d\tT$C\t%d\n",
+    vTotalCantidadDepositos[i],
+    vTotalPesosDepositos[i],
+    vTotalCantidadEfectivos[i],
+    vTotalPesosEfectivos[i],
+    vTotalCantidadCheques[i],
+    vTotalPesosCheques[i]);
+  }
 }
 
-void leerDepositosCajeros()
+void leerDepositosCajeros(dato* memoria)
 {
   int i;
   i = 0;
@@ -95,17 +104,25 @@ void leerDepositosCajeros()
         memoria[i].listo = 0;
         totalCantidadDepositos++;
         totalPesosDepositos += memoria[i].importe;
-        vTotalCantidadDepositos[memoria[i].cajero - 1]++; 
-        vTotalPesosDepositos[memoria[i].cajero - 1] += memoria[i].importe;
+        vTotalCantidadDepositos[(memoria[i].cajero)-1]++; 
+        vTotalPesosDepositos[(memoria[i].cajero)-1] += memoria[i].importe;
 
-      if (memoria[i].cheque == 0)
-      {
-        totalCantidadEfectivos++;
-      }
-      else
-      {
-      } 
+        if (memoria[i].cheque == 0)
+        {
+          totalCantidadEfectivos++;
+          totalPesosEfectivos += memoria[i].importe;
+          vTotalCantidadEfectivos[(memoria[i].cajero)-1]++; 
+          vTotalPesosEfectivos[(memoria[i].cajero)-1] += memoria[i].importe;
+        }
+        else
+        {
+          totalCantidadCheques++;
+          totalPesosCheques += memoria[i].importe;
+          vTotalCantidadCheques[(memoria[i].cajero)-1]++; 
+          vTotalPesosCheques[(memoria[i].cajero)-1] += memoria[i].importe;
+        } 
       }
     }
+    i++;
   }
 }

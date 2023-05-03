@@ -2,8 +2,7 @@
 #define _CONSUMIDOR_H
 #include "globals.h"
 void verificarMemoriaIni(dato*);
-void leerMemoria(dato*);
 void inicializarResumenes();
 void imprimirResumen();
-void leerDepositosCajeros();
+void leerDepositosCajeros(dato*);
 #endif

@@ -20,19 +20,34 @@ void iniciarMemoria(dato* memoria)
   }
 }
 
-void escribirMemoria(dato* memoria)
+void cargarCajero(dato* memoria, int cajero)
 {
   int i;
-  int aleatorio;
-  aleatorio = 0;
-  for (i = 0; i < CANTIDAD; i++)
+  int posicion;
+  int importe;
+  int cheque;
+  
+  printf("cajero\t%d\n", cajero);
+  importe = obtenerNumeroAleatorio(IMPORTE_MIN, IMPORTE_MAX);
+  cheque = obtenerNumeroAleatorio(CHEQUE_MIN, CHEQUE_MAX);
+  posicion = -1;
+  i = 0;
+  while (posicion == -1 && i < CANTIDAD)
   {
-    aleatorio = obtenerNumeroAleatorio(DESDE, HASTA);
-    memoria[i].numero = aleatorio;
-    memoria[i].letra = 0x41 + aleatorio;
-    /* 0x41: 'A' en ASCII */
-    printf("Escrito %d %c\n", memoria[i].numero, memoria[i].letra);
-    sleep(1);
+    if (memoria[i].listo == 0)
+    {
+      posicion = i;
+      memoria[posicion].cajero = cajero;
+      memoria[posicion].importe = importe;
+      memoria[posicion].cheque = cheque;
+      memoria[posicion].listo = 1;
+
+      printf("Posición\t%d\n", posicion);
+      printf("Cajero\t%d\n", memoria[posicion].cajero);
+      printf("Importe\t%d\n", memoria[posicion].importe);
+      printf("Cheque\t%d\n", memoria[posicion].cheque);
+      printf("Listo\t%d\n", memoria[posicion].listo);
+    }
+    i++;
   }
-  printf("Dejamos de escribir en la memoria\n");
 }
