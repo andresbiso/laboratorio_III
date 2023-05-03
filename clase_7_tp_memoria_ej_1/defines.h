@@ -10,10 +10,11 @@
 #define ROJO 0
 #define VERDE 1
 #define LINEAS_PANTALLA 80
+#define POS_INI_MEM 0
 #define INTERVALO_JUGADOR_MS 1000
 #define INTERVALO_PIENSO_MS 1000
 #define LARGO_LINEA 100
 #define NUM_MIN 1
-#define NUM_MAX 99
+#define NUM_MAX 10
 #define LARGO_NOMBRE 100
 #endif

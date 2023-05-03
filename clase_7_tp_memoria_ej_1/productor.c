@@ -9,39 +9,23 @@
 
 void iniciarMemoria(dato* memoria)
 {
-  int i;
-  i = 0;
-  memoria[i].nombreJugador = 0; /*NULL*/
-  memoria[i].numeroPensado = 0;
-  memoria[i].estadoAcierto = 0;
-  memoria[i].inicializado = 1;
+  memset(memoria[POS_INI_MEM].nombreJugador,0x00,sizeof(memoria[POS_INI_MEM].nombreJugador));
+  memoria[POS_INI_MEM].numeroPensado = 0;
+  memoria[POS_INI_MEM].estadoAcierto = 0;
+  memoria[POS_INI_MEM].inicializado = 1;
 }
 
-void escribirNumero(dato* memoria, int numeroPensado)
+void escribirNumeroPensado(dato* memoria, int valor)
 {
-  int i;
-  i = 0;
+  memoria[POS_INI_MEM].numeroPensado = valor;
+}
 
-  memoria[i].nombreJugador = 0; /*NULL*/
-  memoria[i].numeroPensado = numeroPensado;
-  memoria[i].estadoAcierto = 0;
-  memoria[i].inicializado = 1;
-  while (posicion == -1 && i < CANTIDAD)
-  {
-    if (memoria[i].listo == 0)
-    {
-      posicion = i;
-      memoria[posicion].cajero = cajero;
-      memoria[posicion].importe = importe;
-      memoria[posicion].cheque = cheque;
-      memoria[posicion].listo = 1;
+void escribirEstadoAcierto(dato* memoria, int valor)
+{
+  memoria[POS_INI_MEM].estadoAcierto = valor;
+}
 
-      printf("Posición\t%d\n", posicion);
-      printf("Cajero\t%d\n", memoria[posicion].cajero);
-      printf("Importe\t%d\n", memoria[posicion].importe);
-      printf("Cheque\t%d\n", memoria[posicion].cheque);
-      printf("Listo\t%d\n", memoria[posicion].listo);
-    }
-    i++;
-  }
+void escribirNombreJugador(dato* memoria, char* valor)
+{
+  strcpy(memoria[POS_INI_MEM].nombreJugador, valor);
 }

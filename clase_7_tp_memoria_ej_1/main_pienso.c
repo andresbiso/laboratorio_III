@@ -14,8 +14,7 @@ int main(int argc, char *argv[])
 {
   int idMemoria;
   int idSemaforo;
-  int cajero;
-  int intervalo;
+  int localPiensoUnNumero;
   dato* memoria;
 
   if (argc != 1)
@@ -27,22 +26,41 @@ int main(int argc, char *argv[])
   memoria = 0; /*NULL*/
   idMemoria = 0;
   idSemaforo = 0;
+  localPiensoUnNumero = 0;
 
   srand(time(0));
-
   idSemaforo = creoSemaforo();
+  iniciaSemaforo(idSemaforo, VERDE);
   memoria = (dato*)creoMemoria(sizeof(dato)*CANTIDAD, &idMemoria, CLAVE_BASE);
+  iniciarMemoria(memoria);
 
-  verificarMemoriaIni(memoria);
+  limpiarPantalla();
+  printf("Pensando numero...\n");
+  localPiensoUnNumero = obtenerNumeroAleatorio(NUM_MIN, NUM_MAX);
+  printf("Numero pensado %d\n", localPiensoUnNumero);
 
   while(1)
   {
     esperaSemaforo(idSemaforo);
-    limpiarPantalla();
-    cargarCajero(memoria, cajero);
+    if (leerNumeroPensado(memoria) > 0 && leerEstadoAcierto(memoria) == 0)
+    {
+      if (leerNumeroPensado(memoria) != localPiensoUnNumero)
+      {
+        escribirNumeroPensado(memoria, 0);
+        escribirEstadoAcierto(memoria, 0);
+      }
+      else
+      {
+        escribirEstadoAcierto(memoria, 1);
+        limpiarPantalla();
+        printf("Jugador:\t%s\tHa ganado el juego\n", leerNombreJugador(memoria));
+        printf("El número pensado era el %d\n", localPiensoUnNumero);
+        levantaSemaforo(idSemaforo);
+        break;
+      }
+    }
     levantaSemaforo(idSemaforo);
-    intervalo = obtenerNumeroAleatorio(INTERVALO_CAJERO_MIN_MS, INTERVALO_CAJERO_MAX_MS);
-    usleep(intervalo * 1000);
+    usleep(INTERVALO_PIENSO_MS * 1000);
   }
   liberoMemoria(idMemoria, (char*)memoria);
   return 0;

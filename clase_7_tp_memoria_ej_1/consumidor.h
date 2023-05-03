@@ -2,5 +2,7 @@
 #define _CONSUMIDOR_H
 #include "globals.h"
 void verificarMemoriaIni(dato*);
-void leerMemoria(dato*);
+int leerNumeroPensado(dato*);
+int leerEstadoAcierto(dato*);
+char* leerNombreJugador(dato*);
 #endif

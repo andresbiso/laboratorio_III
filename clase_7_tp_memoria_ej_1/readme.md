@@ -1,20 +1,21 @@
-# cajero
-CAJERO(1) cajero 1.0.0  
+# pienso
+PIENSO(1) pienso 1.0.0  
 **Autor:** Andrés Isaac Biso  
-**Fecha:** 01/05/2023  
+**Fecha:** 03/05/2023  
 
 ## NOMBRE
-cajero
+pienso
 
 ## SINOPSIS
-**cajero**
+**pienso**
 
-## DESCRIPCIÓN
+## DESCRIPCIÓN
+
 ## OPCIONES
-**cajero** no tiene opciones disponibles
+**pienso** no tiene opciones disponibles
 
 ## EJEMPLOS
-**./cajero** [1-3]
+**./pienso**
 
 ## VALORES DE SALIDA
 **0**
@@ -22,23 +23,24 @@ cajero
 
 ---
 
-# tesorero
-TESORERO(1) tesorero 1.0.0  
+# jugador
+JUGADOR(1) jugador 1.0.0  
 **Autor:** Andrés Isaac Biso  
-**Fecha:** 01/05/2023  
+**Fecha:** 03/05/2023  
 
 ## NOMBRE
-tesorero
+jugador
 
 ## SINOPSIS
-**tesorero**
+**jugador**
 
-## DESCRIPCIÓN
+## DESCRIPCIÓN
+
 ## OPCIONES
-**tesorero** no tiene opciones disponibles
+**jugador** no tiene opciones disponibles
 
 ## EJEMPLOS
-**./tesorero**
+**./jugador**
 
 ## VALORES DE SALIDA
 **0**
