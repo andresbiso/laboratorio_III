@@ -10,7 +10,8 @@ struct tipo_mensaje
 };
 typedef struct tipo_mensaje mensaje;
 int creoIdColaMensajes(int);
-void borrarMensajes(int);
+int borrarMensajes(int);
 int recibirMensaje(int, long, mensaje*);
 int enviarMensaje(int, long, int, int, char*);
+void liberarColaMensajes(int);
 #endif

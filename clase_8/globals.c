@@ -1,3 +1,4 @@
+#include "cola.h"
 /*
 #include "string.h"
 #include "cola.h"
@@ -12,3 +13,4 @@ void inicializarMensajeGlobal()
   msg.intEvento = Eventos.EVT_NINGUNO;
   memset(msg.charMensaje,0x00,sizeof(msg.charMensaje));
 }*/
+extern mensaje msg2;
