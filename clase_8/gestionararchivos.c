@@ -2,7 +2,6 @@
 #include "stdlib.h"
 #include "string.h"
 #include "defines.h"
-#include "gestionararchivos.h"
 
 FILE* cfptr;
 

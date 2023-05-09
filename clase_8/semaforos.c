@@ -3,7 +3,6 @@
 #include "stdio.h"
 #include "defines.h"
 #include "claves.h"
-#include "semaforos.h"
 
 int creoSemaforo()
 {
