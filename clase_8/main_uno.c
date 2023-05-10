@@ -14,6 +14,7 @@ int main(int argc, char *argv[])
 {
   int idMemoriaInicial;
   int idSemaforo;
+  int idColaMensajes;
   inicial* memoriaInicial;
 
   if (argc != 1)
