@@ -1,5 +1,5 @@
-#ifndef _MEMORIA_H
-#define _MEMORIA_H
+#ifndef _COLA_H
+#define _COLA_H
 #include "defines.h"
 struct tipo_mensaje
 {

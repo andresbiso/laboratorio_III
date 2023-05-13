@@ -10,7 +10,7 @@ void verificarMemoriaInicial(inicial* memoria)
 {
   while (memoria[POS_INI_MEM].inicializado != 1)
   {
-    printf("Atención: Recuerde levantar el programa inicial \"pienso\". Presione \"enter\" para continuar...\n");
+    printf("Atención: Recuerde levantar el programa inicial \"uno\". Presione \"enter\" para continuar...\n");
     getchar();
   }
 
