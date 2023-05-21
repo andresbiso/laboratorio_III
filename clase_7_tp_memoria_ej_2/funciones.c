@@ -4,13 +4,15 @@
 #include "defines.h"
 #include "funciones.h"
 
-int obtenerNumeroAleatorio(int desde, int hasta) {
+int obtenerNumeroAleatorio(int desde, int hasta)
+{
 	int num = 0;
 	num = (rand()%(hasta-desde+1))+desde;
 	return num;
 }
 
-void obtenerNumerosAleatorios(int desde, int hasta, int tamanio, int* nums) {
+void obtenerNumerosAleatorios(int desde, int hasta, int tamanio, int* nums)
+{
 	int i;
 	for (i = 0; i < tamanio; i++)
 	{

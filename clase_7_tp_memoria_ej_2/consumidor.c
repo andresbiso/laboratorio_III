@@ -16,3 +16,8 @@ void verificarMemoriaInicial(inicial* memoria)
 
   limpiarPantalla();
 }
+
+int leerVehiculosEnCola(dato* memoria, int via)
+{
+  return memoria[POS_INI_MEM].vehiculosEnCola[via];
+}

@@ -18,6 +18,8 @@ int main(int argc, char *argv[])
   dato* memoria;
   inicial* memoriaInicial;
   int vias;
+  int viaActual;
+  int intervaloEspera;
 
   if (argc != 2)
   {
@@ -30,7 +32,15 @@ int main(int argc, char *argv[])
   idMemoria = 0;
   idMemoriaInicial = 0;
   idSemaforo = 0;
+  intervaloEspera = 0;
+  viaActual = 0;
   vias = atoi(argv[1]);
+
+  if (vias <= 0)
+  {
+    printf("Error: vias debe ser un valor mayor a 0\n");
+    return 0;
+  }
 
   srand(time(0));
   idSemaforo = creoSemaforo();
@@ -39,16 +49,25 @@ int main(int argc, char *argv[])
   iniciarMemoriaInicial(memoriaInicial);
 
   memoria = (dato*)creoMemoria(sizeof(dato)*CANTIDAD, &idMemoria, CLAVE_BASE);
-  iniciarMemoria(memoria, 4);
+  iniciarMemoria(memoria, vias);
 
   limpiarPantalla();
 
   while(1)
   {
     esperaSemaforo(idSemaforo);
-
+    
     levantaSemaforo(idSemaforo);
-    usleep(INTERVALO_PIENSO_MS * 1000);
+    if (viaActual < vias - 1)
+    {
+      viaActual++;
+    }
+    else
+    {
+      viaActual = 0;
+    }
+    intervaloEspera = obtenerNumeroAleatorio(INTERVALO_PEAJE_MS_MIN, INTERVALO_PEAJE_MS_MAX);
+    usleep(INTERVALO_PIENSO_MS * MICRO_A_MILLI);
   }
   liberoMemoria(idMemoriaInicial, (char*)memoriaInicial);
   liberoMemoria(idMemoria, (char*)memoria);

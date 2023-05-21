@@ -7,7 +7,7 @@ struct tipo_inicial
 };
 struct tipo_dato
 {
-  int* vehiculosEnColas; /*vehiculosEnColas[CANTIDAD_DE_VIAS]*/
+  int* vehiculosEnCola; /*vehiculosEnCola[CANTIDAD_DE_VIAS]*/
 };
 typedef struct tipo_dato dato;
 typedef struct tipo_inicial inicial;
