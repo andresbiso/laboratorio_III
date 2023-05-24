@@ -32,12 +32,13 @@ int main(int argc, char *argv[])
   verificarMemoriaInicial(memoriaInicial);
 
   limpiarPantalla();
-
+/*
   while(1)
   {
-
     usleep(INTERVALO_UNO_MS * 1000);
   }
+
+*/
   liberoMemoria(idMemoriaInicial, (char*)memoriaInicial);
   return 0;
 }

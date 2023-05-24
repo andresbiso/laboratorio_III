@@ -22,6 +22,14 @@ void joinThread(pthread_t* hilo)
   pthread_join(*hilo, 0);
 }
 
+/*Ejemplo uso: joinThreadValorSalida(&idHilo, (void*)&valorDevuelto)*/
+/*char* valorDevuelto; valorDevuelto = 0;*/
+/*No responde bien al free(valorDevuelto) luego del pthread_exit()*/
+void joinThreadValorSalida(pthread_t* hilo, char* valorDevuelto)
+{
+    pthread_join(*hilo, (void**)valorDevuelto);
+}
+
 void lockMutex(pthread_mutex_t* mutex)
 {
   pthread_mutex_lock(mutex);
@@ -44,13 +52,17 @@ void* funcionThread(void* parametro)
     unlockMutex(&mutex);
     sleep(1);
   }
-  printf("Soy el hijo y espero 10 segundos\n");
-  sleep(10);
+  printf("Soy el hijo y espero 2 segundos\n");
+  sleep(2);
   printf("Hijo: Termino\n");
-  pthread_exit((void*)0);
+  return 0;
+  
+  /*Alternativa:*/
+  /*Permite retornar un valor*/
+  /*pthread_exit((void*)0);*/
 }
 
 int crearThread(pthread_t* hilo, pthread_attr_t* atributos, void* arg)
 {
-  return pthread_create(hilo, atributos, funcionThread, arg);
+  return pthread_create(hilo, atributos, funcionThread, arg) == 0;
 }
