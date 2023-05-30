@@ -112,4 +112,76 @@ int backupArchivo(char* ruta, char* rutaNuevoNombre)
   }
   free(mensaje);
   return 0;
-}  
+}
+
+int obtenerTamanioArchivo(char* ruta)
+{
+  int tamanioArchivo;
+  tamanioArchivo = 0;
+  if (!abrirLectura(ruta))
+  {
+   printf("Hubo un error al querer abrir el archivo\n");
+   return -1;
+  }
+
+  /* SEEK_SET = 0; Principio */
+  /* SEEK_END = 2; Fin */
+  fseek(cfptr, 0, 2);
+  tamanioArchivo = ftell(cfptr);
+
+  /*En caso de querer volver al principio*/
+  /*Descomentar la siguiente línea*/
+  /*fseek(cfptr, 0, 0);*/
+
+  /*En caso de querer mostrar el tamaño del archivo por pantalla*/
+  /*printf("Tamaño Archivo: %d\n", tamanioArchivo);*/
+
+  cerrarArchivo();
+  return tamanioArchivo;
+}
+
+int obtenerUltimaLineaArchivo(char* ruta, char* linea)
+{
+  if (!abrirLectura(ruta))
+  {
+   printf("Hubo un error al querer abrir el archivo\n");
+   return -1;
+  }
+
+  while(1)
+  {
+    if (leerLineaArchivo(linea) == 0)
+    {
+      break;
+    }
+  }
+
+  cerrarArchivo();
+  return 0;
+}
+
+int obtenerTotalLineasArchivo(char* ruta)
+{
+  char* linea;
+  int cantidadLineas;
+  cantidadLineas = 0;
+  linea = (char*)malloc((LARGO_LINEA)*sizeof(char));
+  memset(linea,0x00,sizeof(linea));
+
+  if (!abrirLectura(ruta))
+  {
+   printf("Hubo un error al querer abrir el archivo\n");
+   return -1;
+  }
+
+  while(1)
+  {
+    if (leerLineaArchivo(linea) == 0)
+    {
+      break;
+    }
+    cantidadLineas++;
+  }
+  cerrarArchivo();
+  return cantidadLineas;
+}

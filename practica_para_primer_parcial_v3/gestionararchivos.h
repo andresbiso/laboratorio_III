@@ -13,4 +13,7 @@ int esFinArchivo();
 int limpiarArchivo(char*);
 int renombrarArchivo(char*, char*);
 int backupArchivo(char*, char*);
+int obtenerTamanioArchivo(char*);
+int obtenerUltimaLineaArchivo(char*, char*);
+int obtenerTotalLineasArchivo(char*);
 #endif
