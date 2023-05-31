@@ -1,79 +1,21 @@
 /*Standard Library*/
-#include "stdio.h"
-#include "sys/ipc.h"
-#include "sys/sem.h"
-/*Headers Library*/
-#include "defines.h"
-#include "claves.h"
+#include "stdlib.h"
 /*File Header*/
-#include "semaforos.h"
+#include "aleatorio.h"
 
-int crearSemaforo()
+int obtenerNumeroAleatorio(int desde, int hasta)
 {
-  key_t clave;
-  int idSemaforo;
-  clave = crearClave(CLAVE_BASE);
-  idSemaforo = semget(clave, 1, 0600|IPC_CREAT);
-  /*
-   0600: permiso de lectura y escritura para el owner
-   El 0 adlente es para que lo tome como octal
-   El segundo parámetro es la cantidad de semáforos
-  */
-  if (idSemaforo == -1)
-  {
-    printf("Error: no se ha podido crear el semáforo\n");
-    return 0;
-  }
-  return idSemaforo;
+	int num = 0;
+	num = (rand()%(hasta-desde+1))+desde;
+	return num;
 }
 
-int crearSemaforoConClave(int idClave)
+void obtenerNumerosAleatorios(int desde, int hasta, int tamanio, int* nums)
 {
-  key_t clave;
-  int idSemaforo;
-  clave = crearClave(idClave);
-  idSemaforo = semget(clave, 1, 0600|IPC_CREAT);
-  /*
-   0600: permiso de lectura y escritura para el owner
-   El 0 adlente es para que lo tome como octal
-   El segundo parámetro es la cantidad de semáforos
-  */
-  if (idSemaforo == -1)
-  {
-    printf("Error: no se ha podido crear el semáforo\n");
-    return 0;
-  }
-  return idSemaforo;
-}
-
-void iniciarSemaforo(int idSemaforo, int valor)
-{
-  semctl(idSemaforo, 0, SETVAL, valor);
-}
-
-void eliminarSemaforo(int idSemaforo)
-{
-  semctl(idSemaforo, 0, IPC_RMID);
-}
-
-void levantarSemaforo(int idSemaforo)
-{
-  struct sembuf operacion;
-  /*printf("Levanto Semáforo: %d\n", idSemaforo);*/
-  operacion.sem_num = 0;
-  /* Para levantar el semáforo, lo incremento en 1 */
-  operacion.sem_op = 1;
-  operacion.sem_flg = 0;
-  semop(idSemaforo, &operacion, 1);
-}
-
-void esperarSemaforo(int idSemaforo)
-{
-  struct sembuf operacion;
-  /*printf("Espera Semáforo: %d\n", idSemaforo);*/
-  operacion.sem_num = 0;
-  /* Para esperar el semáforo, lo decremento en 1 */
-  operacion.sem_op = -1;
-  operacion.sem_flg = 0;
-  semop(idSemaforo, &operacion, 1);
+	int i;
+	for (i = 0; i < tamanio; i++)
+	{
+		int valor = (rand()%(hasta-desde+1))+desde;
+		nums[i] = valor;
+	}
 }

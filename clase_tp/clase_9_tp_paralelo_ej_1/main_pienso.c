@@ -10,11 +10,14 @@
 #include "libCommon/memoria.h"
 #include "libCommon/cola.h"
 #include "libCommon/hilos.h"
+#include "libCommon/aleatorio.h"
+#include "libCommon/pantalla.h"
 #include "libCore/defines.h"
 #include "libCore/globals.h"
 #include "libCore/funciones.h"
 #include "libCore/productor.h"
 #include "libCore/consumidor.h"
+#include "libThread/thread_pienso.h"
 
 int main(int argc, char *argv[])
 {
@@ -69,7 +72,7 @@ int main(int argc, char *argv[])
     datosThread[i].nroJugador = i+1;
     datosThread[i].cantidadIntentos = 0;
     datosThread[i].alguienAcerto = 0;
-    if (!crearThread(idHilo, &atributos, datosThread))
+    if (!crearThread(&idHilo[i], &atributos, (void*)&piensoThread, (void*)&datosThread[i]))
     {
       printf("Error: No se pude crear el thread\n");
       return -1;

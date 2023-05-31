@@ -1,79 +1,50 @@
 /*Standard Library*/
-#include "stdio.h"
-#include "sys/ipc.h"
-#include "sys/sem.h"
-/*Headers Library*/
-#include "defines.h"
-#include "claves.h"
+#include "string.h"
 /*File Header*/
-#include "semaforos.h"
+#include "cadenas.h"
 
-int crearSemaforo()
+char letraMayuscula(char valor)
 {
-  key_t clave;
-  int idSemaforo;
-  clave = crearClave(CLAVE_BASE);
-  idSemaforo = semget(clave, 1, 0600|IPC_CREAT);
-  /*
-   0600: permiso de lectura y escritura para el owner
-   El 0 adlente es para que lo tome como octal
-   El segundo parámetro es la cantidad de semáforos
-  */
-  if (idSemaforo == -1)
+  const int delta = 'a' - 'A';
+  /* Devuelve 32 en decimal
+  que es la diferencia entre 'a'
+  que es en ASCII decimal 97
+  y 'A' que es en ASCII decimal 65 */
+  if (valor <= 'z' && valor >= 'a')
   {
-    printf("Error: no se ha podido crear el semáforo\n");
-    return 0;
+    valor -= delta;
   }
-  return idSemaforo;
+  return valor;
 }
 
-int crearSemaforoConClave(int idClave)
+char letraMinuscula(char valor)
 {
-  key_t clave;
-  int idSemaforo;
-  clave = crearClave(idClave);
-  idSemaforo = semget(clave, 1, 0600|IPC_CREAT);
-  /*
-   0600: permiso de lectura y escritura para el owner
-   El 0 adlente es para que lo tome como octal
-   El segundo parámetro es la cantidad de semáforos
-  */
-  if (idSemaforo == -1)
+  const int delta = 'a' - 'A';
+  /* Devuelve 32 en decimal
+  que es la diferencia entre 'a'
+  que es en ASCII decimal 97
+  y 'A' que es en ASCII decimal 65 */
+  if (valor >= 'A' && valor <= 'Z')
   {
-    printf("Error: no se ha podido crear el semáforo\n");
-    return 0;
+    valor += delta;
   }
-  return idSemaforo;
+  return valor;
 }
 
-void iniciarSemaforo(int idSemaforo, int valor)
+void cadenaMayuscula(char* cadena, char* cadenaMayusc)
 {
-  semctl(idSemaforo, 0, SETVAL, valor);
+  int i;
+  for (i = 0; i < strlen(cadena); i++)
+  {
+    cadenaMayusc[i] = letraMayuscula(cadena[i]);
+  }
 }
 
-void eliminarSemaforo(int idSemaforo)
+void cadenaMinuscula(char* cadena, char* cadenaMinusc)
 {
-  semctl(idSemaforo, 0, IPC_RMID);
-}
-
-void levantarSemaforo(int idSemaforo)
-{
-  struct sembuf operacion;
-  /*printf("Levanto Semáforo: %d\n", idSemaforo);*/
-  operacion.sem_num = 0;
-  /* Para levantar el semáforo, lo incremento en 1 */
-  operacion.sem_op = 1;
-  operacion.sem_flg = 0;
-  semop(idSemaforo, &operacion, 1);
-}
-
-void esperarSemaforo(int idSemaforo)
-{
-  struct sembuf operacion;
-  /*printf("Espera Semáforo: %d\n", idSemaforo);*/
-  operacion.sem_num = 0;
-  /* Para esperar el semáforo, lo decremento en 1 */
-  operacion.sem_op = -1;
-  operacion.sem_flg = 0;
-  semop(idSemaforo, &operacion, 1);
+  int i;
+  for (i = 0; i < strlen(cadena); i++)
+  {
+    cadenaMinusc[i] = letraMinuscula(cadena[i]);
+  }
 }

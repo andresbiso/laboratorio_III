@@ -1,9 +1,7 @@
-#ifndef _SEMAFOROS_H
-#define _SEMAFOROS_H
-int crearSemaforo();
-void iniciarSemaforo(int,int);
-void eliminarSemaforo(int);
-void levantarSemaforo(int);
-void esperarSemaforo(int);
-int crearSemaforoConClave(int);
+#ifndef _CADENAS_H
+#define _CADENAS_H
+char letraMayuscula(char);
+char letraMinuscula(char);
+void cadenaMayuscula(char*, char*);
+void cadenaMinuscula(char*, char*);
 #endif

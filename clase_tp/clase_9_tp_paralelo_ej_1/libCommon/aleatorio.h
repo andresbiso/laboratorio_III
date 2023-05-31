@@ -1,9 +1,5 @@
-#ifndef _SEMAFOROS_H
-#define _SEMAFOROS_H
-int crearSemaforo();
-void iniciarSemaforo(int,int);
-void eliminarSemaforo(int);
-void levantarSemaforo(int);
-void esperarSemaforo(int);
-int crearSemaforoConClave(int);
+#ifndef _ALEATORIO_H
+#define _ALEATORIO_H
+int obtenerNumeroAleatorio(int, int);
+void obtenerNumerosAleatorios(int, int, int, int*);
 #endif

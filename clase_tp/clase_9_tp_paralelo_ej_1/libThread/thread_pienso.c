@@ -1,104 +1,40 @@
 /*Standard Library*/
 #include "stdio.h"
 #include "stdlib.h"
-#include "string.h"
 #include "unistd.h"
-#include "time.h"
+#include "string.h"
 #include "pthread.h"
 /*Headers Library*/
-#include "defines.h"
-#include "globals.h"
-#include "semaforos.h"
-#include "memoria.h"
-#include "cola.h"
-#include "hilos.h"
-#include "funciones.h"
-#include "productor.h"
-#include "consumidor.h"
+#include "libCore/defines.h"
+#include "libCore/globals.h"
+#include "libCommon/aleatorio.h"
+#include "libCommon/hilos.h"
+/*File Header*/
+#include "thread_pienso.h"
 
-
-int main(int argc, char *argv[])
+void* piensoThread(void* parametro)
 {
- /* int idMemoriaInicial;
-  inicial* memoriaInicial;*/
-  pthread_t* idHilo;
-  pthread_attr_t atributos;
-  int i;
-  int cantidadJugadores;
-  int localPiensoUnNumero;
+  int numeroPensadoJugador;
+  int intervalo;
   jugador* datosThread;
-  int alguienAcerto;
-
-  if (argc != 2)
-  {
-    printf("Uso: ./uno [cantidad_jugadores]\n");
-    return -1;
-  }
-
- /* memoriaInicial = 0;
-  idMemoriaInicial = 0;*/
-  idHilo = 0;
-  i = 0;
-  localPiensoUnNumero = 0;
-  alguienAcerto = 0;
-  cantidadJugadores = atoi(argv[1]);
-
-  if (cantidadJugadores <= 0)
-  {
-    printf("cantidad_jugadores debe ser mayor o igual a 1\n");
-    return -1;
-  }
-
-  srand(time(0));
-
-  iniciarMutex(&mutex);
-  iniciarAttr(&atributos);
-
-  /*memoriaInicial = (inicial*)crearMemoria(sizeof(inicial)*CANTIDAD, &idMemoriaInicial, CLAVE_BASE_INI);
-  iniciarMemoriaInicial(memoriaInicial);*/
-
-  limpiarPantalla();
-  printf("Pensando número...\n");
-  localPiensoUnNumero = obtenerNumeroAleatorio(NUM_MIN, NUM_MAX);
-  printf("Número pensado %d\n", localPiensoUnNumero);
-
-  idHilo = (pthread_t*)malloc(sizeof(pthread_t)*cantidadJugadores);
-  datosThread = (jugador*)malloc(sizeof(jugador)*cantidadJugadores);
-
-  for (i = 0; i < cantidadJugadores; i++)
-  {
-    datosThread[i].nroJugador = i+1;
-    datosThread[i].cantidadIntentos = 0;
-    datosThread[i].alguienAcerto = 0;
-    if (!crearThread(idHilo, &atributos, datosThread))
-    {
-      printf("Error: No se pude crear el thread\n");
-      return -1;
-    }
-  }
-
+  numeroPensadoJugador = 0;
+  intervalo = 0;
+  datosThread = (jugador*)parametro;
   while(1)
   {
     lockMutex(&mutex);
-    for (i = 0; i < cantidadJugadores; i++)
+    printf("Jugador %d: Pensando número...\n", datosThread->nroJugador);
+    numeroPensadoJugador = obtenerNumeroAleatorio(NUM_MIN, NUM_MAX);
+    printf("Jugador %d: Número pensado %d\n",  datosThread->nroJugador, numeroPensadoJugador);
+    datosThread->cantidadIntentos++;
+    if (numeroPensadoJugador == numeroPensadoJugador)
     {
-      if (datosThread[i].alguienAcerto > 0)
-      {
-        printf("Ganó el jugador %d\n", datosThread[i].alguienAcerto);
-        break;
-      }
+       datosThread->alguienAcerto = datosThread->nroJugador;
+       break;
     }
+    intervalo = obtenerNumeroAleatorio(INTERVALO_JUGADOR_MS_MIN, INTERVALO_JUGADOR_MS_MAX);
     unlockMutex(&mutex);
-    usleep(INTERVALO_PIENSO_MS * 1000);
+    usleep(intervalo * 1000);
   }
-
-  for (i = 0; i < cantidadJugadores; i++)
-  {
-    joinThread(&idHilo[i]);
-    printf("Jugador %d intentos %d\n", i, datosThread[i].cantidadIntentos);
-  }
-  free(idHilo);
-  free(datosThread);
-  /*liberarMemoria(idMemoriaInicial, (char*)memoriaInicial);*/
   return 0;
 }
