@@ -31,6 +31,12 @@ void joinThread(pthread_t* hilo)
 /*Ejemplo uso: joinThreadValorSalida(&idHilo, (void*)&valorDevuelto)*/
 /*char* valorDevuelto; valorDevuelto = 0;*/
 /*No responde bien al free(valorDevuelto) luego del pthread_exit()*/
+
+/*Alternativa valor de retorno:*/
+/*Permite retornar un valor*/
+/*En vez de return utilizamos la siguiente función:*/
+/*pthread_exit((void*)0);*/
+/*Donde esta el 0 podemos indicar cualquier valor de salida*/
 void joinThreadValorSalida(pthread_t* hilo, char* valorDevuelto)
 {
     pthread_join(*hilo, (void**)valorDevuelto);
@@ -71,10 +77,6 @@ void* funcionThread(void* parametro)
     usleep(intervalo * 1000);
   }
   return 0;
-  
-  /*Alternativa:*/
-  /*Permite retornar un valor*/
-  /*pthread_exit((void*)0);*/
 }
 
 int crearThread(pthread_t* hilo, pthread_attr_t* atributos, void* arg)
