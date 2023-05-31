@@ -3,6 +3,7 @@
 #include "pthread.h"
 #include "globals.h"
 void iniciarMutex(pthread_mutex_t*);
+void destruirMutex(pthread_mutex_t*);
 void iniciarAttr(pthread_attr_t*);
 void joinThread(pthread_t*);
 void joinThreadValorSalida(pthread_t*,char*);

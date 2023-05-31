@@ -47,6 +47,11 @@ void iniciaSemaforo(int idSemaforo, int valor)
   semctl(idSemaforo, 0, SETVAL, valor);
 }
 
+void eliminaSemaforo(int idSemaforo)
+{
+  semctl(semid, 0, IPC_RMID);
+}
+
 void levantaSemaforo(int idSemaforo)
 {
   struct sembuf operacion;

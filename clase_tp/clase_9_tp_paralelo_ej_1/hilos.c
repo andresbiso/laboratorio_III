@@ -12,6 +12,11 @@ void iniciarMutex(pthread_mutex_t* mutex)
   pthread_mutex_init(mutex, 0);
 }
 
+void destruirMutex(pthread_mutex_t* mutex)
+{
+  pthread_mutex_destroy(mutex);
+}
+
 void iniciarAttr(pthread_attr_t* atributos)
 {
   pthread_attr_init(atributos);
