@@ -6,15 +6,16 @@
 #include "time.h"
 #include "pthread.h"
 /*Headers Library*/
-#include "libCommon/semaforos.h"
-#include "libCommon/memoria.h"
-#include "libCommon/cola.h"
-#include "libCommon/hilos.h"
-#include "libCore/defines.h"
-#include "libCore/globals.h"
-#include "libCore/funciones.h"
-#include "libCore/productor.h"
-#include "libCore/consumidor.h"
+#include "defines.h"
+#include "globals.h"
+#include "semaforos.h"
+#include "memoria.h"
+#include "cola.h"
+#include "hilos.h"
+#include "funciones.h"
+#include "productor.h"
+#include "consumidor.h"
+
 
 int main(int argc, char *argv[])
 {

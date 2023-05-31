@@ -5,9 +5,9 @@
 #include "string.h"
 #include "pthread.h"
 /*Headers Library*/
-#include "defines.h"
-#include "globals.h"
-#include "funciones.h"
+#include "libCore/defines.h"
+#include "libCore/globals.h"
+#include "libCore/funciones.h"
 /*File Header*/
 #include "hilos.h"
 

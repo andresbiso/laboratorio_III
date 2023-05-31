@@ -2,7 +2,7 @@
 #include "stdio.h"
 #include "sys/ipc.h"
 /*Headers Library*/
-#include "defines.h"
+#include "libCore/defines.h"
 /*File Header*/
 #include "claves.h"
 

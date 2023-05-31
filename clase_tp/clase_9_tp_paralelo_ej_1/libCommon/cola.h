@@ -1,7 +1,7 @@
 #ifndef _COLA_H
 #define _COLA_H
 /*Headers Library*/
-#include "defines.h"
+#include "libCore/defines.h"
 struct tipo_mensaje
 {
   long longDest; /*Destinatario*/

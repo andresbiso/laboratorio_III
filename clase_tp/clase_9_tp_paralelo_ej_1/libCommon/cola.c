@@ -4,7 +4,7 @@
 #include "sys/ipc.h"
 #include "sys/msg.h"
 /*Headers Library*/
-#include "defines.h"
+#include "libCore/defines.h"
 #include "claves.h"
 /*File Header*/
 #include "cola.h"

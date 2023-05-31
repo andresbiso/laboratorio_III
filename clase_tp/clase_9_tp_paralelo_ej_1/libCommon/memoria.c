@@ -3,7 +3,7 @@
 #include "sys/shm.h"
 #include "sys/ipc.h"
 /*Headers Library*/
-#include "defines.h"
+#include "libCore/defines.h"
 #include "claves.h"
 /*File Header*/
 #include "memoria.h"

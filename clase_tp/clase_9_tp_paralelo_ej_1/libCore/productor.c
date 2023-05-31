@@ -7,7 +7,6 @@
 #include "defines.h"
 #include "globals.h"
 #include "funciones.h"
-#include "semaforos.h"
 /*File Header*/
 #include "productor.h"
 

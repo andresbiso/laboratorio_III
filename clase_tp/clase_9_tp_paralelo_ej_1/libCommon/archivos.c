@@ -3,7 +3,7 @@
 #include "stdlib.h"
 #include "string.h"
 /*Headers Library*/
-#include "defines.h"
+#include "libCore/defines.h"
 /*File Header*/
 #include "archivos.h"
 
