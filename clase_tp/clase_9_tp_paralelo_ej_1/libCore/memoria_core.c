@@ -1,8 +1,8 @@
 /*Standard Library*/
 #include "stdio.h"
 /*Headers Library*/
-#include "defines.h"
 #include "libCommon/pantalla.h"
+#include "defines.h"
 #include "globals.h"
 /*File Header*/
 #include "memoria_core.h"

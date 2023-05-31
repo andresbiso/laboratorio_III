@@ -72,7 +72,7 @@ int main(int argc, char *argv[])
     datosThread[i].nroJugador = i+1;
     datosThread[i].cantidadIntentos = 0;
     datosThread[i].alguienAcerto = 0;
-    if (!crearThread(&idHilo[i], &atributos, (void*)&piensoThread, (void*)&datosThread[i]))
+    if (!crearThread(&idHilo[i], &atributos, piensoThread, (void*)&datosThread[i]))
     {
       printf("Error: No se pude crear el thread\n");
       return -1;

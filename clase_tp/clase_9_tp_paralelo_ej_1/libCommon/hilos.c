@@ -48,7 +48,7 @@ void unlockMutex(pthread_mutex_t* mutex)
   pthread_mutex_unlock(mutex);
 }
 
-int crearThread(pthread_t* hilo, pthread_attr_t* atributos, void* funcionThread, void* arg)
+int crearThread(pthread_t* hilo, pthread_attr_t* atributos, void* (*funcionThread)(void*), void* arg)
 {
   return pthread_create(hilo, atributos, funcionThread, arg) == 0;
 }
