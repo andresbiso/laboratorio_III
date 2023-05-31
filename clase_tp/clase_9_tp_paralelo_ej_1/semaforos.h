@@ -1,9 +1,9 @@
 #ifndef _SEMAFOROS_H
 #define _SEMAFOROS_H
-int creoSemaforo();
-void iniciaSemaforo(int,int);
-void eliminaSemaforo(int);
-void levantaSemaforo(int);
-void esperaSemaforo(int);
-int creoSemaforoConClave(int);
+int crearSemaforo();
+void iniciarSemaforo(int,int);
+void eliminarSemaforo(int);
+void levantarSemaforo(int);
+void esperarSemaforo(int);
+int crearSemaforoConClave(int);
 #endif

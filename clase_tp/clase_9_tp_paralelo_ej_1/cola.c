@@ -9,9 +9,9 @@
 /*File Header*/
 #include "cola.h"
 
-int creoIdColaMensajes(int clave)
+int crearColaMensajes(int clave)
 {
-  int idColaMensajes = msgget(creoClave(clave), 0600 | IPC_CREAT);
+  int idColaMensajes = msgget(crearClave(clave), 0600 | IPC_CREAT);
   if (idColaMensajes == -1)
   {
     printf("Error: no se ha podido obtener identificador para cola de mensajes\n");

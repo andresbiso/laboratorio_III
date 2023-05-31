@@ -2,5 +2,5 @@
 #define _CLAVES_H
 /*Standard Library*/
 #include "sys/ipc.h"
-key_t creoClave(int);
+key_t crearClave(int);
 #endif

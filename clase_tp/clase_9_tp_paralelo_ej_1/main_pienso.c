@@ -54,7 +54,7 @@ int main(int argc, char *argv[])
   iniciarMutex(&mutex);
   iniciarAttr(&atributos);
 
-  /*memoriaInicial = (inicial*)creoMemoria(sizeof(inicial)*CANTIDAD, &idMemoriaInicial, CLAVE_BASE_INI);
+  /*memoriaInicial = (inicial*)crearMemoria(sizeof(inicial)*CANTIDAD, &idMemoriaInicial, CLAVE_BASE_INI);
   iniciarMemoriaInicial(memoriaInicial);*/
 
   limpiarPantalla();
@@ -99,6 +99,6 @@ int main(int argc, char *argv[])
   }
   free(idHilo);
   free(datosThread);
-  /*liberoMemoria(idMemoriaInicial, (char*)memoriaInicial);*/
+  /*liberarMemoria(idMemoriaInicial, (char*)memoriaInicial);*/
   return 0;
 }

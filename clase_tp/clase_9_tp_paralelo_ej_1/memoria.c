@@ -9,12 +9,12 @@
 #include "memoria.h"
 
 
-void* creoMemoria(int size, int* extIdMemoria, int claveBase)
+void* crearMemoria(int size, int* extIdMemoria, int claveBase)
 {
   void* ptrMemoria;
   int idMemoria;
   
-  idMemoria = shmget(creoClave(claveBase), size, 0777 | IPC_CREAT);
+  idMemoria = shmget(crearClave(claveBase), size, 0777 | IPC_CREAT);
   /*0777: permisos de rwx para owner/group/other*/
   /*IPC_CREAT: crea la memoria si no existe*/
   if (idMemoria == -1)
@@ -33,7 +33,7 @@ void* creoMemoria(int size, int* extIdMemoria, int claveBase)
   return ptrMemoria;
 }
 
-void liberoMemoria(int idMemoria, char* memoria)
+void liberarMemoria(int idMemoria, char* memoria)
 {
   shmdt(memoria);
   shmctl(idMemoria, IPC_RMID, (struct shmid_ds*) 0);

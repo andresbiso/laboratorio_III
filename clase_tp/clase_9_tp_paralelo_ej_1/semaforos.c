@@ -8,11 +8,11 @@
 /*File Header*/
 #include "semaforos.h"
 
-int creoSemaforo()
+int crearSemaforo()
 {
   key_t clave;
   int idSemaforo;
-  clave = creoClave(CLAVE_BASE);
+  clave = crearClave(CLAVE_BASE);
   idSemaforo = semget(clave, 1, 0600|IPC_CREAT);
   /*
    0600: permiso de lectura y escritura para el owner
@@ -27,11 +27,11 @@ int creoSemaforo()
   return idSemaforo;
 }
 
-int creoSemaforoConClave(int idClave)
+int crearSemaforoConClave(int idClave)
 {
   key_t clave;
   int idSemaforo;
-  clave = creoClave(idClave);
+  clave = crearClave(idClave);
   idSemaforo = semget(clave, 1, 0600|IPC_CREAT);
   /*
    0600: permiso de lectura y escritura para el owner
@@ -46,17 +46,17 @@ int creoSemaforoConClave(int idClave)
   return idSemaforo;
 }
 
-void iniciaSemaforo(int idSemaforo, int valor)
+void iniciarSemaforo(int idSemaforo, int valor)
 {
   semctl(idSemaforo, 0, SETVAL, valor);
 }
 
-void eliminaSemaforo(int idSemaforo)
+void eliminarSemaforo(int idSemaforo)
 {
   semctl(idSemaforo, 0, IPC_RMID);
 }
 
-void levantaSemaforo(int idSemaforo)
+void levantarSemaforo(int idSemaforo)
 {
   struct sembuf operacion;
   /*printf("Levanto Semáforo: %d\n", idSemaforo);*/
@@ -67,7 +67,7 @@ void levantaSemaforo(int idSemaforo)
   semop(idSemaforo, &operacion, 1);
 }
 
-void esperaSemaforo(int idSemaforo)
+void esperarSemaforo(int idSemaforo)
 {
   struct sembuf operacion;
   /*printf("Espera Semáforo: %d\n", idSemaforo);*/
