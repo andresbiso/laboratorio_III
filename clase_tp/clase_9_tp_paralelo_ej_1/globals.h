@@ -1,6 +1,5 @@
 #ifndef _GLOBALS_H
 #define _GLOBALS_H
-#include "defines.h"
 struct tipo_inicial
 {
   int inicializado;

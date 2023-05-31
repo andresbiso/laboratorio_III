@@ -1,11 +1,15 @@
+/*Standard Library*/
 #include "stdio.h"
 #include "stdlib.h"
 #include "unistd.h"
 #include "string.h"
 #include "pthread.h"
+/*Headers Library*/
 #include "defines.h"
 #include "globals.h"
 #include "funciones.h"
+/*File Header*/
+#include "hilos.h"
 
 void iniciarMutex(pthread_mutex_t* mutex)
 {

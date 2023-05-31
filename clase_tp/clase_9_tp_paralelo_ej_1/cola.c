@@ -1,9 +1,12 @@
-#include "sys/msg.h"
-#include "sys/ipc.h"
+/*Standard Library*/
 #include "stdio.h"
 #include "string.h"
+#include "sys/ipc.h"
+#include "sys/msg.h"
+/*Headers Library*/
 #include "defines.h"
 #include "claves.h"
+/*File Header*/
 #include "cola.h"
 
 int creoIdColaMensajes(int clave)

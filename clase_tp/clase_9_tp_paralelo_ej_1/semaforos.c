@@ -1,8 +1,12 @@
+/*Standard Library*/
+#include "stdio.h"
 #include "sys/ipc.h"
 #include "sys/sem.h"
-#include "stdio.h"
+/*Headers Library*/
 #include "defines.h"
 #include "claves.h"
+/*File Header*/
+#include "semaforos.h"
 
 int creoSemaforo()
 {

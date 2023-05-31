@@ -1,11 +1,15 @@
+/*Standard Library*/
 #include "stdio.h"
 #include "stdlib.h"
 #include "string.h"
 #include "unistd.h"
+/*Headers Library*/
 #include "defines.h"
 #include "globals.h"
 #include "funciones.h"
 #include "semaforos.h"
+/*File Header*/
+#include "productor.h"
 
 void iniciarMemoriaInicial(inicial* memoria)
 {

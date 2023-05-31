@@ -1,9 +1,11 @@
+/*Standard Library*/
 #include "stdio.h"
 #include "stdlib.h"
 #include "string.h"
 #include "unistd.h"
 #include "time.h"
 #include "pthread.h"
+/*Headers Library*/
 #include "defines.h"
 #include "globals.h"
 #include "semaforos.h"
@@ -13,6 +15,7 @@
 #include "funciones.h"
 #include "productor.h"
 #include "consumidor.h"
+
 
 int main(int argc, char *argv[])
 {

@@ -1,6 +1,9 @@
+/*Standard Library*/
 #include "stdio.h"
 #include "sys/ipc.h"
+/*Headers Library*/
 #include "defines.h"
+/*File Header*/
 #include "claves.h"
 
 key_t creoClave(int idClave)

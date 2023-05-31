@@ -1,9 +1,13 @@
+/*Standard Library*/
 #include "stdio.h"
 #include "stdlib.h"
 #include "string.h"
+/*Headers Library*/
 #include "defines.h"
-#include "gestionararchivos.h"
+/*File Header*/
+#include "archivos.h"
 
+/*Variable global*/
 FILE* cfptr;
 
 int abrirArchivo(char* ruta, char* modo)

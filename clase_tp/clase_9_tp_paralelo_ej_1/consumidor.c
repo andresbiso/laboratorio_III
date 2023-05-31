@@ -1,10 +1,14 @@
+/*Standard Library*/
 #include "stdio.h"
 #include "stdlib.h"
 #include "string.h"
 #include "unistd.h"
+/*Headers Library*/
 #include "defines.h"
 #include "globals.h"
 #include "funciones.h"
+/*File Header*/
+#include "consumidor.h"
 
 void verificarMemoriaInicial(inicial* memoria)
 {

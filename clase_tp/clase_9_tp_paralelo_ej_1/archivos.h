@@ -1,5 +1,5 @@
-#ifndef _GESTIONAR_ARCHIVOS_H
-#define _GESTIONAR_ARCHIVOS_H
+#ifndef _ARCHIVOS_H
+#define _ARCHIVOS_H
 int abrirArchivo(char*, char*);
 void escribirArchivo(char*);
 int leerStringArchivo(char*);

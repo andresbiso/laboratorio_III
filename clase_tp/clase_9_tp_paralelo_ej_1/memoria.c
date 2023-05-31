@@ -1,8 +1,13 @@
+/*Standard Library*/
+#include "stdio.h"
 #include "sys/shm.h"
 #include "sys/ipc.h"
-#include "stdio.h"
+/*Headers Library*/
 #include "defines.h"
 #include "claves.h"
+/*File Header*/
+#include "memoria.h"
+
 
 void* creoMemoria(int size, int* extIdMemoria, int claveBase)
 {
