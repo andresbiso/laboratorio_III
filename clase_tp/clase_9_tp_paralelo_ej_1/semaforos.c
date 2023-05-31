@@ -53,7 +53,7 @@ void iniciaSemaforo(int idSemaforo, int valor)
 
 void eliminaSemaforo(int idSemaforo)
 {
-  semctl(semid, 0, IPC_RMID);
+  semctl(idSemaforo, 0, IPC_RMID);
 }
 
 void levantaSemaforo(int idSemaforo)
