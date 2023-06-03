@@ -8,6 +8,7 @@
 /*Headers Library*/
 #include "libCommon/semaforos.h"
 #include "libCommon/memoria.h"
+#include "libCommon/memoria_ini.h"
 #include "libCommon/cola.h"
 #include "libCommon/hilos.h"
 #include "libCommon/aleatorio.h"
@@ -17,7 +18,6 @@
 #include "libCore/funciones.h"
 #include "libCore/productor.h"
 #include "libCore/consumidor.h"
-#include "libCore/memoria_core.h"
 #include "libThread/thread_jugadores.h"
 
 int main(int argc, char *argv[])
@@ -29,6 +29,8 @@ int main(int argc, char *argv[])
   pthread_t* idHilo;
   pthread_attr_t atributos;
   jugador* datosThread;
+  int cantidadJugadores;
+  int i;
 
   if (argc != 1)
   {
@@ -40,6 +42,7 @@ int main(int argc, char *argv[])
   idMemoriaInicial = 0;
   idSemaforo = 0;
   idHilo = 0;
+  cantidadJugadores = CANTIDAD_JUGADORES;
 
   srand(time(0));
 
@@ -54,15 +57,15 @@ int main(int argc, char *argv[])
 
   limpiarPantalla();
 
-  idHilo = (pthread_t*)malloc(sizeof(pthread_t)*2);
-  datosThread = (jugador*)malloc(sizeof(jugador)*2);
+  idHilo = (pthread_t*)malloc(sizeof(pthread_t)*cantidadJugadores);
+  datosThread = (jugador*)malloc(sizeof(jugador)*cantidadJugadores);
 
-  datosThread[0].nroJugador = MSG_CONEJO;
-  datosThread[0].cantidadPasos = 0;
-  datosThread[0].intervalo = INTERVALO_PASO_CONEJO_MS;
-  datosThread[1].nroJugador = MSG_TORTUGA;
-  datosThread[1].cantidadPasos = 0;
-  datosThread[1].intervalo = INTERVALO_PASO_TORTUGA_MS;
+  for (i = 0; i < cantidadJugadores; i++)
+  {
+    datosThread[0].nroJugador = MSG_CONEJO;
+    datosThread[0].cantidadPasos = 0;
+    datosThread[0].idColaMensajes = idColaMensajes;
+  }
   if (!crearThread(&idHilo[0], &atributos, jugadoresThread, (void*)&datosThread[0]))
   {
     printf("Error: No se pude crear el thread\n");

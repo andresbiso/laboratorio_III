@@ -1,5 +1,7 @@
 #ifndef _SEMAFOROS_H
 #define _SEMAFOROS_H
+#define ROJO 0
+#define VERDE 1
 int crearSemaforo();
 void iniciarSemaforo(int,int);
 void eliminarSemaforo(int);

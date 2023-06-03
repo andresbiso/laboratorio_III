@@ -8,6 +8,7 @@
 /*Headers Library*/
 #include "libCommon/semaforos.h"
 #include "libCommon/memoria.h"
+#include "libCommon/memoria_ini.h"
 #include "libCommon/cola.h"
 #include "libCommon/hilos.h"
 #include "libCommon/aleatorio.h"
@@ -17,7 +18,6 @@
 #include "libCore/funciones.h"
 #include "libCore/productor.h"
 #include "libCore/consumidor.h"
-#include "libCore/memoria_core.h"
 #include "libThread/thread_carrera.h"
 
 int main(int argc, char *argv[])
@@ -55,16 +55,13 @@ int main(int argc, char *argv[])
 
   limpiarPantalla();
 
-  idHilo = (pthread_t*)malloc(sizeof(pthread_t));
-
-  if (!crearThread(idHilo, &atributos, carreraThread, 0))
+  if (!crearThread(&idHilo, &atributos, carreraThread, 0))
   {
     printf("Error: No se pude crear el thread\n");
     return -1;
   }
 
-  joinThread(idHilo);
-  free(idHilo);
+  joinThread(&idHilo);
   liberarMemoria(idMemoriaInicial, (char*)memoriaInicial);
   liberarColaMensajes(idColaMensajes);
   eliminarSemaforo(idSemaforo);

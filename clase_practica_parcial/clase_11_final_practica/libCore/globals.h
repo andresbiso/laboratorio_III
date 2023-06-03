@@ -2,11 +2,6 @@
 #define _GLOBALS_H
 /*Standard Library*/
 #include "pthread.h"
-struct tipo_inicial
-{
-  int inicializado;
-};
-typedef struct tipo_inicial inicial;
 struct tipo_jugador
 {
   int nroJugador;
@@ -17,9 +12,8 @@ typedef struct tipo_jugador jugador;
 enum destinos
 {
   MSG_NADIE, /*0*/
-  MSG_CONEJO,
-  MSG_TORTUGA,
-  MSG_CARRERA
+  MSG_CARRERA,
+  MSG_JUGADOR
 };
 enum eventos
 {

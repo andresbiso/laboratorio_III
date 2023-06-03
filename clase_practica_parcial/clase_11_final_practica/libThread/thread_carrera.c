@@ -15,13 +15,11 @@
 
 void* carreraThread(void* parametro)
 {
-  int idColaMensajes;
   int pasosConejo;
   int pasosTortuga;
   int pasos;
   mensaje msg;
 
-  idColaMensajes = crearColaMensajes(CLAVE_BASE);
   pasos = 0;
   pasosConejo = 0;
   pasosTortuga = 0;

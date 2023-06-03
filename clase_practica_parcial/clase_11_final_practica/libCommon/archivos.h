@@ -1,5 +1,6 @@
 #ifndef _ARCHIVOS_H
 #define _ARCHIVOS_H
+#define LARGO_LINEA 100
 int abrirArchivo(char*, char*);
 void escribirArchivo(char*);
 int leerStringArchivo(char*);

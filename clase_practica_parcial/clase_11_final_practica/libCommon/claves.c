@@ -1,8 +1,6 @@
 /*Standard Library*/
 #include "stdio.h"
 #include "sys/ipc.h"
-/*Headers Library*/
-#include "libCore/defines.h"
 /*File Header*/
 #include "claves.h"
 

@@ -3,7 +3,6 @@
 #include "sys/ipc.h"
 #include "sys/sem.h"
 /*Headers Library*/
-#include "libCore/defines.h"
 #include "claves.h"
 /*File Header*/
 #include "semaforos.h"

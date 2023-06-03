@@ -1,7 +1,6 @@
 #ifndef _COLA_H
 #define _COLA_H
-/*Headers Library*/
-#include "libCore/defines.h"
+#define LARGO_MENSAJE 1024
 struct tipo_mensaje
 {
   long longDest; /*Destinatario*/
@@ -10,7 +9,8 @@ struct tipo_mensaje
   char charMensaje[LARGO_MENSAJE]; /*Mensaje*/
 };
 typedef struct tipo_mensaje mensaje;
-int crearColaMensajes(int);
+int crearColaMensajes();
+int crearColaMensajesConClave(int);
 int borrarMensajes(int);
 int recibirMensaje(int, long, mensaje*);
 int enviarMensaje(int, long, int, int, char*);

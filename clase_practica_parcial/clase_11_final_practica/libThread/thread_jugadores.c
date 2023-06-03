@@ -15,13 +15,11 @@
 
 void* jugadoresThread(void* parametro)
 {
-  int idColaMensajes;
   int pasosAleatorio;
   jugador* datosThread;
   mensaje msg;
   char* pasosChar;
   
-  idColaMensajes = crearColaMensajes(CLAVE_BASE);
   datosThread = (jugador*)parametro;
   msg.longDest = MSG_NADIE;
   msg.intRte = MSG_NADIE;

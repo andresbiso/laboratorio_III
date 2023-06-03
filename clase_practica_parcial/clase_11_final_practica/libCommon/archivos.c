@@ -2,8 +2,6 @@
 #include "stdio.h"
 #include "stdlib.h"
 #include "string.h"
-/*Headers Library*/
-#include "libCore/defines.h"
 /*File Header*/
 #include "archivos.h"
 
