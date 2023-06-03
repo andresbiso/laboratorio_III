@@ -7,25 +7,6 @@
 /*File Header*/
 #include "semaforos.h"
 
-int crearSemaforo()
-{
-  key_t clave;
-  int idSemaforo;
-  clave = crearClave(CLAVE_BASE);
-  idSemaforo = semget(clave, 1, 0600|IPC_CREAT);
-  /*
-   0600: permiso de lectura y escritura para el owner
-   El 0 adlente es para que lo tome como octal
-   El segundo parámetro es la cantidad de semáforos
-  */
-  if (idSemaforo == -1)
-  {
-    printf("Error: no se ha podido crear el semáforo\n");
-    return 0;
-  }
-  return idSemaforo;
-}
-
 int crearSemaforoConClave(int idClave)
 {
   key_t clave;
@@ -43,6 +24,11 @@ int crearSemaforoConClave(int idClave)
     return 0;
   }
   return idSemaforo;
+}
+
+int crearSemaforo()
+{
+  return crearSemaforoConClave(CLAVE_BASE);
 }
 
 void iniciarSemaforo(int idSemaforo, int valor)

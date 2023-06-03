@@ -8,16 +8,6 @@
 /*File Header*/
 #include "cola.h"
 
-int crearColaMensajes()
-{
-  int idColaMensajes = msgget(crearClave(CLAVE_BASE), 0600 | IPC_CREAT);
-  if (idColaMensajes == -1)
-  {
-    printf("Error: no se ha podido obtener identificador para cola de mensajes\n");
-  }
-  return idColaMensajes;
-}
-
 int crearColaMensajesConClave(int clave)
 {
   int idColaMensajes = msgget(crearClave(clave), 0600 | IPC_CREAT);
@@ -26,6 +16,11 @@ int crearColaMensajesConClave(int clave)
     printf("Error: no se ha podido obtener identificador para cola de mensajes\n");
   }
   return idColaMensajes;
+}
+
+int crearColaMensajes()
+{
+  return crearColaMensajesConClave(CLAVE_BASE);
 }
 
 int borrarMensajes(int idColaMensajes)

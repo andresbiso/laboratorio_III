@@ -4,7 +4,7 @@
 /*File Header*/
 #include "claves.h"
 
-key_t crearClave(int idClave)
+key_t crearClaveConId(int idClave)
 {
   /* Igual que en cualquier recurso compartido (memoria compartida,
    semáforos o colas) se obtiene una clave a partir de un fichero
@@ -20,4 +20,9 @@ key_t crearClave(int idClave)
     return 0;
   }
   return clave;
+}
+
+key_t crearClave()
+{
+  return crearClaveConId(CLAVE_BASE);
 }

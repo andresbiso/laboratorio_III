@@ -48,9 +48,9 @@ int main(int argc, char *argv[])
 
   idSemaforo = crearSemaforo();
   iniciarSemaforo(idSemaforo, VERDE);
-  idColaMensajes = crearColaMensajes(CLAVE_BASE);
+  idColaMensajes = crearColaMensajes();
   borrarMensajes(idColaMensajes);
-  memoriaInicial = (inicial*)crearMemoria(sizeof(inicial), &idMemoriaInicial, CLAVE_BASE_INI);
+  memoriaInicial = crearMemoriaInicial(&idMemoriaInicial);
   configurarMemoriaInicial(memoriaInicial);
 
   limpiarPantalla();

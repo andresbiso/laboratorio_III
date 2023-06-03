@@ -7,7 +7,7 @@
 
 inicial* crearMemoriaInicial(int* extIdMemoria)
 {
-  return (inicial*)crearMemoriaConClave(sizeof(inicial), &idMemoriaInicial, CLAVE_BASE_INI)
+  return (inicial*)crearMemoriaConClave(sizeof(inicial), idMemoriaInicial, CLAVE_BASE_INI)
 }
 
 void configurarMemoriaInicial(inicial* memoria)
@@ -22,6 +22,4 @@ void verificarMemoriaInicial(inicial* memoria, char* nombrePrograma)
     printf("Atención: Recuerde levantar el programa inicial \"%d\". Presione \"enter\" para continuar...\n", nombrePrograma);
     getchar();
   }
-
-  limpiarPantalla();
 }
