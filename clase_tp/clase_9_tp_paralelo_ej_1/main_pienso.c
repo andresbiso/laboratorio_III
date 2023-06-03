@@ -72,6 +72,7 @@ int main(int argc, char *argv[])
     datosThread[i].nroJugador = i+1;
     datosThread[i].cantidadIntentos = 0;
     datosThread[i].alguienAcerto = 0;
+    datosThread[i].numeroPensado = localPiensoUnNumero;
     if (!crearThread(&idHilo[i], &atributos, piensoThread, (void*)&datosThread[i]))
     {
       printf("Error: No se pude crear el thread\n");
@@ -79,25 +80,10 @@ int main(int argc, char *argv[])
     }
   }
 
-  while(1)
-  {
-    lockMutex(&mutex);
-    for (i = 0; i < cantidadJugadores; i++)
-    {
-      if (datosThread[i].alguienAcerto > 0)
-      {
-        printf("Ganó el jugador %d\n", datosThread[i].alguienAcerto);
-        break;
-      }
-    }
-    unlockMutex(&mutex);
-    usleep(INTERVALO_PIENSO_MS * 1000);
-  }
-
   for (i = 0; i < cantidadJugadores; i++)
   {
     joinThread(&idHilo[i]);
-    printf("Jugador %d intentos %d\n", i, datosThread[i].cantidadIntentos);
+    printf("Jugador %d intentos %d\n", i + 1, datosThread[i].cantidadIntentos);
   }
   free(idHilo);
   free(datosThread);

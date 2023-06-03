@@ -17,6 +17,6 @@
 #define LARGO_LINEA 100
 #define LARGO_MENSAJE 1024
 #define NUM_MIN 1
-#define NUM_MAX 99
+#define NUM_MAX 10
 #define LARGO_NOMBRE 100
 #endif

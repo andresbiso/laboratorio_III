@@ -23,14 +23,18 @@ void* piensoThread(void* parametro)
   while(1)
   {
     lockMutex(&mutex);
-    printf("Jugador %d: Pensando número...\n", datosThread->nroJugador);
+    printf("Jugador %d: Pensando número... (Intento Nro %d)\n", datosThread->nroJugador, datosThread->cantidadIntentos);
+    /* Forzamos una espera para que se modifique el número aleatorio */
+    sleep(1);
     numeroPensadoJugador = obtenerNumeroAleatorio(NUM_MIN, NUM_MAX);
     printf("Jugador %d: Número pensado %d\n",  datosThread->nroJugador, numeroPensadoJugador);
     datosThread->cantidadIntentos++;
-    if (numeroPensadoJugador == numeroPensadoJugador)
+    if (numeroPensadoJugador == datosThread->numeroPensado)
     {
        datosThread->alguienAcerto = datosThread->nroJugador;
-       break;
+       printf("Ganó el jugador %d\n", datosThread->alguienAcerto);
+       unlockMutex(&mutex);
+       return 0;
     }
     intervalo = obtenerNumeroAleatorio(INTERVALO_JUGADOR_MS_MIN, INTERVALO_JUGADOR_MS_MAX);
     unlockMutex(&mutex);

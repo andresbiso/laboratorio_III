@@ -10,6 +10,7 @@ typedef struct tipo_inicial inicial;
 struct tipo_jugador
 {
   int nroJugador;
+  int numeroPensado;
   int cantidadIntentos;
   int alguienAcerto;
 };
