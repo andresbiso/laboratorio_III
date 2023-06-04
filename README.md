@@ -12,3 +12,7 @@
 
 ## Abrir administrador de archivos desde la terminal 
 - ```gnome-open .```
+
+## Aclaración para entregas
+- Las entregas deben realizarse en formato .tar
+- Tratar de incluir un archivo readme con instrucciones de cómo levantar los procesos
