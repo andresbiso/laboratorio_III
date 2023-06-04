@@ -48,3 +48,45 @@ void cadenaMinuscula(char* cadena, char* cadenaMinusc)
     cadenaMinusc[i] = letraMinuscula(cadena[i]);
   }
 }
+
+void unirCadenas(char* destino, char* origen)
+{
+  return strcat(destino, origen);
+}
+
+/*Ejemplo: unirCadenasConDelimitador(destino, origen, DELIMITADOR_BASE)*/
+void unirCadenasConDelimitador(char* destino, char* origen, char* delimitador)
+{
+  unirCadenas(origen, delimitador);
+  return unirCadenas(destino, origen);
+}
+
+/*Retorna 0 cuando no puede seguir separando la cadena*/
+/*se suele utilizar con un while(token != null)*/
+void separarCadenaConDelimitador(char* cadena, char* delimitador)
+{
+  if (cadena != 0)
+  {
+    return strtok(cadena, delimitador);
+  }
+  else
+  {
+    return strtok(0, delimitador);
+  }
+}
+
+/*Ejemplo: podemos utilizar esta función para*/
+/*crear una estructura array=(char**)malloc(sizeof(char*)*count)*/
+/*y luego separar el string y asignarlo a cada parte del array*/
+/*array[i]=(char*)malloc(sizeof(char)*strlen(token))*/
+/*sprintf(array[i],"%s\n", token)*/
+int contarSeparacionesCadena(char* cadena, char* delimitador)
+{
+  int contador;
+  contador = 0;
+  while (separarCadenaConDelimitador(cadena, delimitador) != 0)
+  {
+    contador++;
+  }
+  return contador;
+}
