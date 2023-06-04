@@ -7,6 +7,7 @@
 #define HASTA 10
 #define RUTA_ARCHIVO_FTOK "/bin/ls"
 #define CLAVE_BASE 33
+#define CLAVE_BASE_INI 34
 #define ROJO 0
 #define VERDE 1
 #define LINEAS_PANTALLA 80
@@ -15,6 +16,6 @@
 #define INTERVALO_PIENSO_MS 1000
 #define LARGO_LINEA 100
 #define NUM_MIN 1
-#define NUM_MAX 10
+#define NUM_MAX 99
 #define LARGO_NOMBRE 100
 #endif

@@ -24,13 +24,15 @@ int main(int argc, char *argv[])
   {
     printf("Reserva: Esperando Acceso...\n");
     esperaSemaforo(idSemaforo);
-    if (!abrirLectura(RUTA_ARCHIVO_LOTE))
+    while (!abrirLectura(RUTA_ARCHIVO_LOTE))
     {
-      printf("Hubo un error al querer abrir el archivo\n");
-      return 0;
+      printf("Reserva: Hubo un error al querer abrir el archivo\n");
+      levantaSemaforo(idSemaforo);
+      usleep(INTERVALO_RESERVA_MS*10000);
+      esperaSemaforo(idSemaforo);
     }
     printf("Reserva: Acceso Obtenido...\n");
-    if (leerReservas()==0)
+    if (leerReservas() > 0)
     {
       cerrarArchivo();
       if (numLote <= 999)

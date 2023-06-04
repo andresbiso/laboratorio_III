@@ -61,7 +61,6 @@ char* obtenerMenuLetra(int valor)
 
 int obtenerMenuNum(char* valor)
 {
-  printf("%s", valor);
   if (strcmp("A", valor) == 0)
   {
     return 1;

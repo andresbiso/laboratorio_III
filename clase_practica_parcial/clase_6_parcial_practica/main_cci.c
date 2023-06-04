@@ -11,11 +11,10 @@
 #include "consumidor.h"
 int main(int argc, char *argv[])
 {
-  int idSemaforoPanel1;
-  int idSemaforoPanel2;
-  int idSemaforoPanel3;
+  int idSemaforoPanel;
   int opcionElegida;
   int panelElegido;
+  char* rutaArchivo;
 
   if (argc != 1)
   {
@@ -25,50 +24,17 @@ int main(int argc, char *argv[])
   
   srand(time(0));
   
-  idSemaforoPanel1 = creoSemaforoConClave(CLAVE_BASE_PANEL_1);
-  idSemaforoPanel2 = creoSemaforoConClave(CLAVE_BASE_PANEL_2);
-  idSemaforoPanel3 = creoSemaforoConClave(CLAVE_BASE_PANEL_3);
-  
-  iniciaSemaforo(idSemaforoPanel1, VERDE);
-  iniciaSemaforo(idSemaforoPanel2, VERDE);
-  iniciaSemaforo(idSemaforoPanel3, VERDE);
+  idSemaforoPanel = creoSemaforo();
+  iniciaSemaforo(idSemaforoPanel, VERDE);
+
+  rutaArchivo = (char*)malloc(100*sizeof(char));
+  memset(rutaArchivo,0x00,sizeof(rutaArchivo));
 
   /* Inicializo Archivos */
-  esperaSemaforo(idSemaforoPanel1);
-  while (!abrirEscritura(RUTA_ARCHIVO_PANEL_1))
-  {
-    printf("CCI: Hubo un error al querer abrir el archivo\n");
-    levantaSemaforo(idSemaforoPanel1);
-    usleep(INTERVALO_CCI_MS*10000);
-    esperaSemaforo(idSemaforoPanel1);
-  }
-  escribirDefaultPanel();
-  cerrarArchivo(RUTA_ARCHIVO_PANEL_1);
-  levantaSemaforo(idSemaforoPanel1);
 
-  esperaSemaforo(idSemaforoPanel2);
-  while (!abrirEscritura(RUTA_ARCHIVO_PANEL_2))
-  {
-    printf("CCI: Hubo un error al querer abrir el archivo\n");
-    levantaSemaforo(idSemaforoPanel2);
-    usleep(INTERVALO_CCI_MS*10000);
-    esperaSemaforo(idSemaforoPanel2);
-  }
-  escribirDefaultPanel();
-  cerrarArchivo(RUTA_ARCHIVO_PANEL_2);
-  levantaSemaforo(idSemaforoPanel2);
-
-  esperaSemaforo(idSemaforoPanel3);
-  while (!abrirEscritura(RUTA_ARCHIVO_PANEL_3))
-  {
-    printf("CCI: Hubo un error al querer abrir el archivo\n");
-    levantaSemaforo(idSemaforoPanel3);
-    usleep(INTERVALO_CCI_MS*10000);
-    esperaSemaforo(idSemaforoPanel3);
-  }
-  escribirDefaultPanel();
-  cerrarArchivo(RUTA_ARCHIVO_PANEL_3);
-  levantaSemaforo(idSemaforoPanel3);
+  inicializarPanel(1, idSemaforoPanel);
+  inicializarPanel(2, idSemaforoPanel);
+  inicializarPanel(3, idSemaforoPanel);
   
   while(1)
   {
@@ -88,106 +54,50 @@ int main(int argc, char *argv[])
       scanf("%d",&panelElegido);
     }
     
-    printf("CCI: Esperando Acceso...\n");
-    switch(panelElegido)
-    {
-      case 1:
-        esperaSemaforo(idSemaforoPanel1);
-        break;
-      case 2:
-        esperaSemaforo(idSemaforoPanel2);
-        break;
-      case 3:
-        esperaSemaforo(idSemaforoPanel3);
-        break;
-    }
+    /*printf("CCI: Esperando Acceso...\n");*/
+    strcpy(rutaArchivo, obtenerRutaArchivoPanel(panelElegido));
+    esperaSemaforo(idSemaforoPanel);
 
-    if (opcionElegida == 1)
+    while (!abrirLectura(rutaArchivo))
     {
-      switch(panelElegido)
-      {
-      case 1:
-        while (!abrirLectura(RUTA_ARCHIVO_PANEL_1))
-        {
-          printf("CCI: Hubo un error al querer abrir el archivo\n");
-          levantaSemaforo(idSemaforoPanel1);
-          usleep(INTERVALO_CCI_MS*10000);
-          esperaSemaforo(idSemaforoPanel1);
-        }
-        break;
-      case 2:
-        while (!abrirLectura(RUTA_ARCHIVO_PANEL_2))
-        {
-          printf("CCI: Hubo un error al querer abrir el archivo\n");
-          levantaSemaforo(idSemaforoPanel2);
-          usleep(INTERVALO_CCI_MS*10000);
-          esperaSemaforo(idSemaforoPanel2);
-        }
-        break;
-      case 3:
-        while (!abrirLectura(RUTA_ARCHIVO_PANEL_3))
-        {
-          printf("CCI: Hubo un error al querer abrir el archivo\n");
-          levantaSemaforo(idSemaforoPanel3);
-          usleep(INTERVALO_CCI_MS*10000);
-          esperaSemaforo(idSemaforoPanel3);
-        }
-        break;
-      }
-      printf("CCI: Acceso Obtenido...\n");
-      leerPanel();
+      printf("CCI: Hubo un error al querer abrir el archivo\n");
+      levantaSemaforo(idSemaforoPanel);
+      usleep(INTERVALO_CCI_MS*10000);
+      esperaSemaforo(idSemaforoPanel);
     }
-    else
+    /*printf("CCI: Acceso Obtenido...\n");*/
+    leerPanel();
+    cerrarArchivo();
+    
+    if (opcionElegida == 2)
     {
-      switch(panelElegido)
+      while (!abrirEscritura(rutaArchivo))
       {
-      case 1:
-        while (!abrirEscritura(RUTA_ARCHIVO_PANEL_1))
-        {
-          printf("CCI: Hubo un error al querer abrir el archivo\n");
-          levantaSemaforo(idSemaforoPanel1);
-          usleep(INTERVALO_CCI_MS*10000);
-          esperaSemaforo(idSemaforoPanel1);
-        }
-        break;
-      case 2:
-        while (!abrirEscritura(RUTA_ARCHIVO_PANEL_2))
-        {
-          printf("CCI: Hubo un error al querer abrir el archivo\n");
-          levantaSemaforo(idSemaforoPanel2);
-          usleep(INTERVALO_CCI_MS*10000);
-          esperaSemaforo(idSemaforoPanel2);
-        }
-        break;
-      case 3:
-        while (!abrirEscritura(RUTA_ARCHIVO_PANEL_3))
-        {
-          printf("CCI: Hubo un error al querer abrir el archivo\n");
-          levantaSemaforo(idSemaforoPanel3);
-          usleep(INTERVALO_CCI_MS*10000);
-          esperaSemaforo(idSemaforoPanel3);
-        }
-        break;
+        printf("CCI: Hubo un error al querer abrir el archivo\n");
+        levantaSemaforo(idSemaforoPanel);
+        usleep(INTERVALO_CCI_MS*10000);
+        esperaSemaforo(idSemaforoPanel);
       }
       escribirPanel();
+      cerrarArchivo();
+      
+      /*Leo nuevamente el archivo para verificar*/
+      /*que los cambios hayan impactado correctamente*/
+      while (!abrirLectura(rutaArchivo))
+      {
+        printf("CCI: Hubo un error al querer abrir el archivo\n");
+        levantaSemaforo(idSemaforoPanel);
+        usleep(INTERVALO_CCI_MS*10000);
+        esperaSemaforo(idSemaforoPanel);
+      }
+      leerPanel();
+      cerrarArchivo();
     }
 
-    switch(panelElegido)
-    {
-      case 1:
-        cerrarArchivo(RUTA_ARCHIVO_PANEL_1);
-        levantaSemaforo(idSemaforoPanel1);
-        break;
-      case 2:
-        cerrarArchivo(RUTA_ARCHIVO_PANEL_2);
-        levantaSemaforo(idSemaforoPanel2);
-        break;
-      case 3:
-        cerrarArchivo(RUTA_ARCHIVO_PANEL_3);
-        levantaSemaforo(idSemaforoPanel3);
-        break;
-    }
+    levantaSemaforo(idSemaforoPanel);
+    memset(rutaArchivo,0x00,sizeof(rutaArchivo));
     usleep(INTERVALO_CCI_MS * 30000);
   }
+  free(rutaArchivo);
   return 0;
 }

@@ -1,17 +1,29 @@
 #include "gestionararchivos.h"
 #include "stdio.h"
 
-int abrirArchivo(char* ruta, char* modo, FILE** fp)
+FILE* cfptr;
+
+int abrirArchivo(char* ruta, char* modo)
 {
-  return (*fp=fopen(ruta,modo))!=0;
+  return (cfptr=fopen(ruta,modo))!=0;
 }
 
-void cerrarArchivo(FILE* fp)
+void escribirArchivo(char* linea)
 {
-  fclose(fp);
+  fprintf(cfptr,linea);
 }
 
-int esFinArchivo(FILE* fp)
+void leerArchivo(char* linea)
 {
-  return feof(fp);
+  fscanf(cfptr,"%s\n",linea);
+}
+
+void cerrarArchivo()
+{
+  fclose(cfptr);
+}
+
+int esFinArchivo()
+{
+  return feof(cfptr);
 }

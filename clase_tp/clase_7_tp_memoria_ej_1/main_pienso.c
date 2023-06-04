@@ -13,9 +13,11 @@
 int main(int argc, char *argv[])
 {
   int idMemoria;
+  int idMemoriaInicial;
   int idSemaforo;
   int localPiensoUnNumero;
   dato* memoria;
+  inicial* memoriaInicial;
 
   if (argc != 1)
   {
@@ -24,13 +26,18 @@ int main(int argc, char *argv[])
   }
 
   memoria = 0; /*NULL*/
+  memoriaInicial = 0; /*NULL*/
   idMemoria = 0;
+  idMemoriaInicial = 0;
   idSemaforo = 0;
   localPiensoUnNumero = 0;
 
   srand(time(0));
   idSemaforo = creoSemaforo();
   iniciaSemaforo(idSemaforo, VERDE);
+  memoriaInicial = (inicial*)creoMemoria(sizeof(inicial)*CANTIDAD, &idMemoriaInicial, CLAVE_BASE_INI);
+  iniciarMemoriaInicial(memoriaInicial);
+
   memoria = (dato*)creoMemoria(sizeof(dato)*CANTIDAD, &idMemoria, CLAVE_BASE);
   iniciarMemoria(memoria);
 
@@ -62,6 +69,7 @@ int main(int argc, char *argv[])
     levantaSemaforo(idSemaforo);
     usleep(INTERVALO_PIENSO_MS * 1000);
   }
+  liberoMemoria(idMemoriaInicial, (char*)memoriaInicial);
   liberoMemoria(idMemoria, (char*)memoria);
   return 0;
 }

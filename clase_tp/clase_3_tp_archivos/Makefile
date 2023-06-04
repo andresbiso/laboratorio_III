@@ -2,13 +2,10 @@ CC=gcc-4.1
 
 CFLAGS = -Wall -O3 -std=gnu89 -pedantic-errors
 HEADERS = -I./
-all: productor consumidor 
+all: clean archivos 
 
-productor: defines.h gestionararchivos.h 
-	$(CC) -o productor productor.c gestionararchivos.c $(CFLAGS) $(HEADERS)
-
-consumidor: defines.h gestionararchivos.h
-	$(CC) -o consumidor consumidor.c gestionararchivos.c $(CFLAGS) $(HEADERS)
+archivos: defines.h gestionararchivos.h productor.h consumidor.h
+	$(CC) -o archivos main.c gestionararchivos.c productor.c consumidor.c $(CFLAGS) $(HEADERS)
 
 clean: 
-	rm -rf *o productor consumidor producto.txt
+	rm -rf *o archivos producto.txt

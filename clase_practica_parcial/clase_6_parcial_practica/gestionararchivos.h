@@ -7,7 +7,8 @@ void cerrarArchivo();
 int abrirLectura(char* ruta);
 int abrirEscritura(char* ruta);
 int abrirAdicion(char* ruta);
-void limpiarArchivo(char*);
 int esFinArchivo();
+int limpiarArchivo(char*);
 int renombrarArchivo(char*, char*);
+int backupArchivo(char*, char*);
 #endif

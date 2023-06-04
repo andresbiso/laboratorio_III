@@ -37,8 +37,8 @@ int main(int argc, char *argv[])
     if (abrirAdicion(rutaArchivo))
     {
       escribirOrden(menuActual);
+      cerrarArchivo();
     }
-    cerrarArchivo();
     levantaSemaforo(idSemaforo);
     memset(rutaArchivo,0x00,sizeof(rutaArchivo));
     usleep(INTERVALO_RESTO_MS * 10000);

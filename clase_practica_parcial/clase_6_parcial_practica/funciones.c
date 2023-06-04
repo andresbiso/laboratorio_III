@@ -1,6 +1,7 @@
-#include "funciones.h"
-#include "stdlib.h"
 #include "stdio.h"
+#include "stdlib.h"
+#include "defines.h"
+#include "funciones.h"
 
 int obtenerNumeroAleatorio(int desde, int hasta) {
 	int num = 0;
@@ -17,32 +18,27 @@ void obtenerNumerosAleatorios(int desde, int hasta, int tamanio, int* nums) {
 	}
 }
 
-char* obtenerDestino(int numVuelo)
+void limpiarPantalla()
 {
-  switch(numVuelo)
+  int i;
+  i = 0;
+  while (i<80)
   {
-    case 1000:
-      return "SEATTLE";
-    case 1001:
-      return "HELSINKI";
-    case 1002:
-      return "DENVER";
-    case 1003:
-      return "DUBLIN";
-    case 1004:
-      return "MONACO";
-    case 1005:
-      return "SAO PAULO";
-    case 1006:
-      return "HOUSTON";
-    case 1007:
-      return "TOKYO";
-    case 1008:
-      return "BUENOS AIRES";
-    case 1009:
-      return "MONTEVIDEO";
-    case 1010:
-      return "VANCOUVER";
+    printf("\n");
+    i++;
+  }
+}
+
+char* obtenerRutaArchivoPanel(int valor)
+{
+  switch(valor)
+  {
+    case 1:
+      return RUTA_ARCHIVO_PANEL_1;
+    case 2:
+      return RUTA_ARCHIVO_PANEL_2;
+    case 3:
+      return RUTA_ARCHIVO_PANEL_3;
     default:
       return "";
   }

@@ -24,14 +24,17 @@ void escribirReservas()
  
   while(numVuelo != 0)
   {
-    strcpy(destino, obtenerDestino(numVuelo));
-    printf("Ingrese Nombre del Pasajero para vuelo %d:\n", numVuelo);
-    scanf("%s",pasajero);
-    sprintf(reserva,"VUELO %04d\nDESTINO %s\nNOMBRE %s\n",numVuelo,destino,pasajero);    
-    escribirArchivo(reserva);
-    memset(pasajero,0x00,sizeof(pasajero));
-    memset(destino,0x00,sizeof(destino));
-    memset(reserva,0x00,sizeof(reserva));
+    if (numVuelo >= NUM_VUELO_MIN || numVuelo <= NUM_VUELO_MAX)
+    {
+      strcpy(destino, obtenerDestino(numVuelo));
+      printf("Ingrese Nombre del Pasajero para vuelo %d:\n", numVuelo);
+      scanf("%s",pasajero);
+      sprintf(reserva,"VUELO %04d\nDESTINO %s\nNOMBRE %s\n",numVuelo,destino,pasajero);    
+      escribirArchivo(reserva);
+      memset(pasajero,0x00,sizeof(pasajero));
+      memset(destino,0x00,sizeof(destino));
+      memset(reserva,0x00,sizeof(reserva));
+    }
     printf("Ingrese número de vuelo (1000-1010) o '0' para finalizar:");
     scanf("%d",&numVuelo);
   }

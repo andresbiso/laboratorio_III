@@ -14,11 +14,13 @@
 int main(int argc, char *argv[])
 {
   int idMemoria;
+  int idMemoriaInicial;
   int idSemaforo;
   int numeroAleatorio;
   int intentos;
   char* nombreJugador;
   dato* memoria;
+  inicial* memoriaInicial;
 
   if (argc != 1)
   {
@@ -27,7 +29,9 @@ int main(int argc, char *argv[])
   }
 
   memoria = 0; /*NULL*/
+  memoriaInicial = 0; /*NULL*/
   idMemoria = 0;
+  idMemoriaInicial = 0;
   idSemaforo = 0;
   numeroAleatorio = 0;
   intentos = 0;
@@ -38,9 +42,11 @@ int main(int argc, char *argv[])
   srand(time(0));
 
   idSemaforo = creoSemaforo();
+  
+  memoriaInicial = (inicial*)creoMemoria(sizeof(inicial)*CANTIDAD, &idMemoriaInicial, CLAVE_BASE_INI);
+  verificarMemoriaInicial(memoriaInicial);
   memoria = (dato*)creoMemoria(sizeof(dato)*CANTIDAD, &idMemoria, CLAVE_BASE);
 
-  verificarMemoriaIni(memoria);
   do
   {
     printf("Ingrese nombre jugador:\n");
@@ -75,6 +81,7 @@ int main(int argc, char *argv[])
     levantaSemaforo(idSemaforo);
     usleep(INTERVALO_JUGADOR_MS * 1000);
   }
+  liberoMemoria(idMemoriaInicial, (char*)memoriaInicial);
   liberoMemoria(idMemoria, (char*)memoria);
   free(nombreJugador);
   return 0;

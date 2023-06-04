@@ -4,4 +4,5 @@ int creoSemaforo();
 void iniciaSemaforo(int,int);
 void levantaSemaforo(int);
 void esperaSemaforo(int);
+int creoSemaforoConClave(int);
 #endif

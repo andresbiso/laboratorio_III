@@ -1,6 +1,7 @@
-#include "funciones.h"
-#include "stdlib.h"
 #include "stdio.h"
+#include "stdlib.h"
+#include "defines.h"
+#include "funciones.h"
 
 int obtenerNumeroAleatorio(int desde, int hasta) {
 	int num = 0;
@@ -15,6 +16,17 @@ void obtenerNumerosAleatorios(int desde, int hasta, int tamanio, int* nums) {
 		int valor = (rand()%(hasta-desde+1))+desde;
 		nums[i] = valor;
 	}
+}
+
+void limpiarPantalla()
+{
+  int i;
+  i = 0;
+  while (i<80)
+  {
+    printf("\n");
+    i++;
+  }
 }
 
 char* obtenerDestino(int numVuelo)

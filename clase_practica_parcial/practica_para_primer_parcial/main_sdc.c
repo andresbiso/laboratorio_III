@@ -19,6 +19,10 @@ int main(int argc, char *argv[])
     printf("Uso: ./sdc [A-C]\n");
     return 0;
   }
+
+  printf("Atención: Recuerde levantar el programa inicial \"resto\". Presione \"enter\" para continuar...");
+  getchar();
+  limpiarPantalla();
   sdcElegido = 0;
   sdcElegido = obtenerMenuNum(argv[1]);
 
@@ -41,9 +45,10 @@ int main(int argc, char *argv[])
     if (abrirLectura(rutaArchivo))
     {
       leerOrdenes(sdcElegido);
+      cerrarArchivo();
+      backupArchivo(rutaArchivo, "./backup.txt");
+      limpiarArchivo(rutaArchivo);
     }
-    cerrarArchivo();
-    limpiarArchivo(obtenerRutaArchivoMenu(sdcElegido));
     levantaSemaforo(idSemaforo);
     usleep(INTERVALO_SDC_MS * 10000);
   }

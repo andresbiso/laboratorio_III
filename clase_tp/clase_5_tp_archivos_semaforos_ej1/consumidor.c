@@ -12,18 +12,17 @@ int leerReservas()
   int pasajeros[11];
   int numero;
   int i;
+  int cantidadVuelosProcesados;
   char* destino;
-  char* texto;
   
   destino = (char*)malloc(20+1 * sizeof(char));
-  texto = (char*)malloc(20+1 * sizeof(char));
  
   memset(reserva,0x00,sizeof(reserva));
   
   for (i=0; i <= 10; i++)
   {
     pasajeros[i] = 0;
-  } 
+  }   cantidadVuelosProcesados = 0;
   while(!esFinArchivo())
   {
     if (leerArchivo(reserva) == 0)
@@ -40,18 +39,21 @@ int leerReservas()
       {
         pasajeros[numero-NUM_VUELO_MIN]++;
       }
+      cantidadVuelosProcesados++;
     }
     memset(reserva,0x00,sizeof(reserva));
   }
-  printf("VUELO DESTINO PASAJEROS\n");
-  for (i = 0; i<=10; i++)
+  if (cantidadVuelosProcesados > 0)
   {
-    strcpy(destino, obtenerDestino(i+NUM_VUELO_MIN));
-    printf("%d %s %d\n",i+NUM_VUELO_MIN,destino,pasajeros[i]);
+    printf("VUELO DESTINO PASAJEROS\n");
+    for (i = 0; i<=10; i++)
+    {
+      strcpy(destino, obtenerDestino(i+NUM_VUELO_MIN));
+      printf("%d %s %d\n",i+NUM_VUELO_MIN,destino,pasajeros[i]);
+    }
   }
-  free(texto);
   free(destino);
-  return 0;
+  return cantidadVuelosProcesados;
 }
 
 void backupLote(int numLote)
@@ -60,4 +62,5 @@ void backupLote(int numLote)
   sprintf(nuevoLote, RUTA_ARCHIVO_LOTE_BAK, numLote);
   renombrarArchivo(RUTA_ARCHIVO_LOTE, nuevoLote);
   limpiarArchivo(RUTA_ARCHIVO_LOTE);
+  printf("Generado Backup: %s\n", nuevoLote);
 }

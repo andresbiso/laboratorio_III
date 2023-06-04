@@ -7,23 +7,7 @@
 #include "gestionararchivos.h"
 #include "semaforos.h"
 #include "funciones.h"
-#include "productor.h"
-void renderPanel(char* mensajeActual)
-{
- char mensaje[100+1];
- memset(mensaje,0x00,sizeof(mensaje));
- while(!esFinArchivo())
- {
-   leerArchivo(mensaje);
-   if (strstr(mensajeActual, mensaje)==0)
-   {
-    strcpy(mensajeActual, mensaje);
-    system("clear");
-    printf("%s\n", mensaje);
-   }
-   memset(mensaje,0x00,sizeof(mensaje));
- }
-}
+#include "consumidor.h"
 
 int main(int argc, char *argv[])
 {
@@ -41,27 +25,15 @@ int main(int argc, char *argv[])
 	panelElegido = atoi(argv[1]);
   
   srand(time(0));
-  rutaArchivo = (char*)malloc(30*sizeof(char));
-  mensajeActual = (char*)malloc(100*sizeof(char));
-  idSemaforoPanel=0;
-  switch(panelElegido)
-  {
-    case 1:
-      strcpy(rutaArchivo, RUTA_ARCHIVO_PANEL_1);
-      idSemaforoPanel = creoSemaforoConClave(CLAVE_BASE_PANEL_1);
-      break;
-    case 2:
-      strcpy(rutaArchivo, RUTA_ARCHIVO_PANEL_2);
-      idSemaforoPanel = creoSemaforoConClave(CLAVE_BASE_PANEL_2);
-      break;
-    case 3:
-      strcpy(rutaArchivo, RUTA_ARCHIVO_PANEL_3);
-      idSemaforoPanel = creoSemaforoConClave(CLAVE_BASE_PANEL_3);
-      break;
-  }
-  
-  iniciaSemaforo(idSemaforoPanel, VERDE);
-  
+  rutaArchivo = (char*)malloc((LARGO_RUTA+1)*sizeof(char));
+  mensajeActual = (char*)malloc((LARGO_LINEA+1)*sizeof(char));
+  memset(rutaArchivo,0x00,sizeof(rutaArchivo));
+  memset(mensajeActual,0x00,sizeof(mensajeActual));
+
+  strcpy(rutaArchivo, obtenerRutaArchivoPanel(panelElegido));
+
+  idSemaforoPanel = creoSemaforo();
+
   while(1)
   {
     /*printf("PANEL: Esperando Acceso...\n");*/
@@ -75,8 +47,9 @@ int main(int argc, char *argv[])
     }
     /*printf("PANEL: Acceso Obtenido...\n");*/
     renderPanel(mensajeActual);
-    cerrarArchivo(rutaArchivo);
+    cerrarArchivo();
     levantaSemaforo(idSemaforoPanel);
+    memset(mensajeActual,0x00,sizeof(mensajeActual));
     usleep(INTERVALO_PANEL_MS * 1000);
   }
   free(rutaArchivo);

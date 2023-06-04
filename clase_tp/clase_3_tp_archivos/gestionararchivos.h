@@ -1,7 +1,8 @@
 #ifndef _GESTIONAR_ARCHIVOS_H
 #define _GESTIONAR_ARCHIVOS_H
-#include "stdio.h"
-int abrirArchivo(char*, char*, FILE**);
-void cerrarArchivo(FILE*);
-int esFinArchivo(FILE* fp);
+int abrirArchivo(char*, char*);
+void escribirArchivo(char*);
+void leerArchivo(char*);
+void cerrarArchivo();
+int esFinArchivo();
 #endif

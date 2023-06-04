@@ -6,7 +6,7 @@
 #include "globals.h"
 #include "funciones.h"
 
-void verificarMemoriaIni(dato* memoria)
+void verificarMemoriaInicial(inicial* memoria)
 {
   while (memoria[POS_INI_MEM].inicializado != 1)
   {

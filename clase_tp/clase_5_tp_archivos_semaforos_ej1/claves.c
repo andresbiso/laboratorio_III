@@ -1,5 +1,6 @@
 #include "stdio.h"
 #include "sys/ipc.h"
+#include "defines.h"
 #include "claves.h"
 
 key_t creoClave(int idClave)

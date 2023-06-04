@@ -29,10 +29,12 @@ int main(int argc, char *argv[])
   {
     printf("Carga: Esperando Acceso...\n");
     esperaSemaforo(idSemaforo);
-    if (!abrirAdicion(RUTA_ARCHIVO_LOTE))
+    while (!abrirAdicion(RUTA_ARCHIVO_LOTE))
     {
-      printf("Hubo un error al querer abrir el archivo\n");
-      return 0;
+      printf("Carga: Hubo un error al querer abrir el archivo\n");
+      levantaSemaforo(idSemaforo);
+      usleep(INTERVALO_RESERVA_MS*10000);
+      esperaSemaforo(idSemaforo);
     }
     printf("Carga: Acceso Obtenido...\n");
     escribirReservas();
