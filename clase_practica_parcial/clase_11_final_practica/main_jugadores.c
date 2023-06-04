@@ -76,7 +76,7 @@ int main(int argc, char *argv[])
     dsatosThread[i].idColaMensajes = idColaMensajes;
     datosThread[i].idSemaforo = idSemaforo;
     datosThread[i].memoria = memoria;
-    datosThread[i].nroJugador = i+1;
+    datosThread[i].nroJugador = i;
     datosThread[i].cantidadPasos = 0;
 
     if (!crearThread(&idHilo[0], &atributos, jugadoresThread, (void*)&datosThread[0]))

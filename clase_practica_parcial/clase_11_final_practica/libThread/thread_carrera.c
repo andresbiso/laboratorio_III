@@ -42,7 +42,7 @@ void* carreraThread(void* parametro)
 
   for (i = 1; i < cantidadJugadores; i++)
   {
-    enviarMensaje(idColaMensajes,MSG_JUGADOR+i,MSG_TABLERO,EVT_CAMINAR,"");
+    enviarMensaje(idColaMensajes, MSG_JUGADOR + i, MSG_TABLERO, EVT_CAMINAR,"");
   }
 
   while(1)

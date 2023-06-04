@@ -18,6 +18,7 @@ void* jugadoresThread(void* parametro)
   mensaje msg;
   jugador* datosThread;
   int pasosAleatorio;
+  int intervalo;
   
   msg.longDest = MSG_NADIE;
   msg.intRte = MSG_NADIE;
@@ -28,10 +29,12 @@ void* jugadoresThread(void* parametro)
 
   pasosAleatorio = 0;
 
-  while(1)
+  intervalo = datosThread->nroJugador == 0 ? INTERVALO_PASO_CONEJO_MS : INTERVALO_PASO_TORTUGA_MS;
+
+  while(msg.intEvento != EVT_FIN)
   {
     lockMutex(&mutex);
-    recibirMensaje(idColaMensajes, MSG_JUGADOR+datosThread->numeroJugador, &msg);
+    recibirMensaje(idColaMensajes, MSG_JUGADOR+datosThread->nroJugador, &msg);
     switch(msg.intEvento)
     {
       case EVT_NINGUNO:
@@ -42,15 +45,10 @@ void* jugadoresThread(void* parametro)
         printf("Jugador %d: camino %d pasos", datosThread->nroJugador, pasosAleatorio);
         printf("Jugador %d: espera %d ms", datosThread->nroJugador, datosThread->intervalo);
         printf("Jugador %d: total %d pasos", datosThread->nroJugador, datosThread->cantidadPasos);
-        enviarMensaje(idColaMensajes,MSG_TABLERO,datosThread->nroJugador,EVT_META,"");
+        enviarMensaje(idColaMensajes, MSG_TABLERO, MSG_JUGADOR + datosThread->nroJugador, EVT_META, "");
         unlockMutex(&mutex);
-        usleep(datosThread->intervalo*pasosAleatorio);
+        usleep(intervalo * pasosAleatorio);
         lockMutex(&mutex);
-        break;
-      case EVT_FIN:
-        unlockMutex(&mutex);
-        free(pasosChar);
-        return 0;
         break;
       default:
         break;
