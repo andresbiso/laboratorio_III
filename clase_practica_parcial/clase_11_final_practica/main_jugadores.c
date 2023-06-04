@@ -24,9 +24,11 @@
 int main(int argc, char *argv[])
 {
   int idColaMensajes;
-  int idMemoriaInicial;
+  int idMemoria;
+  dato_memoria* memoria;
   int idSemaforo;
-  inicial* memoriaInicial;
+  int idMemoriaIni;
+  dato_memoria_ini* memoriaIni;
   pthread_t* idHilo;
   pthread_attr_t atributos;
   jugador* datosThread;
@@ -39,8 +41,10 @@ int main(int argc, char *argv[])
     return -1;
   }
 
-  memoriaInicial = 0; /*NULL*/
-  idMemoriaInicial = 0;
+  memoriaIni = 0; /*NULL*/
+  idMemoriaIni = 0;
+  memoria = 0;
+  idMemoria = 0;
   idSemaforo = 0;
   idHilo = 0;
   cantidadJugadores = CANTIDAD_JUGADORES;
@@ -54,43 +58,43 @@ int main(int argc, char *argv[])
 
   idSemaforo = crearSemaforo();
   idColaMensajes = crearColaMensajes();
-  idMemoria = (dato_memoria*)crearMemoria(sizeof(dato_memoria), &idMemoriaInicial);
-  memoriaInicial = crearMemoriaInicial(&idMemoriaInicial);
-  verificarMemoriaInicial(memoriaInicial, "carrera");
+  memoria = (dato_memoria*)crearMemoria(sizeof(dato_memoria), &idMemoria);
+  memoriaIni = crearMemoriaIni(&idMemoriaIni);
+  verificarMemoriaIni(memoriaIni, "carrera");
 
   limpiarPantalla();
 
   idHilo = (pthread_t*)malloc(sizeof(pthread_t)*cantidadJugadores);
   datosThread = (jugador*)malloc(sizeof(jugador)*cantidadJugadores);
 
+  esperarSemaforo(idSemaforo);
+  escribirCantidadJugadores(memoria, cantidadJugadores);
+  levantarSemaforo(idSemaforo);
+
   for (i = 0; i < cantidadJugadores; i++)
   {
-    dsatosThread.idColaMensajes = idColaMensajes;
-    datosThread.idSemaforo = idSemaforo;
-    datosThread.idMemoria = idMemoria;
-    datosThread[0].nroJugador = MSG_CONEJO;
-    datosThread[0].cantidadPasos = 0;
-    datosThread[0].idColaMensajes = idColaMensajes;
-  }
-  if (!crearThread(&idHilo[0], &atributos, jugadoresThread, (void*)&datosThread[0]))
-  {
-    printf("Error: No se pude crear el thread\n");
-    return -1;
-  }
-  if (!crearThread(&idHilo[1], &atributos, jugadoresThread, (void*)&datosThread[1]))
-  {
-    printf("Error: No se pude crear el thread\n");
-    return -1;
+    dsatosThread[i].idColaMensajes = idColaMensajes;
+    datosThread[i].idSemaforo = idSemaforo;
+    datosThread[i].memoria = memoria;
+    datosThread[i].nroJugador = i+1;
+    datosThread[i].cantidadPasos = 0;
+
+    if (!crearThread(&idHilo[0], &atributos, jugadoresThread, (void*)&datosThread[0]))
+    {
+      printf("Error: No se pude crear el thread\n");
+      return -1;
+    }
   }
   
   joinThread(&idHilo[0]);
   joinThread(&idHilo[1]);
+
   free(idHilo);
   free(datosThread);
-  liberarMemoria(idMemoriaInicial, (char*)memoriaInicial);
-  liberarMemoria(idMemoria, (char*)memoria);
-  liberarColaMensajes(idColaMensajes);
-  eliminarSemaforo(idSemaforo);
   destruirMutex(&mutex);
+
+  esperarSemaforo(idSemaforo);
+  configurarFinalizarMemoriaIni(memoriaIni);
+  levantarSemaforo(idSemaforo);
   return 0;
 }

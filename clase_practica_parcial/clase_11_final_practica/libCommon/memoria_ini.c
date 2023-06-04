@@ -6,21 +6,36 @@
 /*File Header*/
 #include "memoria_ini.h"
 
-inicial* crearMemoriaInicial(int* extIdMemoria)
+dato_memoria_ini* crearMemoriaIni(int* extIdMemoria)
 {
-  return (inicial*)crearMemoriaConClave(sizeof(inicial), idMemoriaInicial, CLAVE_BASE_INI);
+  return (dato_memoria_ini*)crearMemoriaConClave(sizeof(dato_memoria_ini), idMemoriaIni, CLAVE_BASE_INI);
 }
 
-void configurarMemoriaInicial(inicial* memoria)
+void configurarMemoriaIni(dato_memoria_ini* memoria)
 {
   memoria[POS_INI_MEM].inicializado = 1;
+  memoria[POS_INI_MEM].finalizado = 0;
 }
 
-void verificarMemoriaInicial(inicial* memoria, char* nombrePrograma)
+void verificarMemoriaIni(dato_memoria_ini* memoria, char* nombrePrograma)
 {
   while (memoria[POS_INI_MEM].inicializado != 1)
   {
     printf("Atención: Recuerde levantar el programa inicial \"%s\". Presione \"enter\" para continuar...\n", nombrePrograma);
+    getchar();
+  }
+}
+
+void configurarFinalizarMemoriaIni(dato_memoria_ini* memoria)
+{
+  memoria[POS_INI_MEM].finalizado = 1;
+}
+
+void verificarFinalizarMemoriaIni(dato_memoria_ini* memoria, char* nombrePrograma)
+{
+  while (memoria[POS_INI_MEM].finalizado != 1)
+  {
+    printf("Atención: Esperando finalización de programa \"%s\". Presione \"enter\" para continuar...\n", nombrePrograma);
     getchar();
   }
 }

@@ -5,8 +5,9 @@ char letraMayuscula(char);
 char letraMinuscula(char);
 void cadenaMayuscula(char*, char*);
 void cadenaMinuscula(char*, char*);
-void unirCadenas(char*, char*);
-void unirCadenasConDelimitador(char*, char*, char*);
-void separarCadenaConDelimitador(char*, char*);
+char* unirCadenas(char*, char*);
+char* unirCadenasConDelimitador(char*, char*, char*);
+char* separarCadenaConDelimitador(char*, char*);
 int contarSeparacionesCadena(char*, char*);
+int convertirNumeroEnCadena(char*, int);
 #endif

@@ -15,21 +15,36 @@
 
 void* carreraThread(void* parametro)
 {
+  mensaje msg;
+  tablero* datosThread;
   int pasosConejo;
   int pasosTortuga;
   int pasos;
-  mensaje msg;
+  int cantidadJugadores;
+  int i;
 
-  pasos = 0;
-  pasosConejo = 0;
-  pasosTortuga = 0;
   msg.longDest = MSG_NADIE;
   msg.intRte = MSG_NADIE;
   msg.intEvento = EVT_NINGUNO;
   memset(msg.charMensaje,0x00,LARGO_MENSAJE);
 
-  enviarMensaje(idColaMensajes,MSG_CONEJO,MSG_TABLERO,EVT_CAMINAR,(char*)0);
-  enviarMensaje(idColaMensajes,MSG_TORTUGA,MSG_TABLERO,EVT_CAMINAR,(char*)0);
+  datosThread = (tablero*)parametro;
+
+  pasosConejo = 0;
+  pasosTortuga = 0;
+  pasos = 0;
+  cantidadJugadores = 0;
+  i = 0;
+
+  esperarSemaforo(idSemaforo);
+  cantidadJugadores = leerCantidadJugadores(datosThread->memoria);
+  levantarSemaforo(idSemaforo);
+
+  for (i = 1; i < cantidadJugadores; i++)
+  {
+    enviarMensaje(idColaMensajes,MSG_JUGADOR+i,MSG_TABLERO,EVT_CAMINAR,"");
+  }
+
   while(1)
   {
     lockMutex(&mutex);

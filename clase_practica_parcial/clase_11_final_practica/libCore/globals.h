@@ -13,6 +13,7 @@ enum eventos
 {
   EVT_NINGUNO, /*0*/
   EVT_CAMINAR,
+  EVT_META,
   EVT_FIN
 };
 typedef enum destinos Destinos;

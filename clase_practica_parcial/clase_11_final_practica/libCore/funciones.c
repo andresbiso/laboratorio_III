@@ -7,7 +7,41 @@
 /*File Header*/
 #include "funciones.h"
 
-void funcionDummy()
+char* obtenerCaracterPorNumero(int valor)
 {
-  printf("soy una función dummy\n");
+  switch(valor)
+  {
+    case 1:
+      return "A";
+  }
+
+  return 0;
+}
+
+int obtenerNumeroPorCaracter(char* valor)
+{
+  if (strcmp("A", valor) == 0)
+  {
+    return 1;
+  }
+
+  return -1;
+}
+
+/*
+  Ejemplo:
+  char * rutArchivo
+  rutaArchivo = (char*)malloc((LARGO_RUTA+1)*sizeof(char));
+  memset(rutaArchivo,0x00,sizeof(rutaArchivo));
+  strcpy(rutaArchivo, obtenerRutaArchivo(1));
+*/
+char* obtenerRutaArchivo(int valor)
+{
+  switch(valor)
+  {
+    case 1:
+      return RUTA_ARCHIVO;
+    default:
+      return "";
+  }
 }

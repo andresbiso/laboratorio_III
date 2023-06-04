@@ -49,13 +49,13 @@ void cadenaMinuscula(char* cadena, char* cadenaMinusc)
   }
 }
 
-void unirCadenas(char* destino, char* origen)
+char* unirCadenas(char* destino, char* origen)
 {
   return strcat(destino, origen);
 }
 
 /*Ejemplo: unirCadenasConDelimitador(destino, origen, DELIMITADOR_BASE)*/
-void unirCadenasConDelimitador(char* destino, char* origen, char* delimitador)
+char* unirCadenasConDelimitador(char* destino, char* origen, char* delimitador)
 {
   unirCadenas(origen, delimitador);
   return unirCadenas(destino, origen);
@@ -63,7 +63,7 @@ void unirCadenasConDelimitador(char* destino, char* origen, char* delimitador)
 
 /*Retorna 0 cuando no puede seguir separando la cadena*/
 /*se suele utilizar con un while(token != null)*/
-void separarCadenaConDelimitador(char* cadena, char* delimitador)
+char* separarCadenaConDelimitador(char* cadena, char* delimitador)
 {
   if (cadena != 0)
   {
@@ -89,4 +89,9 @@ int contarSeparacionesCadena(char* cadena, char* delimitador)
     contador++;
   }
   return contador;
+}
+
+int convertirNumeroEnCadena(char* cadena, int numero)
+{
+  return sprintf(cadena, "%d", numero);;
 }

@@ -24,9 +24,11 @@
 int main(int argc, char *argv[])
 {
   int idColaMensajes;
-  int idMemoriaInicial;
-  inicial* memoriaInicial;
+  int idMemoria;
+  dato_memoria* memoria;
   int idSemaforo;
+  int idMemoriaIni;
+  dato_memoria_ini* memoriaIni;
   pthread_t idHilo;
   pthread_attr_t atributos;
   tablero datosThread;
@@ -37,8 +39,10 @@ int main(int argc, char *argv[])
     return -1;
   }
 
-  memoriaInicial = 0;
-  idMemoriaInicial = 0;
+  memoriaIni = 0;
+  idMemoriaIni = 0;
+  memoria = 0;
+  idMemoria = 0;
   idSemaforo = 0;
   idColaMensajes = 0;
   idHilo = 0;
@@ -52,31 +56,30 @@ int main(int argc, char *argv[])
   iniciarSemaforo(idSemaforo, VERDE);
   idColaMensajes = crearColaMensajes();
   borrarMensajes(idColaMensajes);
-  idMemoria = (dato_memoria*)crearMemoria(sizeof(dato_memoria), &idMemoriaInicial);
+  memoria = (dato_memoria*)crearMemoria(sizeof(dato_memoria), &idMemoria);
   configurarMemoria(idMemoria);
-  memoriaInicial = crearMemoriaInicial(&idMemoriaInicial);
-  configurarMemoriaInicial(memoriaInicial);
+  memoriaIni = crearMemoriaIni(&idMemoriaIni);
+  configurarMemoriaIni(memoriaIni);
 
   limpiarPantalla();
 
   datosThread.idColaMensajes = idColaMensajes;
   datosThread.idSemaforo = idSemaforo;
-  datosThread.idMemoria = idMemoria;
-  
-  if (!crearThread(&idHilo[0], &atributos, jugadoresThread, (void*)&datosThread))
-  {
-    printf("Error: No se pude crear el thread\n");
-    return -1;
-  }
+  datosThread.memoria = memoria;
 
-  if (!crearThread(&idHilo, &atributos, carreraThread, 0))
+  if (!crearThread(&idHilo, &atributos, carreraThread, (void*)&datosThread))
   {
     printf("Error: No se pude crear el thread\n");
     return -1;
   }
 
   joinThread(&idHilo);
-  liberarMemoria(idMemoriaInicial, (char*)memoriaInicial);
+
+  esperarSemaforo(idSemaforo);
+  verificarFinalizarMemoriaIni(memoriaIni, "jugadores");
+  levantarSemaforo(idSemaforo);
+
+  liberarMemoria(idMemoriaIni, (char*)memoriaIni);
   liberarMemoria(idMemoria, (char*)memoria);
   liberarColaMensajes(idColaMensajes);
   eliminarSemaforo(idSemaforo);
