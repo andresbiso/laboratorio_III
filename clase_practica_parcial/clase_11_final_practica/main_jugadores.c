@@ -85,9 +85,11 @@ int main(int argc, char *argv[])
       return -1;
     }
   }
-  
-  joinThread(&idHilo[0]);
-  joinThread(&idHilo[1]);
+
+  for (i = 0; i < cantidadJugadores; i++)
+  {
+   joinThread(&idHilo[i]);
+  }
 
   free(idHilo);
   free(datosThread);
