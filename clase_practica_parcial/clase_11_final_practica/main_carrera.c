@@ -18,6 +18,7 @@
 #include "libCore/funciones.h"
 #include "libCore/productor.h"
 #include "libCore/consumidor.h"
+#include "libCore/memoria_core.h"
 #include "libThread/thread_carrera.h"
 
 int main(int argc, char *argv[])
@@ -26,8 +27,9 @@ int main(int argc, char *argv[])
   int idMemoriaInicial;
   inicial* memoriaInicial;
   int idSemaforo;
-  pthread_t* idHilo;
+  pthread_t idHilo;
   pthread_attr_t atributos;
+  tablero datosThread;
 
   if (argc != 1)
   {
@@ -50,10 +52,22 @@ int main(int argc, char *argv[])
   iniciarSemaforo(idSemaforo, VERDE);
   idColaMensajes = crearColaMensajes();
   borrarMensajes(idColaMensajes);
+  idMemoria = (dato_memoria*)crearMemoria(sizeof(dato_memoria), &idMemoriaInicial);
+  configurarMemoria(idMemoria);
   memoriaInicial = crearMemoriaInicial(&idMemoriaInicial);
   configurarMemoriaInicial(memoriaInicial);
 
   limpiarPantalla();
+
+  datosThread.idColaMensajes = idColaMensajes;
+  datosThread.idSemaforo = idSemaforo;
+  datosThread.idMemoria = idMemoria;
+  
+  if (!crearThread(&idHilo[0], &atributos, jugadoresThread, (void*)&datosThread))
+  {
+    printf("Error: No se pude crear el thread\n");
+    return -1;
+  }
 
   if (!crearThread(&idHilo, &atributos, carreraThread, 0))
   {
@@ -63,6 +77,7 @@ int main(int argc, char *argv[])
 
   joinThread(&idHilo);
   liberarMemoria(idMemoriaInicial, (char*)memoriaInicial);
+  liberarMemoria(idMemoria, (char*)memoria);
   liberarColaMensajes(idColaMensajes);
   eliminarSemaforo(idSemaforo);
   destruirMutex(&mutex);

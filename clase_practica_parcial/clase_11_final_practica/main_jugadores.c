@@ -18,6 +18,7 @@
 #include "libCore/funciones.h"
 #include "libCore/productor.h"
 #include "libCore/consumidor.h"
+#include "libCore/memoria_core.h"
 #include "libThread/thread_jugadores.h"
 
 int main(int argc, char *argv[])
@@ -50,10 +51,12 @@ int main(int argc, char *argv[])
   iniciarAttr(&atributos);
 
   srand(time(0));
+
   idSemaforo = crearSemaforo();
-  idColaMensajes = crearColaMensajes(CLAVE_BASE);
-  memoriaInicial = (inicial*)crearMemoria(sizeof(inicial), &idMemoriaInicial, CLAVE_BASE_INI);
-  verificarMemoriaInicial(memoriaInicial);
+  idColaMensajes = crearColaMensajes();
+  idMemoria = (dato_memoria*)crearMemoria(sizeof(dato_memoria), &idMemoriaInicial);
+  memoriaInicial = crearMemoriaInicial(&idMemoriaInicial);
+  verificarMemoriaInicial(memoriaInicial, "carrera");
 
   limpiarPantalla();
 
@@ -62,6 +65,9 @@ int main(int argc, char *argv[])
 
   for (i = 0; i < cantidadJugadores; i++)
   {
+    dsatosThread.idColaMensajes = idColaMensajes;
+    datosThread.idSemaforo = idSemaforo;
+    datosThread.idMemoria = idMemoria;
     datosThread[0].nroJugador = MSG_CONEJO;
     datosThread[0].cantidadPasos = 0;
     datosThread[0].idColaMensajes = idColaMensajes;
@@ -82,6 +88,7 @@ int main(int argc, char *argv[])
   free(idHilo);
   free(datosThread);
   liberarMemoria(idMemoriaInicial, (char*)memoriaInicial);
+  liberarMemoria(idMemoria, (char*)memoria);
   liberarColaMensajes(idColaMensajes);
   eliminarSemaforo(idSemaforo);
   destruirMutex(&mutex);

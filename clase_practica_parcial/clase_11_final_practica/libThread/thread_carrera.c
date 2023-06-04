@@ -28,12 +28,12 @@ void* carreraThread(void* parametro)
   msg.intEvento = EVT_NINGUNO;
   memset(msg.charMensaje,0x00,LARGO_MENSAJE);
 
-  enviarMensaje(idColaMensajes,MSG_CONEJO,MSG_CARRERA,EVT_CAMINAR,(char*)0);
-  enviarMensaje(idColaMensajes,MSG_TORTUGA,MSG_CARRERA,EVT_CAMINAR,(char*)0);
+  enviarMensaje(idColaMensajes,MSG_CONEJO,MSG_TABLERO,EVT_CAMINAR,(char*)0);
+  enviarMensaje(idColaMensajes,MSG_TORTUGA,MSG_TABLERO,EVT_CAMINAR,(char*)0);
   while(1)
   {
     lockMutex(&mutex);
-    recibirMensaje(idColaMensajes, MSG_CARRERA, &msg);
+    recibirMensaje(idColaMensajes, MSG_TABLERO, &msg);
     switch(msg.intEvento)
     {
       case EVT_NINGUNO:
@@ -46,13 +46,13 @@ void* carreraThread(void* parametro)
           if (pasosConejo < 100)
           {
             printf("Ganó conejo!");
-            enviarMensaje(idColaMensajes,MSG_CONEJO,MSG_CARRERA,EVT_CAMINAR,(char*)0);
+            enviarMensaje(idColaMensajes,MSG_CONEJO,MSG_TABLERO,EVT_CAMINAR,(char*)0);
             unlockMutex(&mutex);
             return 0;
           }
           else
           {
-            enviarMensaje(idColaMensajes,MSG_CONEJO,MSG_CARRERA,EVT_FIN,(char*)0);
+            enviarMensaje(idColaMensajes,MSG_CONEJO,MSG_TABLERO,EVT_FIN,(char*)0);
           }
         }
         else
@@ -61,13 +61,13 @@ void* carreraThread(void* parametro)
           if (pasosTortuga < 100)
           {
             printf("Ganó tortuga!");
-            enviarMensaje(idColaMensajes,MSG_TORTUGA,MSG_CARRERA,EVT_CAMINAR,(char*)0);
+            enviarMensaje(idColaMensajes,MSG_TORTUGA,MSG_TABLERO,EVT_CAMINAR,(char*)0);
             unlockMutex(&mutex);
             return 0;
           }
           else
           {
-            enviarMensaje(idColaMensajes,MSG_TORTUGA,MSG_CARRERA,EVT_FIN,(char*)0);
+            enviarMensaje(idColaMensajes,MSG_TORTUGA,MSG_TABLERO,EVT_FIN,(char*)0);
           }
         }
         break;

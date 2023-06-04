@@ -7,6 +7,7 @@
 #define CANTIDAD 10
 #define DESDE 0
 #define HASTA 10
+#define MAX_LARGO_CADENA 1000
 /*Intervalos*/
 #define INTERVALO_PASO_CONEJO_MS 100
 #define INTERVALO_PASO_TORTUGA_MS 500

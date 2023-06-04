@@ -30,7 +30,7 @@ void* jugadoresThread(void* parametro)
   while(1)
   {
     lockMutex(&mutex);
-    recibirMensaje(idColaMensajes, MSG_CARRERA, &msg);
+    recibirMensaje(idColaMensajes, MSG_TABLERO, &msg);
     switch(msg.intEvento)
     {
       case EVT_NINGUNO:
@@ -42,7 +42,7 @@ void* jugadoresThread(void* parametro)
         printf("Jugador %d: espera %d ms", datosThread->nroJugador, datosThread->intervalo);
         printf("Jugador %d: total %d pasos", datosThread->nroJugador, datosThread->cantidadPasos);
         sprintf(pasosChar, "%d",pasosAleatorio);
-        enviarMensaje(idColaMensajes,MSG_CARRERA,datosThread->nroJugador,EVT_PASO,pasosChar);
+        enviarMensaje(idColaMensajes,MSG_TABLERO,datosThread->nroJugador,EVT_PASO,pasosChar);
         unlockMutex(&mutex);
         usleep(datosThread->intervalo*pasosAleatorio);
         lockMutex(&mutex);
