@@ -11,6 +11,9 @@
 /*Intervalos*/
 #define INTERVALO_PASO_CONEJO_MS 100
 #define INTERVALO_PASO_TORTUGA_MS 500
+/*Formatos*/
+#define FORMATO_OUTPUT_PANTALLA "LETRA:%s\tNUMERO:%d\n"
+#define FORMATO_OUTPUT_ARCHIVO "%s\t%d\n"
 /*Custom*/
 #define PASOS_MIN 1
 #define PASOS_MAX 5

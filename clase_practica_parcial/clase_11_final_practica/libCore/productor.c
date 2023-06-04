@@ -1,9 +1,24 @@
 /*Standard Library*/
 #include "stdio.h"
+#include "stdlib.h"
+#include "string.h"
+/*Headers Library*/
+#include "libCommon/archivos.h"
+#include "libCore/defines.h"
+#include "libCore/funciones.h"
 /*File Header*/
 #include "productor.h"
 
-void funcionDummyProductor()
+void escribirLinea(int valorNumerico)
 {
-  printf("soy una función dummy\n");
+  char* linea;
+  char caracter;
+  linea = (char*)malloc((LARGO_LINEA+1)*sizeof(char));
+  memset(linea,0x00,sizeof(linea));
+  memset(caracter,0x00,sizeof(caracter));
+  strcpy(&caracter, obtenerCaracter(valorNumerico));
+  sprintf(linea , FORMATO_OUTPUT_ARCHIVO, caracter, valorNumerico);
+  escribirArchivo(linea);
+  printf(linea);
+  free(linea);
 }
