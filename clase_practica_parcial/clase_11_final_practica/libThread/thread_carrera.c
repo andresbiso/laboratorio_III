@@ -50,7 +50,7 @@ void* carreraThread(void* parametro)
       case EVT_CAMINAR_FIN:
         esperarSemaforo(datosThread->idSemaforo);
         pasosJugador = leerPasosJugador(datosThread->memoria, msg.intRte - MSG_JUGADOR);
-        strcpy(leerNombreJugador(datosThread->memoria, msg.intRte - MSG_JUGADOR), nombreJugador);
+        strcpy(nombreJugador, leerNombreJugador(datosThread->memoria, msg.intRte - MSG_JUGADOR));
         levantarSemaforo(datosThread->idSemaforo);
         if (pasosJugador < TOTAL_PASOS)
         {
@@ -75,7 +75,7 @@ void* carreraThread(void* parametro)
     {
       break;
     }
-    usleep(1000);
+    usleep(INTERVALO_CARRERA_MS * 1000);
   }
   return 0;
 }

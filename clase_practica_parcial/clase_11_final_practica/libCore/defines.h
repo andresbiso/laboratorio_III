@@ -9,9 +9,11 @@
 #define HASTA 10
 #define MAX_LARGO_CADENA 1000
 #define RUTA_ARCHIVO "./archivo.txt"
+#define RUTA_BACKUP "./archivo.txt.bak"
 /*Intervalos*/
 #define INTERVALO_PASO_CONEJO_MS 100
 #define INTERVALO_PASO_TORTUGA_MS 500
+#define INTERVALO_CARRERA_MS 500
 /*Formatos*/
 #define FORMATO_OUTPUT_PANTALLA "LETRA:%c\tNUMERO:%d\n"
 #define FORMATO_OUTPUT_ARCHIVO "%c\t%d\n"

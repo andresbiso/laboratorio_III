@@ -22,6 +22,7 @@ void* jugadoresThread(void* parametro)
   int pasosAleatorio;
   int intervalo;
   int pasosJugador;
+  char nombreJugador[LARGO_NOMBRE];
   int tiempoEspera;
   int mitadCamino;
   int finJuego;
@@ -33,14 +34,17 @@ void* jugadoresThread(void* parametro)
 
   datosThread = (jugador*)parametro;
 
+  memset(nombreJugador, 0x00, sizeof(LARGO_NOMBRE));
+
   pasosAleatorio = 0;
   pasosJugador = 0;
   tiempoEspera = 0;
   mitadCamino = 0;
   finJuego = 0;
 
+  strcpy(nombreJugador, obtenerNombreJugador(datosThread->nroJugador));
   esperarSemaforo(datosThread->idSemaforo);
-  escribirNombreJugador(datosThread->memoria, datosThread->nroJugador, obtenerNombreJugador(datosThread->nroJugador));
+  escribirNombreJugador(datosThread->memoria, datosThread->nroJugador, nombreJugador);
   levantarSemaforo(datosThread->idSemaforo);
   intervalo = obtenerIntervaloJugador(datosThread->nroJugador);
 
@@ -54,11 +58,11 @@ void* jugadoresThread(void* parametro)
         break;
       case EVT_CAMINAR:
         pasosAleatorio = obtenerNumeroAleatorio(PASOS_MIN, PASOS_MAX);
+        pasosJugador += pasosAleatorio;
         esperarSemaforo(datosThread->idSemaforo);
-        pasosJugador = leerPasosJugador(datosThread->memoria, datosThread->nroJugador) + pasosAleatorio;
         escribirPasosJugador(datosThread->memoria, datosThread->nroJugador, pasosJugador);
         levantarSemaforo(datosThread->idSemaforo);
-        tiempoEspera = intervalo * pasosAleatorio * 1000;
+        tiempoEspera = intervalo * pasosAleatorio;
         if (mitadCamino == 0 && pasosJugador >= 50)
         {
           if (datosThread->nroJugador == 0)
@@ -67,9 +71,9 @@ void* jugadoresThread(void* parametro)
           }
           mitadCamino = 1;
         }
-        printf("Jugador %d: camino %d pasos\n", datosThread->nroJugador, pasosAleatorio);
-        printf("Jugador %d: espera %d ms\n", datosThread->nroJugador, tiempoEspera);
-        printf("Jugador %d: total %d pasos\n", datosThread->nroJugador, pasosJugador);
+        printf("Jugador %s: caminó %d pasos\n", nombreJugador, pasosAleatorio);
+        printf("Jugador %s: espera %d ms\n", nombreJugador, tiempoEspera);
+        printf("Jugador %s: total %d pasos\n", nombreJugador, pasosJugador);
         enviarMensaje(datosThread->idColaMensajes, MSG_TABLERO, MSG_JUGADOR + datosThread->nroJugador, EVT_CAMINAR_FIN, "");
         break;
       case EVT_FIN:
@@ -84,7 +88,7 @@ void* jugadoresThread(void* parametro)
       break;
     }
     tiempoEspera = tiempoEspera != 0 ? tiempoEspera : intervalo;
-    usleep(tiempoEspera);
+    usleep(tiempoEspera * 1000);
   }
   return 0;
 }
