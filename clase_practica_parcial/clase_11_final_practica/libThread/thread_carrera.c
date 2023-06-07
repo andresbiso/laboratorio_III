@@ -8,6 +8,7 @@
 #include "libCommon/aleatorio.h"
 #include "libCommon/hilos.h"
 #include "libCommon/cola.h"
+#include "libCommon/semaforos.h"
 #include "libCore/defines.h"
 #include "libCore/globals.h"
 #include "libCore/funciones.h"
@@ -19,7 +20,7 @@ void* carreraThread(void* parametro)
   mensaje msg;
   tablero* datosThread;
   int pasosJugador;
-  char[LARGO_NOMBRE] nombreJugador;
+  char nombreJugador[LARGO_NOMBRE];
   int finJuego;
   int i;
 
@@ -49,7 +50,7 @@ void* carreraThread(void* parametro)
       case EVT_CAMINAR_FIN:
         esperarSemaforo(datosThread->idSemaforo);
         pasosJugador = leerPasosJugador(datosThread->memoria, msg.intRte - MSG_JUGADOR);
-        nombreJugador = leerNombreJugador(datosThread->memoria, msg.intRte - MSG_JUGADOR);
+        strcpy(leerNombreJugador(datosThread->memoria, msg.intRte - MSG_JUGADOR), nombreJugador);
         levantarSemaforo(datosThread->idSemaforo);
         if (pasosJugador < TOTAL_PASOS)
         {
@@ -58,7 +59,7 @@ void* carreraThread(void* parametro)
         else
         {
           finJuego = 1;
-          prtinf("Ganó jugador %s\n", nombreJugador);
+          printf("Ganó jugador %s\n", nombreJugador);
           for (i = 0; i < cantidadJugadores; i++)
           {
             enviarMensaje(datosThread->idColaMensajes, MSG_JUGADOR + i, MSG_TABLERO, EVT_FIN, "");

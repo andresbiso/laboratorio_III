@@ -5,6 +5,7 @@
 #include "string.h"
 #include "pthread.h"
 /*Headers Library*/
+#include "libCommon/semaforos.h"
 #include "libCommon/aleatorio.h"
 #include "libCommon/hilos.h"
 #include "libCommon/cola.h"
@@ -57,9 +58,6 @@ void* jugadoresThread(void* parametro)
         pasosJugador = leerPasosJugador(datosThread->memoria, datosThread->nroJugador) + pasosAleatorio;
         escribirPasosJugador(datosThread->memoria, datosThread->nroJugador, pasosJugador);
         levantarSemaforo(datosThread->idSemaforo);
-        printf("Jugador %d: camino %d pasos", datosThread->nroJugador, pasosAleatorio);
-        printf("Jugador %d: espera %d ms", datosThread->nroJugador, intervalo);
-        printf("Jugador %d: total %d pasos", datosThread->nroJugador, pasosJugador);
         tiempoEspera = intervalo * pasosAleatorio * 1000;
         if (mitadCamino == 0 && pasosJugador >= 50)
         {
@@ -69,7 +67,10 @@ void* jugadoresThread(void* parametro)
           }
           mitadCamino = 1;
         }
-        enviarMensaje(datosThread->idColaMensajes, MSG_TABLERO, MSG_JUGADOR + i, EVT_CAMINAR_FIN, "");
+        printf("Jugador %d: camino %d pasos\n", datosThread->nroJugador, pasosAleatorio);
+        printf("Jugador %d: espera %d ms\n", datosThread->nroJugador, tiempoEspera);
+        printf("Jugador %d: total %d pasos\n", datosThread->nroJugador, pasosJugador);
+        enviarMensaje(datosThread->idColaMensajes, MSG_TABLERO, MSG_JUGADOR + datosThread->nroJugador, EVT_CAMINAR_FIN, "");
         break;
       case EVT_FIN:
         finJuego = 1;

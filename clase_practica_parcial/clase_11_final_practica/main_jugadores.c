@@ -68,12 +68,12 @@ int main(int argc, char *argv[])
 
   for (i = 0; i < cantidadJugadores; i++)
   {
-    dsatosThread[i].idColaMensajes = idColaMensajes;
+    datosThread[i].idColaMensajes = idColaMensajes;
     datosThread[i].idSemaforo = idSemaforo;
     datosThread[i].memoria = memoria;
     datosThread[i].nroJugador = i;
 
-    if (!crearThread(&idHilo[0], &atributos, jugadoresThread, (void*)&datosThread[0]))
+    if (!crearThread(&idHilo[i], &atributos, jugadoresThread, (void*)&datosThread[i]))
     {
       printf("Error: No se pude crear el thread\n");
       return -1;

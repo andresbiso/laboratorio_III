@@ -15,8 +15,7 @@ void escribirLinea(int valorNumerico)
   char caracter;
   linea = (char*)malloc((LARGO_LINEA+1)*sizeof(char));
   memset(linea,0x00,sizeof(linea));
-  memset(caracter,0x00,sizeof(caracter));
-  strcpy(&caracter, obtenerCaracter(valorNumerico));
+  strcpy(&caracter, obtenerCaracterPorNumero(valorNumerico));
   sprintf(linea , FORMATO_OUTPUT_ARCHIVO, caracter, valorNumerico);
   escribirArchivo(linea);
   printf(linea);

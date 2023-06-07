@@ -12,5 +12,5 @@ void configurarMemoria(dato_memoria*, int);
 int leerPasosJugador(dato_memoria*, int);
 void escribirPasosJugador(dato_memoria*, int, int);
 char* leerNombreJugador(dato_memoria*, int);
-void escribirNombreJugador(dato_memoria*, int, char*):
+void escribirNombreJugador(dato_memoria*, int, char*);
 #endif

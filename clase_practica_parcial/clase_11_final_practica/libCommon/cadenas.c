@@ -1,4 +1,5 @@
 /*Standard Library*/
+#include "stdio.h"
 #include "string.h"
 /*File Header*/
 #include "cadenas.h"

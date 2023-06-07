@@ -4,5 +4,6 @@
 #define CLAVE_BASE 33
 /*Standard Library*/
 #include "sys/ipc.h"
-key_t crearClave(int);
+key_t crearClaveConId(int);
+key_t crearClave();
 #endif

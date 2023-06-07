@@ -14,8 +14,6 @@ void leerLineas()
   char caracter;
   int valorNumerico;
 
-  memset(&caracter,0x00,sizeof(caracter));
-
   linea = (char*)malloc((LARGO_LINEA)*sizeof(char));
   memset(linea,0x00,sizeof(linea));
   while(leerLineaArchivo(linea) != 0)
@@ -24,8 +22,6 @@ void leerLineas()
     printf(FORMATO_OUTPUT_PANTALLA, caracter, valorNumerico);
   
     memset(linea,0x00,sizeof(linea));
-    memset(caracter,0x00,sizeof(caracter));
   }
   free(linea);
-  free(caracter);
 }

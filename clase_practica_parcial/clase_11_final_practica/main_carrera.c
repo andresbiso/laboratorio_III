@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
   idColaMensajes = crearColaMensajes();
   borrarMensajes(idColaMensajes);
   memoria = (dato_memoria*)crearMemoria(sizeof(dato_memoria)*cantidadJugadores, &idMemoria);
-  configurarMemoria(idMemoria, cantidadJugadores);
+  configurarMemoria(memoria, cantidadJugadores);
   memoriaIni = crearMemoriaIni(&idMemoriaIni);
   configurarMemoriaIni(memoriaIni);
 
