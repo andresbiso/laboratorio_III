@@ -32,7 +32,6 @@ int main(int argc, char *argv[])
   pthread_t* idHilo;
   pthread_attr_t atributos;
   jugador* datosThread;
-  int cantidadJugadores;
   int i;
 
   if (argc != 1)
@@ -58,7 +57,7 @@ int main(int argc, char *argv[])
 
   idSemaforo = crearSemaforo();
   idColaMensajes = crearColaMensajes();
-  memoria = (dato_memoria*)crearMemoria(sizeof(dato_memoria), &idMemoria);
+  memoria = (dato_memoria*)crearMemoria(sizeof(dato_memoria)*cantidadJugadores, &idMemoria);
   memoriaIni = crearMemoriaIni(&idMemoriaIni);
   verificarMemoriaIni(memoriaIni, "carrera");
 
@@ -67,17 +66,12 @@ int main(int argc, char *argv[])
   idHilo = (pthread_t*)malloc(sizeof(pthread_t)*cantidadJugadores);
   datosThread = (jugador*)malloc(sizeof(jugador)*cantidadJugadores);
 
-  esperarSemaforo(idSemaforo);
-  escribirCantidadJugadores(memoria, cantidadJugadores);
-  levantarSemaforo(idSemaforo);
-
   for (i = 0; i < cantidadJugadores; i++)
   {
     dsatosThread[i].idColaMensajes = idColaMensajes;
     datosThread[i].idSemaforo = idSemaforo;
     datosThread[i].memoria = memoria;
     datosThread[i].nroJugador = i;
-    datosThread[i].cantidadPasos = 0;
 
     if (!crearThread(&idHilo[0], &atributos, jugadoresThread, (void*)&datosThread[0]))
     {

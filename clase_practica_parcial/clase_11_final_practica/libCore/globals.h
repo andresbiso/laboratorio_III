@@ -13,11 +13,12 @@ enum eventos
 {
   EVT_NINGUNO, /*0*/
   EVT_CAMINAR,
-  EVT_META,
+  EVT_CAMINAR_FIN,
   EVT_FIN
 };
 typedef enum destinos Destinos;
 typedef enum eventos Eventos;
 /*Shared Global Variables*/
 extern pthread_mutex_t mutex;
+extern int cantidadJugadores;
 #endif

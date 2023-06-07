@@ -6,40 +6,37 @@
 /*File Header*/
 #include "memoria_core.h"
 
-void configurarMemoria(dato_memoria* memoria)
+void configurarMemoria(dato_memoria* memoria, int cantidadPosiciones)
 {
-  memset(memoria[POS_INI_MEM].cadena,0x00,sizeof(memoria[POS_INI_MEM].cadena));
-  memoria[POS_INI_MEM].numero = 0;
-  memoria[POS_INI_MEM].cantidadJugadores = 0;
+  int i;
+  for (i = 0; i < cantidadPosiciones; i++)
+  {
+    memoria[i].pasosJugador = 0;
+    memset(memoria[i].nombreJugador,0x00,sizeof(memoria[i].nombreJugador));
+  }
 }
 
-void escribirNumero(dato_memoria* memoria, int valor)
+int leerPasosJugador(dato_memoria* memoria, int posicion)
 {
-  memoria[POS_INI_MEM].numero = valor;
+  return memoria[posicion].pasosJugador;
 }
 
-int leerNumero(dato_memoria* memoria)
+void escribirPasosJugador(dato_memoria* memoria, int posicion, int valor)
 {
-  return memoria[POS_INI_MEM].numero;
+  memoria[posicion].pasosJugador = valor;
 }
 
-void escribirCadena(dato_memoria* memoria, char* ptrCadena)
+char* leerNombreJugador(dato_memoria* memoria, int posicion)
 {
-  strcpy(memoria[POS_INI_MEM].cadena, ptrCadena);
+  return memoria[posicion].nombreJugador;
 }
 
-char* leerCadena(dato_memoria* memoria)
+void escribirNombreJugador(dato_memoria* memoria, int posicion, char* ptrCadena)
 {
-  return memoria[POS_INI_MEM].cadena;
+  strcpy(memoria[posicion].nombreJugador, ptrCadena);
 }
 
-void escribirCantidadJugadores(dato_memoria* memoria, int valor)
-{
-  memoria[POS_INI_MEM].cantidadJugadores = valor;
-}
 
-int leerCantidadJugadores(dato_memoria* memoria)
-{
-  return memoria[POS_INI_MEM].cantidadJugadores;
-}
+
+
 

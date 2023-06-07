@@ -5,11 +5,12 @@
 #include "string.h"
 #include "pthread.h"
 /*Headers Library*/
-#include "libCore/defines.h"
-#include "libCore/globals.h"
 #include "libCommon/aleatorio.h"
 #include "libCommon/hilos.h"
 #include "libCommon/cola.h"
+#include "libCore/defines.h"
+#include "libCore/globals.h"
+#include "libCore/funciones.h"
 /*File Header*/
 #include "thread_carrera.h"
 
@@ -17,10 +18,9 @@ void* carreraThread(void* parametro)
 {
   mensaje msg;
   tablero* datosThread;
-  int pasosConejo;
-  int pasosTortuga;
-  int pasos;
-  int cantidadJugadores;
+  int pasosJugador;
+  char[LARGO_NOMBRE] nombreJugador;
+  int finJuego;
   int i;
 
   msg.longDest = MSG_NADIE;
@@ -28,68 +28,52 @@ void* carreraThread(void* parametro)
   msg.intEvento = EVT_NINGUNO;
   memset(msg.charMensaje,0x00,LARGO_MENSAJE);
 
+  memset(nombreJugador, 0x00, sizeof(LARGO_NOMBRE));
+
   datosThread = (tablero*)parametro;
+  pasosJugador = 0;
+  finJuego = 0;
 
-  pasosConejo = 0;
-  pasosTortuga = 0;
-  pasos = 0;
-  cantidadJugadores = 0;
-  i = 0;
-
-  esperarSemaforo(idSemaforo);
-  cantidadJugadores = leerCantidadJugadores(datosThread->memoria);
-  levantarSemaforo(idSemaforo);
-
-  for (i = 1; i < cantidadJugadores; i++)
+  for (i = 0; i < cantidadJugadores; i++)
   {
-    enviarMensaje(idColaMensajes, MSG_JUGADOR + i, MSG_TABLERO, EVT_CAMINAR,"");
+    enviarMensaje(datosThread->idColaMensajes, MSG_JUGADOR + i, MSG_TABLERO, EVT_CAMINAR, "");
   }
 
   while(1)
   {
-    lockMutex(&mutex);
-    recibirMensaje(idColaMensajes, MSG_TABLERO, &msg);
+    recibirMensaje(datosThread->idColaMensajes, MSG_TABLERO, &msg);
     switch(msg.intEvento)
     {
       case EVT_NINGUNO:
         break;
-      case EVT_PASO:
-        pasos = atoi(msg.charMensaje);
-        if (msg.intRte == MSG_CONEJO)
+      case EVT_CAMINAR_FIN:
+        esperarSemaforo(datosThread->idSemaforo);
+        pasosJugador = leerPasosJugador(datosThread->memoria, msg.intRte - MSG_JUGADOR);
+        nombreJugador = leerNombreJugador(datosThread->memoria, msg.intRte - MSG_JUGADOR);
+        levantarSemaforo(datosThread->idSemaforo);
+        if (pasosJugador < TOTAL_PASOS)
         {
-          pasosConejo += pasos;
-          if (pasosConejo < 100)
-          {
-            printf("Ganó conejo!");
-            enviarMensaje(idColaMensajes,MSG_CONEJO,MSG_TABLERO,EVT_CAMINAR,(char*)0);
-            unlockMutex(&mutex);
-            return 0;
-          }
-          else
-          {
-            enviarMensaje(idColaMensajes,MSG_CONEJO,MSG_TABLERO,EVT_FIN,(char*)0);
-          }
+          enviarMensaje(datosThread->idColaMensajes, msg.intRte, MSG_TABLERO, EVT_CAMINAR, "");
         }
         else
         {
-          pasosTortuga += pasos;
-          if (pasosTortuga < 100)
+          finJuego = 1;
+          prtinf("Ganó jugador %s\n", nombreJugador);
+          for (i = 0; i < cantidadJugadores; i++)
           {
-            printf("Ganó tortuga!");
-            enviarMensaje(idColaMensajes,MSG_TORTUGA,MSG_TABLERO,EVT_CAMINAR,(char*)0);
-            unlockMutex(&mutex);
-            return 0;
+            enviarMensaje(datosThread->idColaMensajes, MSG_JUGADOR + i, MSG_TABLERO, EVT_FIN, "");
           }
-          else
-          {
-            enviarMensaje(idColaMensajes,MSG_TORTUGA,MSG_TABLERO,EVT_FIN,(char*)0);
-          }
+          break;
         }
         break;
       default:
         break;
     }
     unlockMutex(&mutex);
+    if (finJuego == 1)
+    {
+      break;
+    }
     usleep(1000);
   }
   return 0;

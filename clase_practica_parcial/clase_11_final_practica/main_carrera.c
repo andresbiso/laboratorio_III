@@ -46,6 +46,7 @@ int main(int argc, char *argv[])
   idSemaforo = 0;
   idColaMensajes = 0;
   idHilo = 0;
+  cantidadJugadores = CANTIDAD_JUGADORES;
 
   srand(time(0));
 
@@ -56,8 +57,8 @@ int main(int argc, char *argv[])
   iniciarSemaforo(idSemaforo, VERDE);
   idColaMensajes = crearColaMensajes();
   borrarMensajes(idColaMensajes);
-  memoria = (dato_memoria*)crearMemoria(sizeof(dato_memoria), &idMemoria);
-  configurarMemoria(idMemoria);
+  memoria = (dato_memoria*)crearMemoria(sizeof(dato_memoria)*cantidadJugadores, &idMemoria);
+  configurarMemoria(idMemoria, cantidadJugadores);
   memoriaIni = crearMemoriaIni(&idMemoriaIni);
   configurarMemoriaIni(memoriaIni);
 

@@ -14,7 +14,6 @@ char* obtenerCaracterPorNumero(int valor)
     case 1:
       return "A";
   }
-
   return 0;
 }
 
@@ -24,7 +23,6 @@ int obtenerNumeroPorCaracter(char* valor)
   {
     return 1;
   }
-
   return -1;
 }
 
@@ -41,7 +39,30 @@ char* obtenerRutaArchivo(int valor)
   {
     case 1:
       return RUTA_ARCHIVO;
-    default:
-      return "";
   }
+  return "";
+}
+
+char* obtenerNombreJugador(int nroJugador)
+{
+  switch(nroJugador)
+  {
+    case 0:
+      return "CONEJO";
+    case 1:
+      return "TORTUGA";
+  }
+  return "";
+}
+
+int obtenerIntervaloJugador(int nroJugador)
+{
+  switch(nroJugador)
+  {
+    case 0:
+      return INTERVALO_PASO_CONEJO_MS;
+    case 1:
+      return INTERVALO_PASO_TORTUGA_MS;
+  }
+  return 0;
 }
