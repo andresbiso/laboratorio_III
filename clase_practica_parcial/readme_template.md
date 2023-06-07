@@ -6,11 +6,6 @@ PIENSO(1) pienso 1.0.0
 ## NOMBRE
 pienso
 
-## SINOPSIS
-**pienso**
-
-## DESCRIPCIÓN
-
 ## OPCIONES
 **pienso** no tiene opciones disponibles
 
@@ -30,11 +25,6 @@ JUGADOR(1) jugador 1.0.0
 
 ## NOMBRE
 jugador
-
-## SINOPSIS
-**jugador**
-
-## DESCRIPCIÓN
 
 ## OPCIONES
 **jugador** no tiene opciones disponibles
