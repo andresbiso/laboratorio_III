@@ -78,6 +78,7 @@ void* jugadoresThread(void* parametro)
         break;
       case EVT_FIN:
         finJuego = 1;
+        printf("Jugador %s: fin de juego\n", nombreJugador);
         break;
       default:
         break;

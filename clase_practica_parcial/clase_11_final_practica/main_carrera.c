@@ -76,9 +76,7 @@ int main(int argc, char *argv[])
 
   joinThread(&idHilo);
 
-  esperarSemaforo(idSemaforo);
   verificarFinalizarMemoriaIni(memoriaIni, "jugadores");
-  levantarSemaforo(idSemaforo);
 
   liberarMemoria(idMemoriaIni, (char*)memoriaIni);
   liberarMemoria(idMemoria, (char*)memoria);
