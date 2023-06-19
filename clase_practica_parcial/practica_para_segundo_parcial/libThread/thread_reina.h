@@ -9,4 +9,5 @@ struct tipo_reina
 };
 typedef struct tipo_reina reina;
 void* reinaThread(void*);
+void accionesReina(int, int, int);
 #endif

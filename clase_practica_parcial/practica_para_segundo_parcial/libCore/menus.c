@@ -1,8 +1,5 @@
 /*Standard Library*/
 #include "stdio.h"
-#include "string.h"
-/*Headers Library*/
-#include "libCommon/pantalla.h"
 /*File Header*/
 #include "menus.h"
 
