@@ -18,30 +18,37 @@ int leerRecursoComida(dato_memoria* memoria, int posicion)
 {
   return memoria[posicion].recursoComida;
 }
+
 void escribirRecursoComida(dato_memoria* memoria, int posicion, int valor)
 {
   memoria[posicion].recursoComida = valor;
 }
+
 int leerRecursoHoja(dato_memoria* memoria, int posicion)
 {
- return memoria[posicion].recursoHoja;
+  return memoria[posicion].recursoHoja;
 }
+
 void escribirRecursoHoja(dato_memoria* memoria, int posicion, int valor)
 {
   memoria[posicion].recursoHoja = valor;
 }
+
 int leerRecursoRama(dato_memoria* memoria, int posicion)
 {
- return memoria[posicion].recursoRama;
+  return memoria[posicion].recursoRama;
 }
+
 void escribirRecursoRama(dato_memoria* memoria, int posicion, int valor)
 {
   memoria[posicion].recursoRama = valor;
 }
+
 int leerRecursoAgua(dato_memoria* memoria, int posicion)
 {
- return memoria[posicion].recursoAgua;
+  return memoria[posicion].recursoAgua;
 }
+
 void escribirRecursoAgua(dato_memoria* memoria, int posicion, int valor)
 {
   memoria[posicion].recursoAgua = valor;

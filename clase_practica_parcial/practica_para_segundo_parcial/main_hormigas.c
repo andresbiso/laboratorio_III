@@ -72,6 +72,10 @@ int main(int argc, char *argv[])
     datosThread[i].idColaMensajes = idColaMensajes;
     datosThread[i].memoria = memoria;
     datosThread[i].nroHormiga = i;
+    datosThread[i].recursoComida = 0;
+    datosThread[i].recursoHoja = 0;
+    datosThread[i].recursoRama = 0;
+    datosThread[i].recursoAgua = 0;
 
     if (!crearThread(&idHilo[i], &atributos, hormigasThread, (void*)&datosThread[i]))
     {

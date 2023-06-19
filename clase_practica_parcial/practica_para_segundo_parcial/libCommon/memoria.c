@@ -39,5 +39,5 @@ void* crearMemoria(int size, int* extIdMemoria)
 void liberarMemoria(int idMemoria, char* memoria)
 {
   shmdt(memoria);
-  shmctl(idMemoria, IPC_RMID, (struct shmid_ds*) 0);
+  shmctl(idMemoria, IPC_RMID, (struct shmid_ds*)0);
 }

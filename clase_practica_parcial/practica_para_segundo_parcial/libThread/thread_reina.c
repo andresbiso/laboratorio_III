@@ -55,7 +55,7 @@ void* reinaThread(void* parametro)
   int recursoHoja;
   int recursoRama;
   int recursoAgua;
-  int finJuego;
+  int cantHormigasFin;
   int i;
   int opcion;
   int numeroHormiga;
@@ -71,7 +71,7 @@ void* reinaThread(void* parametro)
   recursoRama = 0;
   recursoAgua = 0;
   opcion = -1;
-  finJuego = 0;
+  cantHormigasFin = 0;
   numeroHormiga = -1;
 
   for (i = 0; i < cantidadHormigas; i++)
@@ -92,55 +92,47 @@ void* reinaThread(void* parametro)
         break;
       case EVT_JUNTAR_COMIDA_FIN:
         printf("Hormiga %d: terminó de juntar comida\n", numeroHormiga);
-        lockMutex(&mutex);
-        recursoComida = leerRecursoComida(datosThread->memoria, 0);
-        unlockMutex(&mutex);
         break;
       case EVT_JUNTAR_HOJA_FIN:
         printf("Hormiga %d: terminó de juntar hojas\n", numeroHormiga);
-        lockMutex(&mutex);
-        recursoHoja = leerRecursoHoja(datosThread->memoria, 0);
-        unlockMutex(&mutex);
         break;
       case EVT_JUNTAR_RAMA_FIN:
         printf("Hormiga %d: terminó de juntar ramas\n", numeroHormiga);
-        lockMutex(&mutex);
-        recursoRama = leerRecursoRama(datosThread->memoria, 0);
-        unlockMutex(&mutex);
         break;
       case EVT_JUNTAR_AGUA_FIN:
         printf("Hormiga %d: terminó de juntar agua\n", numeroHormiga);
-        lockMutex(&mutex);
-        recursoAgua = leerRecursoAgua(datosThread->memoria, 0);
-        unlockMutex(&mutex);
+        break;
+      case EVT_FIN_HORMIGA:
+        printf("Hormiga %d: finalizó su trabajo\n", numeroHormiga);
+        cantHormigasFin++;
+        numeroHormiga = -1;
         break;
       default:
         break;
     }
+
+    lockMutex(&mutex);
+    recursoComida = leerRecursoComida(datosThread->memoria, 0);
+    recursoHoja = leerRecursoHoja(datosThread->memoria, 0);
+    recursoRama = leerRecursoRama(datosThread->memoria, 0);
+    recursoAgua = leerRecursoAgua(datosThread->memoria, 0);
+    unlockMutex(&mutex);
     printf("Recurso Comida: %d unidades\n", recursoComida);
     printf("Recurso Hoja: %d unidades\n", recursoHoja);
     printf("Recurso Rama: %d unidades\n", recursoRama);
     printf("Recurso Agua: %d unidades\n", recursoAgua);
-    if (recursoComida >= TOTAL_RECURSO || recursoHoja >= TOTAL_RECURSO || recursoRama >= TOTAL_RECURSO || recursoAgua >= TOTAL_RECURSO)
+ 
+    if (cantHormigasFin >= cantidadHormigas)
     {
-      finJuego = 1;
-      printf("Se alcanzó recurso máximo\n");
-      for (i = 0; i < cantidadHormigas; i++)
-      {
-        lockMutex(&mutex);
-        enviarMensaje(datosThread->idColaMensajes, MSG_HORMIGA + i, MSG_REINA, EVT_FIN, "");
-        unlockMutex(&mutex);
-      }
+      printf("Todas las hormigas finalizaron su trabajo\n");
       break;
     }
 
-    if (finJuego == 1)
+    if (numeroHormiga >= 0)
     {
-      break;
+      opcion = mostrarMenuReina(numeroHormiga);
+      accionesReina(opcion, datosThread->idColaMensajes, numeroHormiga);
     }
-
-    opcion = mostrarMenuReina(numeroHormiga);
-    accionesReina(opcion, datosThread->idColaMensajes, numeroHormiga);
 
     usleep(INTERVALO_REINA_MS * 1000);
   }

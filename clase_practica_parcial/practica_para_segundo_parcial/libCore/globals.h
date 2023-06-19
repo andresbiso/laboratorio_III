@@ -20,7 +20,7 @@ enum eventos
   EVT_JUNTAR_RAMA_FIN,
   EVT_JUNTAR_AGUA,
   EVT_JUNTAR_AGUA_FIN,
-  EVT_FIN
+  EVT_FIN_HORMIGA
 };
 typedef enum destinos Destinos;
 typedef enum eventos Eventos;

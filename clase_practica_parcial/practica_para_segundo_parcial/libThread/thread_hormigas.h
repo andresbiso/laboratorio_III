@@ -8,6 +8,10 @@ struct tipo_hormiga
   dato_memoria* memoria;
   /*custom*/
   int nroHormiga;
+  int recursoComida;
+  int recursoHoja;
+  int recursoRama;
+  int recursoAgua;
 };
 typedef struct tipo_hormiga hormiga;
 void* hormigasThread(void*);
