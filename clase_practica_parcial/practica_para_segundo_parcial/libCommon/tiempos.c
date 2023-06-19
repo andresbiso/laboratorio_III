@@ -6,6 +6,12 @@
 #include "tiempos.h"
 
 /*Devuelve el tiempo en ms*/
+/*Ejemplo uso:
+1. tiempo t_inicio; tiempo t_final;
+2. obtenerTiempoActual(&t_inicio);
+3. obtenerTiempoActual(&t_final);
+4. printf("Tiempo empleado: %dms\n", obtenerTiempoTranscurrido(t_inicio, t_final));
+*/
 int obtenerTiempoTranscurrido(tiempo tiempoInicio, tiempo tiempoFin)
 {
     int secInicio, microInicio;

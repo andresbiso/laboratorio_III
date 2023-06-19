@@ -22,15 +22,6 @@ enum eventos
   EVT_JUNTAR_AGUA_FIN,
   EVT_FIN
 };
-enum acciones
-{
-  AC_NINGUNO, /*0*/
-  AC_JUNTAR_COMIDA,
-  AC_JUNTAR_HOJA,
-  AC_JUNTAR_RAMA,
-  AC_JUNTAR_AGUA
-};
-typedef enum acciones Acciones;
 typedef enum destinos Destinos;
 typedef enum eventos Eventos;
 /*Shared Global Variables*/

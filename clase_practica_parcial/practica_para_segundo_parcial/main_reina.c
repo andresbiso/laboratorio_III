@@ -67,7 +67,6 @@ int main(int argc, char *argv[])
   printf("Cantidad Hormigas %d\n", cantidadHormigas);
 
   datosThread.idColaMensajes = idColaMensajes;
-  datosThread.idSemaforo = idSemaforo;
   datosThread.memoria = memoria;
 
   if (!crearThread(&idHilo, &atributos, reinaThread, (void*)&datosThread))

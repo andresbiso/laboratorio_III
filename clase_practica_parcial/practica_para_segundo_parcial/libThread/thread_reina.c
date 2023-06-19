@@ -8,12 +8,44 @@
 #include "libCommon/aleatorio.h"
 #include "libCommon/hilos.h"
 #include "libCommon/cola.h"
-#include "libCommon/semaforos.h"
 #include "libCore/defines.h"
 #include "libCore/globals.h"
 #include "libCore/funciones.h"
+#include "libCore/menus.h"
 /*File Header*/
 #include "thread_reina.h"
+
+void accionesReina(int opcion, int idColaMensajes, int numeroHormiga)
+{
+    switch (opcion) {
+      case AC_JUNTAR_COMIDA:
+        printf("Hormiga %d: Juntar Comida\n", numeroHormiga);
+        lockMutex(&mutex);
+        enviarMensaje(idColaMensajes, MSG_HORMIGA + numeroHormiga, MSG_REINA, EVT_JUNTAR_COMIDA, "");
+        unlockMutex(&mutex);
+        break;
+      case AC_JUNTAR_HOJA:
+        printf("Hormiga %d: Juntar Hoja\n", numeroHormiga);
+        lockMutex(&mutex);
+        enviarMensaje(idColaMensajes, MSG_HORMIGA + numeroHormiga, MSG_REINA, EVT_JUNTAR_HOJA, "");
+        unlockMutex(&mutex);
+        break;
+      case AC_JUNTAR_RAMA: 
+        printf("Hormiga %d: Juntar Rama\n", numeroHormiga);
+        lockMutex(&mutex);
+        enviarMensaje(idColaMensajes, MSG_HORMIGA + numeroHormiga, MSG_REINA, EVT_JUNTAR_RAMA, "");
+        unlockMutex(&mutex);
+        break;
+      case AC_JUNTAR_AGUA: 
+        printf("Hormiga %d: Juntar Agua\n", numeroHormiga);
+        lockMutex(&mutex);
+        enviarMensaje(idColaMensajes, MSG_HORMIGA + numeroHormiga, MSG_REINA, EVT_JUNTAR_AGUA, "");
+        unlockMutex(&mutex);
+        break;
+      default:
+        break;
+    }
+}
 
 void* reinaThread(void* parametro)
 {
@@ -26,7 +58,7 @@ void* reinaThread(void* parametro)
   int finJuego;
   int i;
   int opcion;
-  int hormigaNumero;
+  int numeroHormiga;
 
   msg.longDest = MSG_NADIE;
   msg.intRte = MSG_NADIE;
@@ -38,79 +70,49 @@ void* reinaThread(void* parametro)
   recursoHoja = 0;
   recursoRama = 0;
   recursoAgua = 0;
-  opcion = 0;
+  opcion = -1;
   finJuego = 0;
-  hormigaNumero = -1;
+  numeroHormiga = -1;
 
   for (i = 0; i < cantidadHormigas; i++)
   {
-    opcion = -1;
-    while(opcion < 1 || opcion > 4)
-    {
-      printf("Hormiga %d\n", i);
-      printf("Opcion 1: Juntar Comida\n");
-      printf("Opcion 2: Juntar Hoja\n");
-      printf("Opcion 3: Juntar Rama\n");
-      printf("Opcion 4: Juntar Agua\n");
-
-      printf("Ingresar Opcion:\n");
-      scanf("%d",&opcion); 
-    }
-
-    switch (opcion) {
-      case AC_JUNTAR_COMIDA:
-        printf("Hormiga %d: Juntar Comida\n", i);
-        enviarMensaje(datosThread->idColaMensajes, MSG_HORMIGA + i, MSG_REINA, EVT_JUNTAR_COMIDA, "");
-        break;
-      case AC_JUNTAR_HOJA:
-        printf("Hormiga %d: Juntar Hoja\n", i);
-        enviarMensaje(datosThread->idColaMensajes, MSG_HORMIGA + i, MSG_REINA, EVT_JUNTAR_HOJA, "");  
-        break;
-      case AC_JUNTAR_RAMA: 
-        printf("Hormiga %d: Juntar Rama\n", i);
-        enviarMensaje(datosThread->idColaMensajes, MSG_HORMIGA + i, MSG_REINA, EVT_JUNTAR_RAMA, "");
-        break;
-      case AC_JUNTAR_AGUA: 
-        printf("Hormiga %d: Juntar Agua\n", i);
-        enviarMensaje(datosThread->idColaMensajes, MSG_HORMIGA + i, MSG_REINA, EVT_JUNTAR_AGUA, "");
-        break;
-      default:
-        break;
-    }
+    opcion = mostrarMenuReina(i);
+    accionesReina(opcion, datosThread->idColaMensajes, i);
   }
 
   while(1)
   {
     lockMutex(&mutex);
     recibirMensaje(datosThread->idColaMensajes, MSG_REINA, &msg);
-    hormigaNumero = msg.intRte - MSG_HORMIGA;
+    unlockMutex(&mutex);
+    numeroHormiga = msg.intRte - MSG_HORMIGA;
     switch(msg.intEvento)
     {
       case EVT_NINGUNO:
         break;
       case EVT_JUNTAR_COMIDA_FIN:
-        printf("Hormiga %d: terminó de juntar comida\n", hormigaNumero);
-        esperarSemaforo(datosThread->idSemaforo);
+        printf("Hormiga %d: terminó de juntar comida\n", numeroHormiga);
+        lockMutex(&mutex);
         recursoComida = leerRecursoComida(datosThread->memoria, 0);
-        levantarSemaforo(datosThread->idSemaforo);
+        unlockMutex(&mutex);
         break;
       case EVT_JUNTAR_HOJA_FIN:
-        printf("Hormiga %d: terminó de juntar hojas\n", hormigaNumero);
-        esperarSemaforo(datosThread->idSemaforo);
+        printf("Hormiga %d: terminó de juntar hojas\n", numeroHormiga);
+        lockMutex(&mutex);
         recursoHoja = leerRecursoHoja(datosThread->memoria, 0);
-        levantarSemaforo(datosThread->idSemaforo);
+        unlockMutex(&mutex);
         break;
       case EVT_JUNTAR_RAMA_FIN:
-        printf("Hormiga %d: terminó de juntar ramas\n", hormigaNumero);
-        esperarSemaforo(datosThread->idSemaforo);
+        printf("Hormiga %d: terminó de juntar ramas\n", numeroHormiga);
+        lockMutex(&mutex);
         recursoRama = leerRecursoRama(datosThread->memoria, 0);
-        levantarSemaforo(datosThread->idSemaforo);
+        unlockMutex(&mutex);
         break;
       case EVT_JUNTAR_AGUA_FIN:
-        printf("Hormiga %d: terminó de juntar agua\n", hormigaNumero);
-        esperarSemaforo(datosThread->idSemaforo);
+        printf("Hormiga %d: terminó de juntar agua\n", numeroHormiga);
+        lockMutex(&mutex);
         recursoAgua = leerRecursoAgua(datosThread->memoria, 0);
-        levantarSemaforo(datosThread->idSemaforo);
+        unlockMutex(&mutex);
         break;
       default:
         break;
@@ -125,49 +127,20 @@ void* reinaThread(void* parametro)
       printf("Se alcanzó recurso máximo\n");
       for (i = 0; i < cantidadHormigas; i++)
       {
+        lockMutex(&mutex);
         enviarMensaje(datosThread->idColaMensajes, MSG_HORMIGA + i, MSG_REINA, EVT_FIN, "");
+        unlockMutex(&mutex);
       }
       break;
     }
-    unlockMutex(&mutex);
+
     if (finJuego == 1)
     {
       break;
     }
 
-    opcion = -1;
-    while(opcion < 1 || opcion > 4)
-    {
-      printf("Hormiga %d\n", hormigaNumero);
-      printf("Opcion 1: Juntar Comida\n");
-      printf("Opcion 2: Juntar Hoja\n");
-      printf("Opcion 3: Juntar Rama\n");
-      printf("Opcion 4: Juntar Agua\n");
-
-      printf("Ingresar Opcion:\n");
-      scanf("%d",&opcion); 
-    }
-
-    switch (opcion) {
-      case AC_JUNTAR_COMIDA:
-        printf("Hormiga %d: Juntar Comida\n", hormigaNumero);
-        enviarMensaje(datosThread->idColaMensajes, MSG_HORMIGA + hormigaNumero, MSG_REINA, EVT_JUNTAR_COMIDA, "");
-        break;
-      case AC_JUNTAR_HOJA:
-        printf("Hormiga %d: Juntar Hoja\n", hormigaNumero);
-        enviarMensaje(datosThread->idColaMensajes, MSG_HORMIGA + hormigaNumero, MSG_REINA, EVT_JUNTAR_HOJA, "");  
-        break;
-      case AC_JUNTAR_RAMA: 
-        printf("Hormiga %d: Juntar Rama\n", hormigaNumero);
-        enviarMensaje(datosThread->idColaMensajes, MSG_HORMIGA + hormigaNumero, MSG_REINA, EVT_JUNTAR_RAMA, "");
-        break;
-      case AC_JUNTAR_AGUA: 
-        printf("Hormiga %d: Juntar Agua\n", hormigaNumero);
-        enviarMensaje(datosThread->idColaMensajes, MSG_HORMIGA + hormigaNumero, MSG_REINA, EVT_JUNTAR_AGUA, "");
-        break;
-      default:
-        break;
-    }
+    opcion = mostrarMenuReina(numeroHormiga);
+    accionesReina(opcion, datosThread->idColaMensajes, numeroHormiga);
 
     usleep(INTERVALO_REINA_MS * 1000);
   }

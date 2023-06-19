@@ -5,7 +5,6 @@
 struct tipo_hormiga
 {
   int idColaMensajes;
-  int idSemaforo;
   dato_memoria* memoria;
   /*custom*/
   int nroHormiga;

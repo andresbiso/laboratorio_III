@@ -5,7 +5,6 @@
 #include "string.h"
 #include "pthread.h"
 /*Headers Library*/
-#include "libCommon/semaforos.h"
 #include "libCommon/aleatorio.h"
 #include "libCommon/hilos.h"
 #include "libCommon/cola.h"
@@ -38,58 +37,59 @@ void* hormigasThread(void* parametro)
   {
     lockMutex(&mutex);
     recibirMensaje(datosThread->idColaMensajes, MSG_HORMIGA + datosThread->nroHormiga, &msg);
+    unlockMutex(&mutex);
     switch(msg.intEvento)
     {
       case EVT_NINGUNO:
         break;
       case EVT_JUNTAR_COMIDA:
         recursoAleatorio = obtenerNumeroAleatorio(JUNTAR_MIN, JUNTAR_MAX);
-        esperarSemaforo(datosThread->idSemaforo);
+        lockMutex(&mutex);
         recursoTotal = leerRecursoComida(datosThread->memoria, 0);
-        levantarSemaforo(datosThread->idSemaforo);
+        unlockMutex(&mutex);
         recursoTotal += recursoAleatorio;
-        esperarSemaforo(datosThread->idSemaforo);
+        lockMutex(&mutex);
         escribirRecursoComida(datosThread->memoria, 0, recursoTotal);
-        levantarSemaforo(datosThread->idSemaforo);
+        unlockMutex(&mutex);
         printf("Hormiga %d: obtuvo %d recurso comida\n", datosThread->nroHormiga, recursoAleatorio);
         printf("Hormiga %d: total %d recurso comida\n", datosThread->nroHormiga, recursoTotal);
         enviarMensaje(datosThread->idColaMensajes, MSG_REINA, MSG_HORMIGA + datosThread->nroHormiga, EVT_JUNTAR_COMIDA_FIN, "");
         break;
       case EVT_JUNTAR_HOJA:
         recursoAleatorio = obtenerNumeroAleatorio(JUNTAR_MIN, JUNTAR_MAX);
-        esperarSemaforo(datosThread->idSemaforo);
+        lockMutex(&mutex);
         recursoTotal = leerRecursoHoja(datosThread->memoria, 0);
-        levantarSemaforo(datosThread->idSemaforo);
+        unlockMutex(&mutex);
         recursoTotal += recursoAleatorio;
-        esperarSemaforo(datosThread->idSemaforo);
+        lockMutex(&mutex);
         escribirRecursoHoja(datosThread->memoria, 0, recursoTotal);
-        levantarSemaforo(datosThread->idSemaforo);
+        unlockMutex(&mutex);
         printf("Hormiga %d: obtuvo %d recurso hoja\n", datosThread->nroHormiga, recursoAleatorio);
         printf("Hormiga %d: total %d recurso hoja\n", datosThread->nroHormiga, recursoTotal);
         enviarMensaje(datosThread->idColaMensajes, MSG_REINA, MSG_HORMIGA + datosThread->nroHormiga, EVT_JUNTAR_HOJA_FIN, "");
         break;
       case EVT_JUNTAR_RAMA:
         recursoAleatorio = obtenerNumeroAleatorio(JUNTAR_MIN, JUNTAR_MAX);
-        esperarSemaforo(datosThread->idSemaforo);
+        lockMutex(&mutex);
         recursoTotal = leerRecursoRama(datosThread->memoria, 0);
-        levantarSemaforo(datosThread->idSemaforo);
+        unlockMutex(&mutex);
         recursoTotal += recursoAleatorio;
-        esperarSemaforo(datosThread->idSemaforo);
+        lockMutex(&mutex);
         escribirRecursoRama(datosThread->memoria, 0, recursoTotal);
-        levantarSemaforo(datosThread->idSemaforo);
+        unlockMutex(&mutex);
         printf("Hormiga %d: obtuvo %d recurso rama\n", datosThread->nroHormiga, recursoAleatorio);
         printf("Hormiga %d: total %d recurso rama\n", datosThread->nroHormiga, recursoTotal);
         enviarMensaje(datosThread->idColaMensajes, MSG_REINA, MSG_HORMIGA + datosThread->nroHormiga, EVT_JUNTAR_RAMA_FIN, "");
         break;
       case EVT_JUNTAR_AGUA:
         recursoAleatorio = obtenerNumeroAleatorio(JUNTAR_MIN, JUNTAR_MAX);
-        esperarSemaforo(datosThread->idSemaforo);
+        lockMutex(&mutex);
         recursoTotal = leerRecursoAgua(datosThread->memoria, 0);
-        levantarSemaforo(datosThread->idSemaforo);
+        unlockMutex(&mutex);
         recursoTotal += recursoAleatorio;
-        esperarSemaforo(datosThread->idSemaforo);
+        lockMutex(&mutex);
         escribirRecursoAgua(datosThread->memoria, 0, recursoTotal);
-        levantarSemaforo(datosThread->idSemaforo);
+        unlockMutex(&mutex);
         printf("Hormiga %d: obtuvo %d recurso agua\n", datosThread->nroHormiga, recursoAleatorio);
         printf("Hormiga %d: total %d recurso agua\n", datosThread->nroHormiga, recursoTotal);
         enviarMensaje(datosThread->idColaMensajes, MSG_REINA, MSG_HORMIGA + datosThread->nroHormiga, EVT_JUNTAR_AGUA_FIN, "");
@@ -101,7 +101,6 @@ void* hormigasThread(void* parametro)
       default:
         break;
     }
-    unlockMutex(&mutex);
     if (finJuego == 1)
     {
       break;

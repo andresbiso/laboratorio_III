@@ -70,7 +70,6 @@ int main(int argc, char *argv[])
   for (i = 0; i < cantidadHormigas; i++)
   {
     datosThread[i].idColaMensajes = idColaMensajes;
-    datosThread[i].idSemaforo = idSemaforo;
     datosThread[i].memoria = memoria;
     datosThread[i].nroHormiga = i;
 

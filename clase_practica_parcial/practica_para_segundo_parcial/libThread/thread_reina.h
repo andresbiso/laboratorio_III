@@ -5,7 +5,6 @@
 struct tipo_reina
 {
   int idColaMensajes;
-  int idSemaforo;
   dato_memoria* memoria;
 };
 typedef struct tipo_reina reina;
