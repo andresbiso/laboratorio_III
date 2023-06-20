@@ -20,5 +20,5 @@
 #define JUNTAR_MIN 1
 #define JUNTAR_MAX 4
 #define LARGO_NOMBRE 100
-#define TOTAL_RECURSO 1
+#define TOTAL_RECURSO 90
 #endif
