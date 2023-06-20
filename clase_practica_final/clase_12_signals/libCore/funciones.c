@@ -42,3 +42,15 @@ char* obtenerRutaArchivo(int valor)
   }
   return "";
 }
+
+char* obtenerNombreJugadorPorNumero(int numJugador)
+{
+  switch(valor)
+  {
+    case 0:
+      return "Julian";
+    case 1:
+      return "Lautaro";
+  }
+  return "";
+}

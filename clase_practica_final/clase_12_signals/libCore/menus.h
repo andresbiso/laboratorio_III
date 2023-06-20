@@ -1,14 +1,11 @@
 #ifndef _MENUS_H
 #define _MENUS_H
-enum acciones_menu_reina
+enum acciones_menu_partido
 {
   AC_NINGUNA, /*0*/
-  AC_JUNTAR_COMIDA,
-  AC_JUNTAR_HOJA,
-  AC_JUNTAR_RAMA,
-  AC_JUNTAR_AGUA,
+  AC_PATEAR,
   AC_MAX
 };
-typedef enum acciones_menu_reina AccionesMenuReina;
-int mostrarMenuReina(int);
+typedef enum acciones_menu_partido AccionesMenuPartido;
+int mostrarMenuPartido(int);
 #endif

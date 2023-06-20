@@ -1,6 +1,7 @@
 #ifndef _THREAD_JUGADOR_H
 #define _THREAD_JUGADOR_H
 /*Headers Library*/
+#include "libCore/defines.h"
 #include "libCore/memoria_core.h"
 struct tipo_jugador
 {
@@ -8,11 +9,9 @@ struct tipo_jugador
   dato_memoria* memoria;
   /*custom*/
   int nroJugador;
-  int recursoComida;
-  int recursoHoja;
-  int recursoRama;
-  int recursoAgua;
+  char nombreJugador[LARGO_NOMBRE];
 };
 typedef struct tipo_jugador jugador;
 void* jugadorThread(void*);
+int jugadorAcciones(int, char*);
 #endif

@@ -6,7 +6,6 @@
 #include "time.h"
 #include "pthread.h"
 /*Headers Library*/
-#include "libCommon/semaforos.h"
 #include "libCommon/memoria.h"
 #include "libCommon/memoria_ini.h"
 #include "libCommon/cola.h"
@@ -26,7 +25,6 @@ int main(int argc, char *argv[])
   int idColaMensajes;
   int idMemoria;
   dato_memoria* memoria;
-  int idSemaforo;
   int idMemoriaIni;
   dato_memoria_ini* memoriaIni;
   pthread_t idHilo;
@@ -43,7 +41,6 @@ int main(int argc, char *argv[])
   idMemoriaIni = 0;
   memoria = 0;
   idMemoria = 0;
-  idSemaforo = 0;
   idColaMensajes = 0;
   idHilo = 0;
   cantidadHormigas = atoi(argv[1]);
@@ -53,8 +50,6 @@ int main(int argc, char *argv[])
   iniciarMutex(&mutex);
   iniciarAttr(&atributos);
 
-  idSemaforo = crearSemaforo();
-  iniciarSemaforo(idSemaforo, VERDE);
   idColaMensajes = crearColaMensajes();
   borrarMensajes(idColaMensajes);
   memoria = (dato_memoria*)crearMemoria(sizeof(dato_memoria), &idMemoria);
@@ -82,7 +77,6 @@ int main(int argc, char *argv[])
   liberarMemoria(idMemoriaIni, (char*)memoriaIni);
   liberarMemoria(idMemoria, (char*)memoria);
   liberarColaMensajes(idColaMensajes);
-  eliminarSemaforo(idSemaforo);
   destruirMutex(&mutex);
   return 0;
 }

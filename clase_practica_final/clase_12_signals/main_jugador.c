@@ -6,7 +6,6 @@
 #include "time.h"
 #include "pthread.h"
 /*Headers Library*/
-#include "libCommon/semaforos.h"
 #include "libCommon/memoria.h"
 #include "libCommon/memoria_ini.h"
 #include "libCommon/cola.h"
@@ -26,7 +25,6 @@ int main(int argc, char *argv[])
   int idColaMensajes;
   int idMemoria;
   dato_memoria* memoria;
-  int idSemaforo;
   int idMemoriaIni;
   dato_memoria_ini* memoriaIni;
   pthread_t* idHilo;
@@ -44,9 +42,8 @@ int main(int argc, char *argv[])
   idMemoriaIni = 0;
   memoria = 0;
   idMemoria = 0;
-  idSemaforo = 0;
   idHilo = 0;
-  cantidadHormigas = atoi(argv[1]);
+  cantidadJugadores = 2;
 
   srand(time(0));
 
@@ -55,36 +52,33 @@ int main(int argc, char *argv[])
 
   srand(time(0));
 
-  idSemaforo = crearSemaforo();
   idColaMensajes = crearColaMensajes();
-  memoria = (dato_memoria*)crearMemoria(sizeof(dato_memoria), &idMemoria);
+  memoria = (dato_memoria*)crearMemoria(sizeof(dato_memoria)*cantidadJugadores, &idMemoria);
   memoriaIni = crearMemoriaIni(&idMemoriaIni);
-  verificarMemoriaIni(memoriaIni, "arbitro");
+  verificarMemoriaIni(memoriaIni, "partido");
 
   limpiarPantalla();
-  printf("Cantidad Jugadores %d\n", cantidadHormigas);
+  printf("Cantidad Jugadores %d\n", cantidadJugadores);
 
-  idHilo = (pthread_t*)malloc(sizeof(pthread_t)*cantidadHormigas);
-  datosThread = (hormiga*)malloc(sizeof(hormiga)*cantidadHormigas);
+  idHilo = (pthread_t*)malloc(sizeof(pthread_t)*cantidadJugadores);
+  datosThread = (jugador*)malloc(sizeof(jugador)*cantidadJugadores);
 
-  for (i = 0; i < cantidadHormigas; i++)
+  for (i = 0; i < cantidadJugadores; i++)
   {
     datosThread[i].idColaMensajes = idColaMensajes;
     datosThread[i].memoria = memoria;
-    datosThread[i].nroHormiga = i;
-    datosThread[i].recursoComida = 0;
-    datosThread[i].recursoHoja = 0;
-    datosThread[i].recursoRama = 0;
-    datosThread[i].recursoAgua = 0;
+    datosThread[i].nroJugador = i;
+    memset(datosThread[i].nombreJugador, 0x00, sizeof(LARGO_NOMBRE));
+    strcpy(datosThread[i].nombreJugador, obtenerNombreJugadorPorNumero(i));
 
-    if (!crearThread(&idHilo[i], &atributos, hormigasThread, (void*)&datosThread[i]))
+    if (!crearThread(&idHilo[i], &atributos, jugadorThread, (void*)&datosThread[i]))
     {
       printf("Error: No se pude crear el thread\n");
       return -1;
     }
   }
 
-  for (i = 0; i < cantidadHormigas; i++)
+  for (i = 0; i < cantidadJugadores; i++)
   {
    joinThread(&idHilo[i]);
   }
@@ -93,8 +87,6 @@ int main(int argc, char *argv[])
   free(datosThread);
   destruirMutex(&mutex);
 
-  esperarSemaforo(idSemaforo);
   configurarFinalizarMemoriaIni(memoriaIni);
-  levantarSemaforo(idSemaforo);
   return 0;
 }

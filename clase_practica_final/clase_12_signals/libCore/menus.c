@@ -3,19 +3,16 @@
 /*File Header*/
 #include "menus.h"
 
-int mostrarMenuReina(int numeroHormiga)
+int mostrarMenuPartido(char* nombreJugador)
 {
     int opcion;
     opcion = -1;
 
     while((opcion <= AC_NINGUNA) || (opcion >= AC_MAX))    
     {
-      printf("Hormiga %d\n", numeroHormiga);
+      printf("Jugador %d\n", nombreJugador);
       printf("Menu\n");
-      printf("1.Juntar Comida\n");
-      printf("2.Juntar Hoja\n");
-      printf("3.Juntar Rama\n");
-      printf("4.Juntar Agua\n");
+      printf("1.Patear al arco\n");
       printf("Ingresar Opcion:\n");
       if ((scanf("%d", &opcion) != 1)
         || (opcion <= AC_NINGUNA)

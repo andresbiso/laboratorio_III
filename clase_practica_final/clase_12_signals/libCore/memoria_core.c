@@ -6,53 +6,32 @@
 /*File Header*/
 #include "memoria_core.h"
 
-void configurarMemoria(dato_memoria* memoria)
+void configurarMemoria(dato_memoria* memoria, int cantidad)
 {
-  memoria[0].recursoComida = 0;
-  memoria[0].recursoHoja = 0;
-  memoria[0].recursoRama = 0;
-  memoria[0].recursoAgua = 0;
+  int i;
+  for(i = 0; i < cantidad; i++)
+  {
+    memoria[i].goles = 0;
+    memoria[i].finPartido = 0;
+  }
 }
 
-int leerRecursoComida(dato_memoria* memoria, int posicion)
+int leerGoles(dato_memoria* memoria, int posicion)
 {
-  return memoria[posicion].recursoComida;
+  return memoria[posicion].goles;
 }
 
-void escribirRecursoComida(dato_memoria* memoria, int posicion, int valor)
+void escribirGoles(dato_memoria* memoria, int posicion, int valor)
 {
-  memoria[posicion].recursoComida = valor;
+  memoria[posicion].goles = valor;
 }
 
-int leerRecursoHoja(dato_memoria* memoria, int posicion)
+int leerFinPartido(dato_memoria* memoria, int posicion)
 {
-  return memoria[posicion].recursoHoja;
+  return memoria[posicion].finPartido;
 }
 
-void escribirRecursoHoja(dato_memoria* memoria, int posicion, int valor)
+void escribirFinPartido(dato_memoria* memoria, int posicion, int valor)
 {
-  memoria[posicion].recursoHoja = valor;
+  memoria[posicion].finPartido = valor;
 }
-
-int leerRecursoRama(dato_memoria* memoria, int posicion)
-{
-  return memoria[posicion].recursoRama;
-}
-
-void escribirRecursoRama(dato_memoria* memoria, int posicion, int valor)
-{
-  memoria[posicion].recursoRama = valor;
-}
-
-int leerRecursoAgua(dato_memoria* memoria, int posicion)
-{
-  return memoria[posicion].recursoAgua;
-}
-
-void escribirRecursoAgua(dato_memoria* memoria, int posicion, int valor)
-{
-  memoria[posicion].recursoAgua = valor;
-}
-
-
-

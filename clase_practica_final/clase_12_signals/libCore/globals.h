@@ -6,8 +6,8 @@
 enum destinos
 {
   MSG_NADIE, /*0*/
-  MSG_JULIAN,
-  MSG_LAUTARO
+  MSG_PARTIDO,
+  MSG_JUGADOR
 };
 enum eventos
 {

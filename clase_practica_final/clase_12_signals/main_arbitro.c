@@ -6,7 +6,6 @@
 #include "time.h"
 #include "pthread.h"
 /*Headers Library*/
-#include "libCommon/semaforos.h"
 #include "libCommon/memoria.h"
 #include "libCommon/memoria_ini.h"
 #include "libCommon/cola.h"
@@ -19,23 +18,22 @@
 #include "libCore/productor.h"
 #include "libCore/consumidor.h"
 #include "libCore/memoria_core.h"
-#include "libThread/thread_arbitro.h"
+#include "libThread/thread_partido.h"
 
 int main(int argc, char *argv[])
 {
   int idColaMensajes;
   int idMemoria;
   dato_memoria* memoria;
-  int idSemaforo;
   int idMemoriaIni;
   dato_memoria_ini* memoriaIni;
   pthread_t idHilo;
   pthread_attr_t atributos;
-  arbitro datosThread;
+  partido datosThread;
 
   if (argc != 1)
   {
-    printf("Uso: ./arbitro\n");
+    printf("Uso: ./partido\n");
     return -1;
   }
 
@@ -43,33 +41,30 @@ int main(int argc, char *argv[])
   idMemoriaIni = 0;
   memoria = 0;
   idMemoria = 0;
-  idSemaforo = 0;
   idColaMensajes = 0;
   idHilo = 0;
-  cantidadHormigas = atoi(argv[1]);
+  cantidadJugadores = 2;
 
   srand(time(0));
 
   iniciarMutex(&mutex);
   iniciarAttr(&atributos);
 
-  idSemaforo = crearSemaforo();
-  iniciarSemaforo(idSemaforo, VERDE);
   idColaMensajes = crearColaMensajes();
   borrarMensajes(idColaMensajes);
-  memoria = (dato_memoria*)crearMemoria(sizeof(dato_memoria), &idMemoria);
+  memoria = (dato_memoria*)crearMemoria(sizeof(dato_memoria)*cantidadJugadores, &idMemoria);
   configurarMemoria(memoria);
   memoriaIni = crearMemoriaIni(&idMemoriaIni);
   configurarMemoriaIni(memoriaIni);
 
   limpiarPantalla();
 
-  printf("Cantidad Jugadores %d\n", cantidadHormigas);
+  printf("Cantidad Jugadores %d\n", cantidadJugadores);
 
   datosThread.idColaMensajes = idColaMensajes;
   datosThread.memoria = memoria;
 
-  if (!crearThread(&idHilo, &atributos, reinaThread, (void*)&datosThread))
+  if (!crearThread(&idHilo, &atributos, partidoThread, (void*)&datosThread))
   {
     printf("Error: No se pude crear el thread\n");
     return -1;
@@ -82,7 +77,6 @@ int main(int argc, char *argv[])
   liberarMemoria(idMemoriaIni, (char*)memoriaIni);
   liberarMemoria(idMemoria, (char*)memoria);
   liberarColaMensajes(idColaMensajes);
-  eliminarSemaforo(idSemaforo);
   destruirMutex(&mutex);
   return 0;
 }

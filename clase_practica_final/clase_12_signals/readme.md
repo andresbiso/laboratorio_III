@@ -1,16 +1,16 @@
-# arbitro
-ARBITRO(1) arbitro 1.0.0  
+# partido
+partido(1) partido 1.0.0  
 **Autor:** Andrés Isaac Biso  
 **Fecha:** 20/06/2023  
 
 ## NOMBRE
-arbitro
+partido
 
 ## OPCIONES
-**arbitro**
+**partido**
 
 ## EJEMPLOS
-**./arbitro**
+**./partido**
 
 ## VALORES DE SALIDA
 **0**

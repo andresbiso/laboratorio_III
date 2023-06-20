@@ -3,4 +3,5 @@
 char* obtenerCaracterPorNumero(int);
 int obtenerNumeroPorCaracter(char*);
 char* obtenerRutaArchivo(int);
+char* obtenerNombreJugadorporNumero(int);
 #endif

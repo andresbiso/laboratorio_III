@@ -12,7 +12,7 @@
 #define RUTA_BACKUP "./archivo.txt.bak"
 /*Intervalos*/
 #define INTERVALO_JUGADOR_MS 300
-#define INTERVALO_ARBITRO_MS 300
+#define INTERVALO_PARTIDO_MS 300
 /*Formatos*/
 #define FORMATO_OUTPUT_PANTALLA "LETRA:%c\tNUMERO:%d\n"
 #define FORMATO_OUTPUT_ARCHIVO "%c\t%d\n"
