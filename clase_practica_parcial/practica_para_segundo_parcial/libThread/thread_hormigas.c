@@ -53,7 +53,8 @@ void* hormigasThread(void* parametro)
         escribirRecursoComida(datosThread->memoria, 0, recursoTotal);
         unlockMutex(&mutex);
         printf("Hormiga %d: obtuvo %d recurso comida\n", datosThread->nroHormiga, recursoAleatorio);
-        printf("Hormiga %d: total %d recurso comida\n", datosThread->nroHormiga, recursoTotal);
+        printf("Hormiga %d: total local -> %d recurso comida\n", datosThread->nroHormiga, datosThread->recursoComida);
+        printf("Hormiga %d: total global -> %d recurso comida\n", datosThread->nroHormiga, recursoTotal);
         lockMutex(&mutex);
         enviarMensaje(datosThread->idColaMensajes, MSG_REINA, MSG_HORMIGA + datosThread->nroHormiga, EVT_JUNTAR_COMIDA_FIN, "");
         unlockMutex(&mutex);
@@ -69,7 +70,8 @@ void* hormigasThread(void* parametro)
         escribirRecursoHoja(datosThread->memoria, 0, recursoTotal);
         unlockMutex(&mutex);
         printf("Hormiga %d: obtuvo %d recurso hoja\n", datosThread->nroHormiga, recursoAleatorio);
-        printf("Hormiga %d: total %d recurso hoja\n", datosThread->nroHormiga, recursoTotal);
+        printf("Hormiga %d: total local -> %d recurso hoja\n", datosThread->nroHormiga, datosThread->recursoHoja);
+        printf("Hormiga %d: total global -> %d recurso hoja\n", datosThread->nroHormiga, recursoTotal);
         lockMutex(&mutex);
         enviarMensaje(datosThread->idColaMensajes, MSG_REINA, MSG_HORMIGA + datosThread->nroHormiga, EVT_JUNTAR_HOJA_FIN, "");
         unlockMutex(&mutex);
@@ -85,7 +87,8 @@ void* hormigasThread(void* parametro)
         escribirRecursoRama(datosThread->memoria, 0, recursoTotal);
         unlockMutex(&mutex);
         printf("Hormiga %d: obtuvo %d recurso rama\n", datosThread->nroHormiga, recursoAleatorio);
-        printf("Hormiga %d: total %d recurso rama\n", datosThread->nroHormiga, recursoTotal);
+        printf("Hormiga %d: total local -> %d recurso rama\n", datosThread->nroHormiga, datosThread->recursoRama);
+        printf("Hormiga %d: total global -> %d recurso rama\n", datosThread->nroHormiga, recursoTotal);
         lockMutex(&mutex);
         enviarMensaje(datosThread->idColaMensajes, MSG_REINA, MSG_HORMIGA + datosThread->nroHormiga, EVT_JUNTAR_RAMA_FIN, "");
         unlockMutex(&mutex);
@@ -101,7 +104,8 @@ void* hormigasThread(void* parametro)
         escribirRecursoAgua(datosThread->memoria, 0, recursoTotal);
         unlockMutex(&mutex);
         printf("Hormiga %d: obtuvo %d recurso agua\n", datosThread->nroHormiga, recursoAleatorio);
-        printf("Hormiga %d: total %d recurso agua\n", datosThread->nroHormiga, recursoTotal);
+        printf("Hormiga %d: total local -> %d recurso agua\n", datosThread->nroHormiga, datosThread->recursoAgua);
+        printf("Hormiga %d: total global -> %d recurso agua\n", datosThread->nroHormiga, recursoTotal);
         lockMutex(&mutex);
         enviarMensaje(datosThread->idColaMensajes, MSG_REINA, MSG_HORMIGA + datosThread->nroHormiga, EVT_JUNTAR_AGUA_FIN, "");
         unlockMutex(&mutex);
@@ -115,8 +119,8 @@ void* hormigasThread(void* parametro)
     || datosThread->recursoRama >= TOTAL_RECURSO
     || datosThread->recursoAgua >= TOTAL_RECURSO)
     {
-      printf("Hormiga %d: alcanzó recurso máximo\n", datosThread->nroHormiga);
-      printf("Hormiga %d: fin de juego\n", datosThread->nroHormiga);
+      printf("Hormiga %d: alcanzó recurso local máximo\n", datosThread->nroHormiga);
+      printf("Hormiga %d: fin de trabajo\n", datosThread->nroHormiga);
       lockMutex(&mutex);
       enviarMensaje(datosThread->idColaMensajes, MSG_REINA, MSG_HORMIGA + datosThread->nroHormiga, EVT_FIN_HORMIGA, "");
       unlockMutex(&mutex);

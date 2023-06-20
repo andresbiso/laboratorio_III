@@ -19,25 +19,25 @@ void accionesReina(int opcion, int idColaMensajes, int numeroHormiga)
 {
     switch (opcion) {
       case AC_JUNTAR_COMIDA:
-        printf("Hormiga %d: Juntar Comida\n", numeroHormiga);
+        printf("Hormiga %d: juntar comida\n", numeroHormiga);
         lockMutex(&mutex);
         enviarMensaje(idColaMensajes, MSG_HORMIGA + numeroHormiga, MSG_REINA, EVT_JUNTAR_COMIDA, "");
         unlockMutex(&mutex);
         break;
       case AC_JUNTAR_HOJA:
-        printf("Hormiga %d: Juntar Hoja\n", numeroHormiga);
+        printf("Hormiga %d: juntar hoja\n", numeroHormiga);
         lockMutex(&mutex);
         enviarMensaje(idColaMensajes, MSG_HORMIGA + numeroHormiga, MSG_REINA, EVT_JUNTAR_HOJA, "");
         unlockMutex(&mutex);
         break;
       case AC_JUNTAR_RAMA: 
-        printf("Hormiga %d: Juntar Rama\n", numeroHormiga);
+        printf("Hormiga %d: juntar rama\n", numeroHormiga);
         lockMutex(&mutex);
         enviarMensaje(idColaMensajes, MSG_HORMIGA + numeroHormiga, MSG_REINA, EVT_JUNTAR_RAMA, "");
         unlockMutex(&mutex);
         break;
       case AC_JUNTAR_AGUA: 
-        printf("Hormiga %d: Juntar Agua\n", numeroHormiga);
+        printf("Hormiga %d: juntar agua\n", numeroHormiga);
         lockMutex(&mutex);
         enviarMensaje(idColaMensajes, MSG_HORMIGA + numeroHormiga, MSG_REINA, EVT_JUNTAR_AGUA, "");
         unlockMutex(&mutex);
@@ -124,7 +124,7 @@ void* reinaThread(void* parametro)
  
     if (cantHormigasFin >= cantidadHormigas)
     {
-      printf("Todas las hormigas finalizaron su trabajo\n");
+      printf("Reina: todas las hormigas finalizaron su trabajo\n");
       break;
     }
 
