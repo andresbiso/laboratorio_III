@@ -1,5 +1,5 @@
 # partido
-partido(1) partido 1.0.0  
+PARTIDO(1) partido 1.0.0  
 **Autor:** Andrés Isaac Biso  
 **Fecha:** 20/06/2023  
 
