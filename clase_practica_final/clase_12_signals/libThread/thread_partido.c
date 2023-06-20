@@ -15,6 +15,44 @@
 /*File Header*/
 #include "thread_partido.h"
 
+int validarGanador(partido* datosThread)
+{
+  int i;
+  /* int j;*/
+  int goles;
+   /* int intentos;*/
+   /* int goles2;*/
+  /* int intentos2;*/
+  for (i = 0; i < cantidadJugadores; i++)
+  {
+    /* intentos = leerIntentos(datosThread->memoria, i);*/
+    goles = leerGoles(datosThread->memoria, i);
+    if (goles >= MAX_GOLES)
+    {
+      return i;
+      /*for (j = 0; j < cantidadJugadores; j++)
+      {
+        if (i != j)
+        {
+          intentos2 = leerIntentos(datosThread->memoria, j);
+          goles2 = leerGoles(datosThread->memoria, j);
+          printf("intentos: %d\n", intentos);
+          printf("intentos2: %d\n", intentos2);
+          printf("goles: %d\n", goles);
+          printf("goles2: %d\n", goles2);
+          printf("i: %d\n", i);
+          printf("j: %d\n", j);
+          if (intentos == intentos2 && goles > goles2)
+          {
+            return j;
+          }
+        }
+      }*/
+    }
+  }
+  return -1;
+}
+
 int partidoAcciones(int opcion, int idColaMensajes, int numJugador)
 {
   int evento;
@@ -25,6 +63,7 @@ int partidoAcciones(int opcion, int idColaMensajes, int numJugador)
       lockMutex(&mutex);
       enviarMensaje(idColaMensajes, MSG_JUGADOR + numJugador, MSG_PARTIDO, evento, "");
       unlockMutex(&mutex);
+      usleep(INTERVALO_PARTIDO_MS * 1000);
       break;
     default:
       break;
@@ -40,6 +79,9 @@ void* partidoThread(void* parametro)
   int numJugador;
   int evento;
   int golesJugador;
+  int intentosJugador;
+  int ganador;
+  int i;
   char nomJugador[LARGO_NOMBRE];
 
   msg.longDest = MSG_NADIE;
@@ -52,16 +94,33 @@ void* partidoThread(void* parametro)
   numJugador = 0;
   evento = EVT_NINGUNO;
   golesJugador = 0;
-
+  intentosJugador = 0;
+  ganador = -1;
   memset(nomJugador, 0x00, sizeof(LARGO_NOMBRE));
 
   while(1)
   {
-    lockMutex(&mutex);
+    ganador = validarGanador(datosThread);
+    if (ganador >= 0)
+    {
+      strcpy(nomJugador, obtenerNombreJugadorPorNumero(ganador));
+      printf("Jugador %s: ganó el partido con %d goles\n", nomJugador, leerGoles(datosThread->memoria, ganador));
+      for (i = 0; i < cantidadJugadores; i++)
+      {
+        lockMutex(&mutex);
+        escribirFinPartido(datosThread->memoria, i, 1);
+        enviarMensaje(datosThread->idColaMensajes, MSG_JUGADOR + i, MSG_PARTIDO, EVT_NINGUNO, "");
+        unlockMutex(&mutex);
+        usleep(100 * 1000);
+      }
+      break;
+    }
+
     golesJugador = leerGoles(datosThread->memoria, numJugador);
-    unlockMutex(&mutex);
-  
+    intentosJugador = leerIntentos(datosThread->memoria, numJugador);
     strcpy(nomJugador, obtenerNombreJugadorPorNumero(numJugador));
+    intentosJugador++;
+    printf("Intento Nº %d\n", intentosJugador);
     opcion = mostrarMenuPartido(nomJugador);
     evento = partidoAcciones(opcion, datosThread->idColaMensajes, numJugador);
 
@@ -71,7 +130,6 @@ void* partidoThread(void* parametro)
         break;
       case EVT_GOL:
         printf("Gol de %s\n", nomJugador);
-        golesJugador++;
         break;
       case EVT_FUERA:
         printf("Jugador %s: fuera\n", nomJugador);
@@ -85,20 +143,8 @@ void* partidoThread(void* parametro)
       default:
         break;
     }
- 
-    if (golesJugador >= MAX_GOLES)
-    {
-      printf("Jugador %s: ganó el partido con %d goles\n", nomJugador, golesJugador);
-      for (numJugador = 0; numJugador < cantidadJugadores; numJugador++)
-      {
-        lockMutex(&mutex);
-        escribirFinPartido(datosThread->memoria, numJugador, 1);
-        unlockMutex(&mutex);
-      }
-      break;
-    }
 
-    if (numJugador < cantidadJugadores - 1)
+    if (numJugador < (cantidadJugadores - 1))
     {
       numJugador++;
     }

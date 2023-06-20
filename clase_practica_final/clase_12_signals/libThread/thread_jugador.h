@@ -13,5 +13,4 @@ struct tipo_jugador
 };
 typedef struct tipo_jugador jugador;
 void* jugadorThread(void*);
-int jugadorAcciones(int, char*);
 #endif

@@ -19,6 +19,9 @@ void* jugadorThread(void* parametro)
   mensaje msg;
   jugador* datosThread;
   int golesJugador;
+  int intentosJugador;
+  int finPartido;
+
   msg.longDest = MSG_NADIE;
   msg.intRte = MSG_NADIE;
   msg.intEvento = EVT_NINGUNO;
@@ -26,21 +29,39 @@ void* jugadorThread(void* parametro)
 
   datosThread = (jugador*)parametro;
   golesJugador = 0;
+  intentosJugador = 0;
+  finPartido = 0;
 
   while(1)
   {
+    finPartido = leerFinPartido(datosThread->memoria, datosThread->nroJugador);
+
+    if (finPartido == 1)
+    {
+      printf("Jugador %s: finalizó de jugar\n", datosThread->nombreJugador);
+      break;
+    }
+
     lockMutex(&mutex);
     recibirMensaje(datosThread->idColaMensajes, MSG_JUGADOR + datosThread->nroJugador, &msg);
     unlockMutex(&mutex);
+
+    intentosJugador = leerIntentos(datosThread->memoria, datosThread->nroJugador);
+    intentosJugador++;
+    lockMutex(&mutex);
+    escribirIntentos(datosThread->memoria, datosThread->nroJugador, intentosJugador);
+    unlockMutex(&mutex);
+    printf("Jugador %s: intento -> %d\n", datosThread->nombreJugador, intentosJugador);
+  
     switch(msg.intEvento)
     {
       case EVT_NINGUNO:
         break;
       case EVT_GOL:
         printf("Jugador %s: metió gol\n", datosThread->nombreJugador);
-        lockMutex(&mutex);
         golesJugador = leerGoles(datosThread->memoria, datosThread->nroJugador);
         golesJugador++;
+        lockMutex(&mutex);
         escribirGoles(datosThread->memoria, datosThread->nroJugador, golesJugador);
         unlockMutex(&mutex);
         printf("Jugador %s: total goles -> %d\n", datosThread->nombreJugador, golesJugador);
@@ -56,12 +77,6 @@ void* jugadorThread(void* parametro)
         break;
       default:
         break;
-    }
- 
-    if (leerFinPartido(datosThread->memoria, datosThread->nroJugador) == 1)
-    {
-      printf("Jugador %s: finalizó de jugar\n", datosThread->nombreJugador);
-      break;
     }
 
     usleep(INTERVALO_JUGADOR_MS * 1000);

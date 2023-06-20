@@ -8,5 +8,7 @@ struct tipo_partido
   dato_memoria* memoria;
 };
 typedef struct tipo_partido partido;
+int validarGanador(partido*);
+int partidoAcciones(int, int, int);
 void* partidoThread(void*);
 #endif

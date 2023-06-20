@@ -88,5 +88,6 @@ int main(int argc, char *argv[])
   destruirMutex(&mutex);
 
   configurarFinalizarMemoriaIni(memoriaIni);
+
   return 0;
 }
