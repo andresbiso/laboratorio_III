@@ -10,6 +10,15 @@
 - ipcs: https://www.man7.org/linux/man-pages/man1/ipcs.1.html
 - ipcrm: https://www.man7.org/linux/man-pages/man1/ipcrm.1.html
 
+## Signal
+- signum-generic.h: https://github.com/lattera/glibc/blob/master/bits/signum-generic.h
+- signal.h manpage: https://www.man7.org/linux/man-pages/man0/signal.h.0p.html
+- kill: https://www.man7.org/linux/man-pages/man1/kill.1.html
+- ```kill -l```: permite ver las señales y su número.
+
+## Function Pointers
+- https://cdecl.org/
+
 ## Abrir administrador de archivos desde la terminal 
 - ```gnome-open .```
 
