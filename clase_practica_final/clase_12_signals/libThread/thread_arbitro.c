@@ -13,9 +13,9 @@
 #include "libCore/funciones.h"
 #include "libCore/menus.h"
 /*File Header*/
-#include "thread_reina.h"
+#include "thread_arbitro.h"
 
-void accionesReina(int opcion, int idColaMensajes, int numeroHormiga)
+void arbitroAcciones(int opcion, int idColaMensajes, int numeroHormiga)
 {
     switch (opcion) {
       case AC_JUNTAR_COMIDA:
@@ -47,10 +47,10 @@ void accionesReina(int opcion, int idColaMensajes, int numeroHormiga)
     }
 }
 
-void* reinaThread(void* parametro)
+void* arbitroThread(void* parametro)
 {
   mensaje msg;
-  reina* datosThread;
+  arbitro* datosThread;
   int recursoComida;
   int recursoHoja;
   int recursoRama;
@@ -65,7 +65,7 @@ void* reinaThread(void* parametro)
   msg.intEvento = EVT_NINGUNO;
   memset(msg.charMensaje,0x00,LARGO_MENSAJE);
 
-  datosThread = (reina*)parametro;
+  datosThread = (arbitro*)parametro;
   recursoComida = 0;
   recursoHoja = 0;
   recursoRama = 0;

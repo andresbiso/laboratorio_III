@@ -7,12 +7,12 @@ LIB_COMMON_C = libCommon/archivos.c libCommon/claves.c libCommon/semaforos.c lib
 LIB_CORE_H = libCore/defines.h libCore/globals.h libCore/funciones.h libCore/productor.h libCore/consumidor.h libCore/memoria_core.h libCore/menus.h
 LIB_CORE_C = libCore/globals.c libCore/funciones.c libCore/productor.c libCore/consumidor.c libCore/memoria_core.c libCore/menus.c
 
-all: clean reina hormigas 
+all: clean arbitro jugador 
 
-reina: $(LIB_COMMON_H) $(LIB_CORE_H) libThread/thread_reina.h
-	$(CC) -o reina main_reina.c $(LIB_COMMON_C) $(LIB_CORE_C) libThread/thread_reina.c $(CFLAGS) $(HEADERS)
-hormigas: $(LIB_COMMON_H) $(LIB_CORE_H) libThread/thread_hormigas.h
-	$(CC) -o hormigas main_hormigas.c $(LIB_COMMON_C) $(LIB_CORE_C) libThread/thread_hormigas.c $(CFLAGS) $(HEADERS)
+arbitro: $(LIB_COMMON_H) $(LIB_CORE_H) libThread/thread_arbitro.h
+	$(CC) -o arbitro main_arbitro.c $(LIB_COMMON_C) $(LIB_CORE_C) libThread/thread_arbitro.c $(CFLAGS) $(HEADERS)
+jugador: $(LIB_COMMON_H) $(LIB_CORE_H) libThread/thread_jugador.h
+	$(CC) -o jugador main_jugador.c $(LIB_COMMON_C) $(LIB_CORE_C) libThread/thread_jugador.c $(CFLAGS) $(HEADERS)
 
 clean: 
-	rm -rf *o reina hormigas *.txt
+	rm -rf *o arbitro jugador *.txt

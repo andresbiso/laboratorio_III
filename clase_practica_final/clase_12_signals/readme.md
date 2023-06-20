@@ -1,16 +1,16 @@
-# reina
-REINA(1) reina 1.0.0  
+# arbitro
+ARBITRO(1) arbitro 1.0.0  
 **Autor:** Andrés Isaac Biso  
-**Fecha:** 07/06/2023  
+**Fecha:** 20/06/2023  
 
 ## NOMBRE
-reina
+arbitro
 
 ## OPCIONES
-**reina [cantidad_hormigas]**
+**arbitro**
 
 ## EJEMPLOS
-**./reina 4**
+**./arbitro**
 
 ## VALORES DE SALIDA
 **0**
@@ -18,19 +18,19 @@ reina
 
 ---
 
-# hormigas
-HORMIGAS(1) hormigas 1.0.0  
+# jugador
+JUGADOR(1) jugador 1.0.0  
 **Autor:** Andrés Isaac Biso  
-**Fecha:** 07/06/2023  
+**Fecha:** 20/06/2023  
 
 ## NOMBRE
-hormigas
+jugador
 
 ## OPCIONES
-**hormigas [cantidad_hormigas]**
+**jugador**
 
 ## EJEMPLOS
-**./hormigas 4**
+**./jugador**
 
 ## VALORES DE SALIDA
 **0**

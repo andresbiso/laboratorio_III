@@ -19,7 +19,7 @@
 #include "libCore/productor.h"
 #include "libCore/consumidor.h"
 #include "libCore/memoria_core.h"
-#include "libThread/thread_hormigas.h"
+#include "libThread/thread_arbitro.h"
 
 int main(int argc, char *argv[])
 {
@@ -29,22 +29,22 @@ int main(int argc, char *argv[])
   int idSemaforo;
   int idMemoriaIni;
   dato_memoria_ini* memoriaIni;
-  pthread_t* idHilo;
+  pthread_t idHilo;
   pthread_attr_t atributos;
-  hormiga* datosThread;
-  int i;
+  arbitro datosThread;
 
-  if (argc != 2)
+  if (argc != 1)
   {
-    printf("Uso: ./hormiga [cantidad_hormigas]\n");
+    printf("Uso: ./arbitro\n");
     return -1;
   }
 
-  memoriaIni = 0; /*NULL*/
+  memoriaIni = 0;
   idMemoriaIni = 0;
   memoria = 0;
   idMemoria = 0;
   idSemaforo = 0;
+  idColaMensajes = 0;
   idHilo = 0;
   cantidadHormigas = atoi(argv[1]);
 
@@ -53,48 +53,36 @@ int main(int argc, char *argv[])
   iniciarMutex(&mutex);
   iniciarAttr(&atributos);
 
-  srand(time(0));
-
   idSemaforo = crearSemaforo();
+  iniciarSemaforo(idSemaforo, VERDE);
   idColaMensajes = crearColaMensajes();
+  borrarMensajes(idColaMensajes);
   memoria = (dato_memoria*)crearMemoria(sizeof(dato_memoria), &idMemoria);
+  configurarMemoria(memoria);
   memoriaIni = crearMemoriaIni(&idMemoriaIni);
-  verificarMemoriaIni(memoriaIni, "reina");
+  configurarMemoriaIni(memoriaIni);
 
   limpiarPantalla();
-  printf("Cantidad Hormigas %d\n", cantidadHormigas);
 
-  idHilo = (pthread_t*)malloc(sizeof(pthread_t)*cantidadHormigas);
-  datosThread = (hormiga*)malloc(sizeof(hormiga)*cantidadHormigas);
+  printf("Cantidad Jugadores %d\n", cantidadHormigas);
 
-  for (i = 0; i < cantidadHormigas; i++)
+  datosThread.idColaMensajes = idColaMensajes;
+  datosThread.memoria = memoria;
+
+  if (!crearThread(&idHilo, &atributos, reinaThread, (void*)&datosThread))
   {
-    datosThread[i].idColaMensajes = idColaMensajes;
-    datosThread[i].memoria = memoria;
-    datosThread[i].nroHormiga = i;
-    datosThread[i].recursoComida = 0;
-    datosThread[i].recursoHoja = 0;
-    datosThread[i].recursoRama = 0;
-    datosThread[i].recursoAgua = 0;
-
-    if (!crearThread(&idHilo[i], &atributos, hormigasThread, (void*)&datosThread[i]))
-    {
-      printf("Error: No se pude crear el thread\n");
-      return -1;
-    }
+    printf("Error: No se pude crear el thread\n");
+    return -1;
   }
 
-  for (i = 0; i < cantidadHormigas; i++)
-  {
-   joinThread(&idHilo[i]);
-  }
+  joinThread(&idHilo);
 
-  free(idHilo);
-  free(datosThread);
+  verificarFinalizarMemoriaIni(memoriaIni, "jugador");
+
+  liberarMemoria(idMemoriaIni, (char*)memoriaIni);
+  liberarMemoria(idMemoria, (char*)memoria);
+  liberarColaMensajes(idColaMensajes);
+  eliminarSemaforo(idSemaforo);
   destruirMutex(&mutex);
-
-  esperarSemaforo(idSemaforo);
-  configurarFinalizarMemoriaIni(memoriaIni);
-  levantarSemaforo(idSemaforo);
   return 0;
 }

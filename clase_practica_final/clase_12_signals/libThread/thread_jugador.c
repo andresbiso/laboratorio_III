@@ -14,10 +14,10 @@
 /*File Header*/
 #include "thread_hormigas.h"
 
-void* hormigasThread(void* parametro)
+void* jugadorThread(void* parametro)
 {
   mensaje msg;
-  hormiga* datosThread;
+  jugador* datosThread;
   int recursoAleatorio;
   int recursoTotal;
   int cantHormigasFin;
@@ -27,7 +27,7 @@ void* hormigasThread(void* parametro)
   msg.intEvento = EVT_NINGUNO;
   memset(msg.charMensaje,0x00,LARGO_MENSAJE);
 
-  datosThread = (hormiga*)parametro;
+  datosThread = (jugador*)parametro;
 
   recursoAleatorio = 0;
   recursoTotal = 0;

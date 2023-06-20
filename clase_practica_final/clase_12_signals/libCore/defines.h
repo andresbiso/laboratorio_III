@@ -11,14 +11,14 @@
 #define RUTA_ARCHIVO "./archivo.txt"
 #define RUTA_BACKUP "./archivo.txt.bak"
 /*Intervalos*/
-#define INTERVALO_HORMIGA_MS 300
-#define INTERVALO_REINA_MS 300
+#define INTERVALO_JUGADOR_MS 300
+#define INTERVALO_ARBITRO_MS 300
 /*Formatos*/
 #define FORMATO_OUTPUT_PANTALLA "LETRA:%c\tNUMERO:%d\n"
 #define FORMATO_OUTPUT_ARCHIVO "%c\t%d\n"
 /*Custom*/
-#define JUNTAR_MIN 1
-#define JUNTAR_MAX 4
+#define EVENTO_MIN 1
+#define EVENTO_MAX 4
 #define LARGO_NOMBRE 100
-#define TOTAL_RECURSO 90
+#define MAX_GOLES 5
 #endif

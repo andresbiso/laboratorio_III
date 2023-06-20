@@ -6,25 +6,20 @@
 enum destinos
 {
   MSG_NADIE, /*0*/
-  MSG_REINA,
-  MSG_HORMIGA
+  MSG_JULIAN,
+  MSG_LAUTARO
 };
 enum eventos
 {
   EVT_NINGUNO, /*0*/
-  EVT_JUNTAR_COMIDA,
-  EVT_JUNTAR_COMIDA_FIN,
-  EVT_JUNTAR_HOJA,
-  EVT_JUNTAR_HOJA_FIN,
-  EVT_JUNTAR_RAMA,
-  EVT_JUNTAR_RAMA_FIN,
-  EVT_JUNTAR_AGUA,
-  EVT_JUNTAR_AGUA_FIN,
-  EVT_FIN_HORMIGA
+  EVT_GOL,
+  EVT_FUERA,
+  EVT_PALO,
+  EVT_ATAJA
 };
 typedef enum destinos Destinos;
 typedef enum eventos Eventos;
 /*Shared Global Variables*/
 extern pthread_mutex_t mutex;
-extern int cantidadHormigas;
+extern int cantidadJugadores;
 #endif
