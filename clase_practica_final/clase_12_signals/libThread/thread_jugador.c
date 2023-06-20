@@ -17,14 +17,14 @@
 void* jugadorThread(void* parametro)
 {
   mensaje msg;
-  partido* datosThread;
+  jugador* datosThread;
   int golesJugador;
   msg.longDest = MSG_NADIE;
   msg.intRte = MSG_NADIE;
   msg.intEvento = EVT_NINGUNO;
   memset(msg.charMensaje,0x00,LARGO_MENSAJE);
 
-  datosThread = (partido*)parametro;
+  datosThread = (jugador*)parametro;
   golesJugador = 0;
 
   while(1)
@@ -37,30 +37,30 @@ void* jugadorThread(void* parametro)
       case EVT_NINGUNO:
         break;
       case EVT_GOL:
-        printf("Jugador %s: metió gol\n", nomJugador);
+        printf("Jugador %s: metió gol\n", datosThread->nombreJugador);
         lockMutex(&mutex);
-        golesJugador = leerGoles(datosThread->memoria, numJugador);
+        golesJugador = leerGoles(datosThread->memoria, datosThread->nroJugador);
         golesJugador++;
-        escribirGoles(datosThread->memoria, numJugador, golesJugador);
+        escribirGoles(datosThread->memoria, datosThread->nroJugador, golesJugador);
         unlockMutex(&mutex);
-        printf("Jugador %s: total goles -> %d\n", nomJugador, golesJugador);
+        printf("Jugador %s: total goles -> %d\n", datosThread->nombreJugador, golesJugador);
         break;
       case EVT_FUERA:
-        printf("Jugador %s: fuera\n", nomJugador);
+        printf("Jugador %s: fuera\n", datosThread->nombreJugador);
         break;
       case EVT_PALO:
-        printf("Jugador %s: palo\n", nomJugador);
+        printf("Jugador %s: palo\n", datosThread->nombreJugador);
         break;
       case EVT_ATAJA:
-        printf("Jugador %s: atajado\n", nomJugador);
+        printf("Jugador %s: atajado\n", datosThread->nombreJugador);
         break;
       default:
         break;
     }
  
-    if (leerFinPartido(datosThread->memoria, datosThread->numJugador) == 1)
+    if (leerFinPartido(datosThread->memoria, datosThread->nroJugador) == 1)
     {
-      printf("Jugador %s: finalizó de jugar\n", datosThread->nomJugador);
+      printf("Jugador %s: finalizó de jugar\n", datosThread->nombreJugador);
       break;
     }
 

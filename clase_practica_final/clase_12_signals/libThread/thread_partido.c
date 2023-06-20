@@ -63,7 +63,7 @@ void* partidoThread(void* parametro)
   
     strcpy(nomJugador, obtenerNombreJugadorPorNumero(numJugador));
     opcion = mostrarMenuPartido(nomJugador);
-    evento = accionesPartido(opcion, datosThread->idColaMensajes, numJugador);
+    evento = partidoAcciones(opcion, datosThread->idColaMensajes, numJugador);
 
     switch(evento)
     {

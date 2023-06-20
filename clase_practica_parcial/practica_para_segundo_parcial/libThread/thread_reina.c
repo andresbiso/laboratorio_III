@@ -15,7 +15,7 @@
 /*File Header*/
 #include "thread_reina.h"
 
-void accionesReina(int opcion, int idColaMensajes, int numeroHormiga)
+void reinaAcciones(int opcion, int idColaMensajes, int numeroHormiga)
 {
     switch (opcion) {
       case AC_JUNTAR_COMIDA:
@@ -77,7 +77,7 @@ void* reinaThread(void* parametro)
   for (i = 0; i < cantidadHormigas; i++)
   {
     opcion = mostrarMenuReina(i);
-    accionesReina(opcion, datosThread->idColaMensajes, i);
+    reinaAcciones(opcion, datosThread->idColaMensajes, i);
   }
 
   while(1)
@@ -131,7 +131,7 @@ void* reinaThread(void* parametro)
     if (numeroHormiga >= 0)
     {
       opcion = mostrarMenuReina(numeroHormiga);
-      accionesReina(opcion, datosThread->idColaMensajes, numeroHormiga);
+      reinaAcciones(opcion, datosThread->idColaMensajes, numeroHormiga);
     }
 
     usleep(INTERVALO_REINA_MS * 1000);

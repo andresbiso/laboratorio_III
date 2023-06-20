@@ -45,7 +45,7 @@ char* obtenerRutaArchivo(int valor)
 
 char* obtenerNombreJugadorPorNumero(int numJugador)
 {
-  switch(valor)
+  switch(numJugador)
   {
     case 0:
       return "Julian";

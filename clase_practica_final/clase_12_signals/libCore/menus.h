@@ -7,5 +7,5 @@ enum acciones_menu_partido
   AC_MAX
 };
 typedef enum acciones_menu_partido AccionesMenuPartido;
-int mostrarMenuPartido(int);
+int mostrarMenuPartido(char*);
 #endif

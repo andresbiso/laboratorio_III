@@ -10,7 +10,7 @@ int mostrarMenuPartido(char* nombreJugador)
 
     while((opcion <= AC_NINGUNA) || (opcion >= AC_MAX))    
     {
-      printf("Jugador %d\n", nombreJugador);
+      printf("Jugador %s\n", nombreJugador);
       printf("Menu\n");
       printf("1.Patear al arco\n");
       printf("Ingresar Opcion:\n");
