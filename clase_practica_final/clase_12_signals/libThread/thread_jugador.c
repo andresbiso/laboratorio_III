@@ -63,17 +63,31 @@ void* jugadorThread(void* parametro)
         golesJugador++;
         lockMutex(&mutex);
         escribirGoles(datosThread->memoria, datosThread->nroJugador, golesJugador);
+        enviarMensaje(datosThread->idColaMensajes, MSG_PARTIDO, MSG_JUGADOR + datosThread->nroJugador, EVT_GOL, "");
         unlockMutex(&mutex);
+        usleep(100 * 1000);
         printf("Jugador %s: total goles -> %d\n", datosThread->nombreJugador, golesJugador);
         break;
       case EVT_FUERA:
         printf("Jugador %s: fuera\n", datosThread->nombreJugador);
+        lockMutex(&mutex);
+        enviarMensaje(datosThread->idColaMensajes, MSG_PARTIDO, MSG_JUGADOR + datosThread->nroJugador, EVT_FUERA, "");
+        unlockMutex(&mutex);
+        usleep(100 * 1000);
         break;
       case EVT_PALO:
         printf("Jugador %s: palo\n", datosThread->nombreJugador);
+        lockMutex(&mutex);
+        enviarMensaje(datosThread->idColaMensajes, MSG_PARTIDO, MSG_JUGADOR + datosThread->nroJugador, EVT_PALO, "");
+        unlockMutex(&mutex);
+        usleep(100 * 1000);
         break;
       case EVT_ATAJA:
         printf("Jugador %s: atajado\n", datosThread->nombreJugador);
+        lockMutex(&mutex);
+        enviarMensaje(datosThread->idColaMensajes, MSG_PARTIDO, MSG_JUGADOR + datosThread->nroJugador, EVT_ATAJA, "");
+        unlockMutex(&mutex);
+        usleep(100 * 1000);
         break;
       default:
         break;
