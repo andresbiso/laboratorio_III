@@ -34,4 +34,5 @@
 #define IMPORTE_MENU_B 2000
 #define IMPORTE_MENU_C 3000
 #define IMPORTE_POSTRE 200
+#define MAX_ORDENES 100
 #endif

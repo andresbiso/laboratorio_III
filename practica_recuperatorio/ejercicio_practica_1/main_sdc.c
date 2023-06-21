@@ -64,14 +64,13 @@ int main(int argc, char *argv[])
     {
       leerOrdenes(sdcElegido);
       cerrarArchivo();
-      backupArchivo(rutaArchivo, RUTA_ARCHIVO_BACKUP);
+      /*backupArchivo(rutaArchivo, RUTA_ARCHIVO_BACKUP);*/
       limpiarArchivo(rutaArchivo);
     }
     levantarSemaforo(idSemaforo);
     usleep(INTERVALO_SDC_MS * 1000);
   }
 
-  eliminarSemaforo(idSemaforo);
   free(rutaArchivo);
   return 0;
 }
