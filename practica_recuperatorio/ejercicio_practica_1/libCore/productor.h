@@ -1,4 +1,6 @@
 #ifndef _PRODUCTOR_H
 #define _PRODUCTOR_H
-void escribirOrden(int);
+/*Headers Library*/
+#include "globals.h"
+void escribirOrden(orden*);
 #endif

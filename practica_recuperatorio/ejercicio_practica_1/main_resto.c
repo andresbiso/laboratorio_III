@@ -23,6 +23,7 @@ int main(int argc, char *argv[])
   /*Custom*/
   int menuActual;
   char* rutaArchivo;
+  orden* nuevaOrden;
 
   if (argc != 1)
   {
@@ -41,16 +42,20 @@ int main(int argc, char *argv[])
   rutaArchivo = (char*)malloc(LARGO_LINEA*sizeof(char));
   memset(rutaArchivo,0x00,sizeof(rutaArchivo));
 
+  nuevaOrden = (orden*)malloc(sizeof(orden));
+  memset(nuevaOrden,0x00,sizeof(nuevaOrden));
+
   limpiarPantalla();
 
   while(1)
   {
     menuActual = obtenerNumeroAleatorio(MENU_MIN, MENU_MAX);
+    nuevaOrden->tipoMenu = menuActual;
     strcpy(rutaArchivo, obtenerRutaArchivoMenu(menuActual));
     esperarSemaforo(idSemaforo);
     if (abrirAdicion(rutaArchivo))
     {
-      escribirOrden(menuActual);
+      escribirOrden(nuevaOrden);
       cerrarArchivo();
     }
     levantarSemaforo(idSemaforo);

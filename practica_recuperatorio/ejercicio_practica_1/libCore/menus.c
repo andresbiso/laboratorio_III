@@ -3,17 +3,17 @@
 /*File Header*/
 #include "menus.h"
 
-int mostrarMenuPartido(char* nombreJugador)
+int mostrarMenuPostre(char* letraMenu)
 {
     int opcion;
     opcion = -1;
 
     while((opcion <= AC_NINGUNA) || (opcion >= AC_MAX))    
     {
-      printf("Jugador %s\n", nombreJugador);
-      printf("Menu\n");
-      printf("1.Patear al arco\n");
-      printf("Ingresar Opcion:\n");
+      printf("Menu %s\n", letraMenu);
+      printf("¿Quiere Postre?\n");
+      printf("1.Si\n");
+      printf("2.No\n");
       if ((scanf("%d", &opcion) != 1)
         || (opcion <= AC_NINGUNA)
         || (opcion >= AC_MAX))

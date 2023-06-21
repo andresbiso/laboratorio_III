@@ -16,7 +16,7 @@
 /*Formatos*/
 #define FORMATO_OUTPUT_PANTALLA "LETRA:%c\tNUMERO:%d\n"
 #define FORMATO_OUTPUT_ARCHIVO "%c\t%d\n"
-#define FORMATO_MENU "MENU:%s\tPRECIO:%d\tTIENE_POSTRE:%d\n"
+#define FORMATO_MENU "MENU:%s\tPRECIO:%d\tTIENE_POSTRE:%s\n"
 #define FORMATO_OUTPUT "%d\t%d\t%s\n"
 /*Custom*/
 #define LARGO_RUTA 100
@@ -24,6 +24,7 @@
 #define RUTA_ARCHIVO_MENU_A "./sdcA.txt"
 #define RUTA_ARCHIVO_MENU_B "./sdcB.txt"
 #define RUTA_ARCHIVO_MENU_C "./sdcC.txt"
+#define RUTA_ARCHIVO_BACKUP "./backup.txt"
 #define MENU_MAX 3
 #define MENU_MIN 1
 #define MENU_A "A"

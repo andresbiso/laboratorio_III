@@ -116,6 +116,7 @@ int backupArchivo(char* ruta, char* rutaNuevoNombre)
   return 0;
 }
 
+/*Devuelve el tamaño en bytes*/
 int obtenerTamanioArchivo(char* ruta)
 {
   int tamanioArchivo;
@@ -136,7 +137,7 @@ int obtenerTamanioArchivo(char* ruta)
   /*fseek(cfptr, 0, 0);*/
 
   /*En caso de querer mostrar el tamaño del archivo por pantalla*/
-  /*printf("Tamaño Archivo: %d\n", tamanioArchivo);*/
+  /*printf("Tamaño Archivo: %d bytes\n", tamanioArchivo);*/
 
   cerrarArchivo();
   return tamanioArchivo;

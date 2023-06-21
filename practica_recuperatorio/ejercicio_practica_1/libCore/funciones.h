@@ -4,4 +4,5 @@ char* obtenerRutaArchivoMenu(int);
 char* obtenerMenuLetra(int);
 int obtenerMenuNum(char*);
 int obtenerPrecioMenu(int);
+char* obtenerCadenaPostre(int);
 #endif

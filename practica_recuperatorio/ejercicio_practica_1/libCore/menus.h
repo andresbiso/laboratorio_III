@@ -1,11 +1,12 @@
 #ifndef _MENUS_H
 #define _MENUS_H
-enum acciones_menu_partido
+enum acciones_menu_postre
 {
   AC_NINGUNA, /*0*/
-  AC_PATEAR,
+  AC_SI,
+  AC_NO,
   AC_MAX
 };
-typedef enum acciones_menu_partido AccionesMenuPartido;
-int mostrarMenuPartido(char*);
+typedef enum acciones_menu_postre AccionesMenuPostre;
+int mostrarMenuPostre(char*);
 #endif

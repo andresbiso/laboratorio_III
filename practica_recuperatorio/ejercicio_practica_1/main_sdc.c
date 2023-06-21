@@ -9,6 +9,7 @@
 #include "libCommon/aleatorio.h"
 #include "libCommon/pantalla.h"
 #include "libCommon/archivos.h"
+#include "libCommon/cadenas.h"
 #include "libCore/defines.h"
 #include "libCore/globals.h"
 #include "libCore/funciones.h"
@@ -39,6 +40,7 @@ int main(int argc, char *argv[])
   getchar();
   limpiarPantalla();
 
+  cadenaMayuscula(argv[1], argv[1]);
   sdcElegido = obtenerMenuNum(argv[1]);
 
   if (sdcElegido == -1)
@@ -62,7 +64,7 @@ int main(int argc, char *argv[])
     {
       leerOrdenes(sdcElegido);
       cerrarArchivo();
-      backupArchivo(rutaArchivo, "./backup.txt");
+      backupArchivo(rutaArchivo, RUTA_ARCHIVO_BACKUP);
       limpiarArchivo(rutaArchivo);
     }
     levantarSemaforo(idSemaforo);

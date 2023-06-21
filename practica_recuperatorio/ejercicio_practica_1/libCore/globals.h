@@ -1,25 +1,31 @@
 #ifndef _GLOBALS_H
 #define _GLOBALS_H
-/*Standard Library*/
-#include "pthread.h"
-/*Message Queue*/
-enum destinos
+/*Headers Library*/
+#include "libCommon/archivos.h"
+#include "defines.h"
+enum postre
 {
-  MSG_NADIE, /*0*/
-  MSG_PARTIDO,
-  MSG_JUGADOR
+  P_NINGUNO, /*0*/
+  P_SI,
+  P_NO
 };
-enum eventos
+enum menu
 {
-  EVT_NINGUNO, /*0*/
-  EVT_GOL,
-  EVT_FUERA,
-  EVT_PALO,
-  EVT_ATAJA
+  M_NINGUNO, /*0*/
+  M_A,
+  M_B,
+  M_C
 };
-typedef enum destinos Destinos;
-typedef enum eventos Eventos;
+typedef enum postre Postre;
+typedef enum menu Menu;
+struct tipo_orden
+{
+  int tipoMenu;
+  int precio;
+  int conPostre;
+  char descripcion[LARGO_LINEA];
+};
+typedef struct tipo_orden orden;
 /*Shared Global Variables*/
-extern pthread_mutex_t mutex;
 extern int cantidadJugadores;
 #endif

@@ -4,36 +4,31 @@
 #include "string.h"
 /*Headers Library*/
 #include "libCommon/archivos.h"
-#include "libCore/defines.h"
-#include "libCore/funciones.h"
+#include "defines.h"
+#include "globals.h"
+#include "funciones.h"
+#include "menus.h"
 /*File Header*/
 #include "productor.h"
 
-void escribirOrden(int menuActual)
+void escribirOrden(orden* nuevaOrden)
 {
   char* lineaOrden;
   char* letraMenu;
-  int conPostre;
-  int precio;
   lineaOrden = (char*)malloc((LARGO_LINEA+1)*sizeof(char));
   memset(lineaOrden,0x00,sizeof(lineaOrden));
   letraMenu = (char*)malloc((1+1)*sizeof(char));
   memset(letraMenu,0x00,sizeof(letraMenu));
-  precio = obtenerPrecioMenu(menuActual);
-  strcpy(letraMenu, obtenerMenuLetra(menuActual));
-  conPostre=-1;
-  while (conPostre != 0 && conPostre != 1)
+  nuevaOrden->precio = obtenerPrecioMenu(nuevaOrden->tipoMenu);
+  strcpy(letraMenu, obtenerMenuLetra(nuevaOrden->tipoMenu));
+  nuevaOrden->conPostre = mostrarMenuPostre(letraMenu);
+  if (nuevaOrden->conPostre == 1)
   {
-    printf("¿Quiere postre? (1=si;0=no)");
-    scanf("%d", &conPostre);
+    nuevaOrden->precio += IMPORTE_POSTRE;
   }
-  if (conPostre == 1)
-  {
-    precio += IMPORTE_POSTRE;
-  }
-  sprintf(lineaOrden , FORMATO_OUTPUT, precio, conPostre, letraMenu);
+  sprintf(lineaOrden , FORMATO_OUTPUT, nuevaOrden->precio, nuevaOrden->conPostre, letraMenu);
   escribirArchivo(lineaOrden);
-  printf(lineaOrden);
+  printf(FORMATO_MENU, letraMenu, nuevaOrden->precio, obtenerCadenaPostre(nuevaOrden->conPostre));
   free(lineaOrden);
   free(letraMenu);
 }

@@ -4,14 +4,15 @@
 #include "string.h"
 /*Headers Library*/
 #include "libCommon/archivos.h"
-#include "libCore/defines.h"
+#include "defines.h"
+#include "globals.h"
+#include "funciones.h"
 /*File Header*/
 #include "consumidor.h"
 
 void leerOrdenes()
 {
-  int conPostre;
-  int precio;
+  orden nuevaOrden;
   char* menuLetra;
   char* lineaOrden;
 
@@ -20,13 +21,14 @@ void leerOrdenes()
 
   lineaOrden = (char*)malloc((LARGO_LINEA)*sizeof(char));
   memset(lineaOrden,0x00,sizeof(lineaOrden));
-  precio = 0;
-  conPostre = 0;
+  nuevaOrden.precio = 0;
+  nuevaOrden.conPostre = 0;
   while(leerLineaArchivo(lineaOrden) != 0)
   {
-    sscanf(lineaOrden, FORMATO_OUTPUT, &precio, &conPostre, menuLetra);
-    printf(FORMATO_MENU, menuLetra, precio, conPostre);            precio = 0;
-    conPostre = 0;
+    sscanf(lineaOrden, FORMATO_OUTPUT, &nuevaOrden.precio, &nuevaOrden.conPostre, menuLetra);
+    printf(FORMATO_MENU, menuLetra, nuevaOrden.precio, obtenerCadenaPostre(nuevaOrden.conPostre));
+    nuevaOrden.precio = 0;
+    nuevaOrden.conPostre = 0;
     memset(lineaOrden,0x00,sizeof(lineaOrden));
     memset(menuLetra,0x00,sizeof(menuLetra));
   }
