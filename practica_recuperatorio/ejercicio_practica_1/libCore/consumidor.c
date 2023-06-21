@@ -8,20 +8,28 @@
 /*File Header*/
 #include "consumidor.h"
 
-void leerLineas()
+void leerOrdenes()
 {
-  char* linea;
-  char caracter;
-  int valorNumerico;
+  int conPostre;
+  int precio;
+  char* menuLetra;
+  char* lineaOrden;
 
-  linea = (char*)malloc((LARGO_LINEA)*sizeof(char));
-  memset(linea,0x00,sizeof(linea));
-  while(leerLineaArchivo(linea) != 0)
+  menuLetra = (char*)malloc((1)*sizeof(char));
+  memset(menuLetra,0x00,sizeof(menuLetra));
+
+  lineaOrden = (char*)malloc((LARGO_LINEA)*sizeof(char));
+  memset(lineaOrden,0x00,sizeof(lineaOrden));
+  precio = 0;
+  conPostre = 0;
+  while(leerLineaArchivo(lineaOrden) != 0)
   {
-    sscanf(linea, FORMATO_OUTPUT_ARCHIVO, &caracter, &valorNumerico);
-    printf(FORMATO_OUTPUT_PANTALLA, caracter, valorNumerico);
-  
-    memset(linea,0x00,sizeof(linea));
+    sscanf(lineaOrden, FORMATO_OUTPUT, &precio, &conPostre, menuLetra);
+    printf(FORMATO_MENU, menuLetra, precio, conPostre);            precio = 0;
+    conPostre = 0;
+    memset(lineaOrden,0x00,sizeof(lineaOrden));
+    memset(menuLetra,0x00,sizeof(menuLetra));
   }
-  free(linea);
+  free(lineaOrden);
+  free(menuLetra);
 }

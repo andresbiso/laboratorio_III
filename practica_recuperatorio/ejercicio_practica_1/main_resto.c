@@ -6,11 +6,9 @@
 #include "time.h"
 /*Headers Library*/
 #include "libCommon/semaforos.h"
-#include "libCommon/memoria.h"
-#include "libCommon/memoria_ini.h"
-#include "libCommon/cola.h"
 #include "libCommon/aleatorio.h"
 #include "libCommon/pantalla.h"
+#include "libCommon/archivos.h"
 #include "libCore/defines.h"
 #include "libCore/globals.h"
 #include "libCore/funciones.h"
@@ -21,40 +19,44 @@ int main(int argc, char *argv[])
 {
   /*General*/
   int idSemaforo;
-  int idMemoriaIni;
-  dato_memoria_ini* memoriaIni;
 
   /*Custom*/
+  int menuActual;
+  char* rutaArchivo;
 
   if (argc != 1)
   {
-    printf("Uso: ./jugador\n");
+    printf("Uso: ./resto\n");
     return -1;
   }
 
-  memoriaIni = 0; /*NULL*/
-  idMemoriaIni = 0;
   idSemaforo = 0;
+  menuActual = 1;
 
   srand(time(0));
 
   idSemaforo = crearSemaforo();
   iniciarSemaforo(idSemaforo, VERDE);
-  memoriaIni = crearMemoriaIni(&idMemoriaIni);
-  configurarMemoriaIni(memoriaIni);
+
+  rutaArchivo = (char*)malloc(LARGO_LINEA*sizeof(char));
+  memset(rutaArchivo,0x00,sizeof(rutaArchivo));
 
   limpiarPantalla();
 
   while(1)
   {
-    break;
-    usleep(1000);
+    menuActual = obtenerNumeroAleatorio(MENU_MIN, MENU_MAX);
+    strcpy(rutaArchivo, obtenerRutaArchivoMenu(menuActual));
+    esperarSemaforo(idSemaforo);
+    if (abrirAdicion(rutaArchivo))
+    {
+      escribirOrden(menuActual);
+      cerrarArchivo();
+    }
+    levantarSemaforo(idSemaforo);
+    memset(rutaArchivo,0x00,sizeof(rutaArchivo));
+    usleep(INTERVALO_RESTO_MS * 1000);
   }
-
-  verificarFinalizarMemoriaIni(memoriaIni, "jugadores");
-
-  liberarMemoria(idMemoriaIni, (char*)memoriaIni);
-  eliminarSemaforo(idSemaforo);
+  free(rutaArchivo);
   return 0;
 }
-

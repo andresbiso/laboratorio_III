@@ -1,16 +1,16 @@
-# carrera
-CARRERA(1) carrera 1.0.0  
+# resto
+RESTO(1) resto 1.0.0  
 **Autor:** Andrés Isaac Biso  
-**Fecha:** 08/06/2023  
+**Fecha:** 20/06/2023  
 
 ## NOMBRE
-carrera
+resto
 
 ## OPCIONES
-**carrera** no tiene opciones disponibles
+**resto** no tiene opciones disponibles
 
 ## EJEMPLOS
-**./carrera**
+**./resto**
 
 ## VALORES DE SALIDA
 **0**
@@ -18,19 +18,19 @@ carrera
 
 ---
 
-# jugador
-JUGADORES(1) jugador 1.0.0  
+# sdc
+SDC(1) sdc 1.0.0  
 **Autor:** Andrés Isaac Biso  
-**Fecha:** 08/06/2023  
+**Fecha:** 20/06/2023  
 
 ## NOMBRE
-jugador
+sdc
 
 ## OPCIONES
-**jugador** no tiene opciones disponibles
+**sdc [A-C]**
 
 ## EJEMPLOS
-**./jugador**
+**./sdc A**
 
 ## VALORES DE SALIDA
 **0**

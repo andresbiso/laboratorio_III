@@ -4,6 +4,8 @@
   - Command line arguments: -Wall -O3 -std=gnu89 -pedantic-errors -pthread
   - Copiar todos los archivos con el mismo nombre y contenido.
   - Solo es para probar ejecución, no se puede observar creación de archivos.
+- USB VM: https://superuser.com/questions/931637/virtualbox-claims-a-usb-drive-but-hosted-centos-7-cannot-access-it
+  - Solo lo pude hacer funcionar con driver USB 2.0 de VirtualBox, usando un puerto USB 2.0 y con formato FAT.
 
 ## IPC
 - Si cerramos un programa sin que termine de liberar los recursos compartidos. Debemos liberar estos recursos a mano.

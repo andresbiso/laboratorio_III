@@ -7,50 +7,62 @@
 /*File Header*/
 #include "funciones.h"
 
-char* obtenerCaracterPorNumero(int valor)
+char* obtenerRutaArchivoMenu(int valor)
 {
   switch(valor)
   {
     case 1:
-      return "A";
+      return RUTA_ARCHIVO_MENU_A;
+    case 2:
+      return RUTA_ARCHIVO_MENU_B;
+    case 3:
+      return RUTA_ARCHIVO_MENU_C;
+    default:
+      return "";
+  }
+}
+
+char* obtenerMenuLetra(int valor)
+{
+  switch(valor)
+  {
+    case 1:
+      return MENU_A;
+    case 2:
+      return MENU_B;
+    case 3:
+      return MENU_C;
   }
   return 0;
 }
 
-int obtenerNumeroPorCaracter(char* valor)
+int obtenerMenuNum(char* valor)
 {
   if (strcmp("A", valor) == 0)
   {
     return 1;
   }
+  else if (strcmp("B", valor) == 0)
+  {
+    return 2;
+  }
+  else if (strcmp("C", valor) == 0)
+  {
+    return 3;
+  }
   return -1;
 }
 
-/*
-  Ejemplo:
-  char * rutArchivo
-  rutaArchivo = (char*)malloc((LARGO_RUTA+1)*sizeof(char));
-  memset(rutaArchivo,0x00,sizeof(rutaArchivo));
-  strcpy(rutaArchivo, obtenerRutaArchivo(1));
-*/
-char* obtenerRutaArchivo(int valor)
+int obtenerPrecioMenu(int valor)
 {
   switch(valor)
   {
     case 1:
-      return RUTA_ARCHIVO;
+      return IMPORTE_MENU_A;
+    case 2:
+      return IMPORTE_MENU_B;
+    case 3:
+      return IMPORTE_MENU_C;
   }
-  return "";
-}
-
-char* obtenerNombreJugadorPorNumero(int numJugador)
-{
-  switch(numJugador)
-  {
-    case 0:
-      return "Julian";
-    case 1:
-      return "Lautaro";
-  }
-  return "";
+  return 0;
 }
