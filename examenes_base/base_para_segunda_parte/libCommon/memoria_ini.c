@@ -8,7 +8,7 @@
 
 dato_memoria_ini* crearMemoriaIni(int* extIdMemoria)
 {
-  return (dato_memoria_ini*)crearMemoriaConClave(sizeof(dato_memoria_ini), extIdMemoria, CLAVE_BASE_INI);
+  return (dato_memoria_ini*)crearMemoriaConClaveRuta(sizeof(dato_memoria_ini), extIdMemoria, CLAVE_BASE_INI, RUTA_ARCHIVO_FTOK_INI);
 }
 
 void configurarMemoriaIni(dato_memoria_ini* memoria)

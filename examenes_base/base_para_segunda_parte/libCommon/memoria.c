@@ -7,12 +7,12 @@
 /*File Header*/
 #include "memoria.h"
 
-void* crearMemoriaConClave(int size, int* extIdMemoria, int claveBase)
+void* crearMemoriaConClaveRuta(int size, int* extIdMemoria, int clave, const char* ruta)
 {
   void* ptrMemoria;
   int idMemoria;
   
-  idMemoria = shmget(crearClave(claveBase), size, 0777 | IPC_CREAT);
+  idMemoria = shmget(crearClaveConIdRuta(clave, ruta), size, 0777 | IPC_CREAT);
   /*0777: permisos de rwx para owner/group/other*/
   /*IPC_CREAT: crea la memoria si no existe*/
   if (idMemoria == -1)
@@ -31,6 +31,11 @@ void* crearMemoriaConClave(int size, int* extIdMemoria, int claveBase)
   return ptrMemoria;
 }
 
+void* crearMemoriaConClave(int size, int* extIdMemoria, int clave)
+{
+  return crearMemoriaConClaveRuta(size, extIdMemoria, clave, RUTA_ARCHIVO_FTOK);
+}
+
 void* crearMemoria(int size, int* extIdMemoria)
 {
   return crearMemoriaConClave(size, extIdMemoria, CLAVE_BASE);
@@ -39,5 +44,5 @@ void* crearMemoria(int size, int* extIdMemoria)
 void liberarMemoria(int idMemoria, char* memoria)
 {
   shmdt(memoria);
-  shmctl(idMemoria, IPC_RMID, (struct shmid_ds*) 0);
+  shmctl(idMemoria, IPC_RMID, (struct shmid_ds*)0);
 }

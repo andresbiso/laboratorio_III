@@ -35,8 +35,3 @@ void escribirNombreJugador(dato_memoria* memoria, int posicion, char* ptrCadena)
 {
   strcpy(memoria[posicion].nombreJugador, ptrCadena);
 }
-
-
-
-
-
