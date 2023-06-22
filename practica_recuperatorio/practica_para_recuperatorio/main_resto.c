@@ -1,0 +1,115 @@
+/*Standard Library*/
+#include "stdio.h"
+#include "stdlib.h"
+#include "string.h"
+#include "unistd.h"
+#include "time.h"
+/*Headers Library*/
+#include "libCommon/semaforos.h"
+#include "libCommon/aleatorio.h"
+#include "libCommon/pantalla.h"
+#include "libCommon/archivos.h"
+#include "libCommon/memoria.h"
+#include "libCommon/memoria_ini.h"
+#include "libCore/defines.h"
+#include "libCore/globals.h"
+#include "libCore/funciones.h"
+#include "libCore/menus.h"
+#include "libCore/productor.h"
+#include "libCore/consumidor.h"
+
+int main(int argc, char *argv[])
+{
+  /*General*/
+  int idSemaforo;
+  int idMemoriaIni;
+  dato_memoria_ini* memoriaIni;
+
+  /*Custom*/
+  int comidaElegida;
+  char rutaArchivo[LARGO_RUTA];
+  comida* comidas;
+  int totalComida;
+  int meseroAleatorio;
+  int i;
+
+  if (argc != 1)
+  {
+    printf("Uso: ./resto\n");
+    return -1;
+  }
+
+  idSemaforo = 0;
+  memoriaIni = 0; /*NULL*/
+  idMemoriaIni = 0;
+  comidaElegida = 0;
+  totalComida = 0;
+  meseroAleatorio = 0;
+  i = 0;
+
+  srand(time(0));
+
+  idSemaforo = crearSemaforo();
+  iniciarSemaforo(idSemaforo, VERDE);
+  memoriaIni = crearMemoriaIni(&idMemoriaIni);
+  configurarMemoriaIni(memoriaIni);
+
+  comidas = (comida*)malloc(3*sizeof(comida));
+  memset(comidas,0x00,3*sizeof(comidas));
+  memset(rutaArchivo,0x00,LARGO_LINEA*sizeof(char));
+
+  limpiarPantalla();
+
+  for (i = 0; i < CANT_COMIDAS; i++)
+  {
+    printf("Comida %d\n", i + 1);
+    printf("Ingrese descripción: \n");
+    scanf("%19s", comidas[i].descripcion);
+    printf("\n");
+    printf("Ingrese precio: \n");
+    scanf("%d", &comidas[i].precio);
+    printf("\n");
+    comidas[i].total = 0;
+  }
+
+  while(1)
+  {
+    if (totalComida <= (MAX_PEDIDOS - 1))
+    {
+      totalComida++;
+    }
+    else
+    {
+      printf("Se alcanzó máximo de órdenes\n");
+      printf("Cerrando Resto\n");
+      break;
+    }
+    comidaElegida = mostrarMenu(comidas);
+    meseroAleatorio = obtenerNumeroAleatorio(MESERO_MIN, MESERO_MAX);
+    strcpy(rutaArchivo, obtenerRutaArchivoMesero(meseroAleatorio));
+    comidas[comidaElegida-1].total++;
+    printf("Total Ordenes: %d\n", totalComida);
+    printf("Total Ordenes Comida 1 (%s): %d\n", comidas[0].descripcion, comidas[0].total);
+    printf("Total Ordenes Comida 2 (%s): %d\n", comidas[1].descripcion, comidas[1].total);
+    printf("Total Ordenes Comida 3 (%s): %d\n", comidas[2].descripcion, comidas[2].total);
+    printf("Total Obtenido Comida 1 (%s): $%d\n", comidas[0].descripcion, comidas[0].precio * comidas[0].total);
+    printf("Total Obtenido Comida 2 (%s): $%d\n", comidas[1].descripcion, comidas[1].precio * comidas[1].total);
+    printf("Total Obtenido Comida 3 (%s): $%d\n", comidas[2].descripcion, comidas[2].precio * comidas[2].total);
+    printf("Mesero Elegido: %d\n", meseroAleatorio);
+    esperarSemaforo(idSemaforo);
+    if (abrirAdicion(rutaArchivo))
+    {
+      escribirOrden(&comidas[comidaElegida-1], comidaElegida);
+      cerrarArchivo();
+    }
+    levantarSemaforo(idSemaforo);
+
+    memset(rutaArchivo,0x00,sizeof(rutaArchivo));
+    usleep(INTERVALO_RESTO_MS * 1000);
+  }
+
+  liberarMemoria(idMemoriaIni, (char*)memoriaIni);
+  eliminarSemaforo(idSemaforo);
+  free(comidas);
+  return 0;
+}
