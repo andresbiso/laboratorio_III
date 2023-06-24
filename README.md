@@ -34,12 +34,16 @@
 - Las entregas deben realizarse en formato .tar
 - Tratar de incluir un archivo readme con instrucciones de cómo levantar los procesos
 - Compilar el programa en un entorno linux o macOS con un gcc más actualizado.
+- El makefile debe entregarse con la siguiente configuración:
+```
+CC = gcc-4.1
+CFLAGS = -Wall -Werror -O4 -std=gnu89 -pedantic-errors -pthread
+```
 
 ### macOS
 - Utilizar homebrew para instalar el paquete gcc. Recomiendo instalar la versión 13.
-- En el makefile hacer los siguientes cambios durante esta revisión en entorno actualizado:
+- Configuración de makefile para este entorno:
 ```
-CC=gcc-13
+CC = gcc-13
 CFLAGS = -Wall -Werror -O3 -std=gnu89 -pedantic-errors -pthread
 ```
-- Dónde dice gcc-13 ponemos el número de versión instalada por homebrew.
