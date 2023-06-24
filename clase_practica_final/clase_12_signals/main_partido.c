@@ -1,10 +1,10 @@
 /*Standard Library*/
-#include "stdio.h"
-#include "stdlib.h"
-#include "string.h"
-#include "unistd.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
 #include "time.h"
-#include "pthread.h"
+#include <pthread.h>
 /*Headers Library*/
 #include "libCommon/memoria.h"
 #include "libCommon/memoria_ini.h"

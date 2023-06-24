@@ -1,8 +1,8 @@
 /*Standard Library*/
-#include "stdio.h"
-#include "string.h"
-#include "sys/ipc.h"
-#include "sys/msg.h"
+#include <stdio.h>
+#include <string.h>
+#include <sys/ipc.h>
+#include <sys/msg.h>
 /*Headers Library*/
 #include "claves.h"
 /*File Header*/
@@ -10,7 +10,7 @@
 
 int crearColaMensajesConClave(int clave)
 {
-  int idColaMensajes = msgget(crearClave(clave), 0600 | IPC_CREAT);
+  int idColaMensajes = msgget(crearClaveConId(clave), 0600 | IPC_CREAT);
   if (idColaMensajes == -1)
   {
     printf("Error: no se ha podido obtener identificador para cola de mensajes\n");
@@ -18,7 +18,7 @@ int crearColaMensajesConClave(int clave)
   return idColaMensajes;
 }
 
-int crearColaMensajes()
+int crearColaMensajes(void)
 {
   return crearColaMensajesConClave(CLAVE_BASE);
 }

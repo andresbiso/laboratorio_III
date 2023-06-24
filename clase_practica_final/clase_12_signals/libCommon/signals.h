@@ -1,8 +1,8 @@
 #ifndef _SIGNALS_H
 #define _SIGNALS_H
 /*Standard Library*/
-#include "unistd.h"
-#include "signal.h"
+#include <unistd.h>
+#include <signal.h>
 /*declare crearSignal as function (int, pointer to function (int) returning void)*/
 /*returning pointer to function (int) returning voi*/
 void (*crearSignal(int, void (*)(int)))(int);

@@ -1,7 +1,7 @@
 /*Standard Library*/
-#include "stdio.h"
-#include "stdlib.h"
-#include "string.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 /*File Header*/
 #include "archivos.h"
 
@@ -13,14 +13,14 @@ int abrirArchivo(char* ruta, char* modo)
   return (cfptr=fopen(ruta,modo))!=0;
 }
 
-void escribirArchivo(char* linea)
+int escribirArchivo(char* linea)
 {
-  fprintf(cfptr,linea);
+  return fprintf(cfptr,"%s",linea);
 }
 
 int leerStringArchivo(char* linea)
 {
-  return fscanf(cfptr,"%s\n",linea);
+  return fscanf(cfptr,"%s",linea);
 }
 
 int leerNumeroArchivo(int* numero)
@@ -33,7 +33,7 @@ char* leerLineaArchivo(char* linea)
   return fgets(linea, LARGO_LINEA, cfptr);
 }
 
-void cerrarArchivo()
+void cerrarArchivo(void)
 {
   if (cfptr != 0)
   {
@@ -56,7 +56,7 @@ int abrirAdicion(char* ruta)
   return abrirArchivo(ruta, "a");
 }
 
-int esFinArchivo()
+int esFinArchivo(void)
 {
   return feof(cfptr);
 }
@@ -85,7 +85,7 @@ int backupArchivo(char* ruta, char* rutaNuevoNombre)
 
   cantLineasCopiadas = 0;
   mensaje = (char*)malloc((LARGO_LINEA)*sizeof(char));
-  memset(mensaje,0x00,sizeof(mensaje));
+  memset(mensaje,0x00,(LARGO_LINEA)*sizeof(char));
 
   if (!abrirLectura(ruta))
   {
@@ -101,9 +101,9 @@ int backupArchivo(char* ruta, char* rutaNuevoNombre)
 
   while(leerLineaArchivo(mensaje) != 0)
   {
-    fprintf(cfptrBak,mensaje);
+    fprintf(cfptrBak,"%s",mensaje);
     cantLineasCopiadas++;
-    memset(mensaje,0x00,sizeof(mensaje));
+    memset(mensaje,0x00,(LARGO_LINEA)*sizeof(char));
   }
 
   cerrarArchivo();
@@ -168,7 +168,7 @@ int obtenerTotalLineasArchivo(char* ruta)
   int cantidadLineas;
   cantidadLineas = 0;
   linea = (char*)malloc((LARGO_LINEA)*sizeof(char));
-  memset(linea,0x00,sizeof(linea));
+  memset(linea,0x00,(LARGO_LINEA)*sizeof(char));
 
   if (!abrirLectura(ruta))
   {

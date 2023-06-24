@@ -1,6 +1,6 @@
 /*Standard Library*/
-#include "stdio.h"
-#include "sys/ipc.h"
+#include <stdio.h>
+#include <sys/ipc.h>
 /*File Header*/
 #include "claves.h"
 
@@ -27,7 +27,7 @@ key_t crearClaveConId(int idClave)
   return crearClaveConIdRuta(idClave, RUTA_ARCHIVO_FTOK);
 }
 
-key_t crearClave()
+key_t crearClave(void)
 {
   return crearClaveConId(CLAVE_BASE);
 }

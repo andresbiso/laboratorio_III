@@ -1,5 +1,5 @@
 /*Standard Library*/
-#include "stdlib.h"
+#include <stdlib.h>
 /*File Header*/
 #include "aleatorio.h"
 

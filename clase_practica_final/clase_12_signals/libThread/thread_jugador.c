@@ -1,9 +1,9 @@
 /*Standard Library*/
-#include "stdio.h"
-#include "stdlib.h"
-#include "unistd.h"
-#include "string.h"
-#include "pthread.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
+#include <pthread.h>
 /*Headers Library*/
 #include "libCommon/aleatorio.h"
 #include "libCommon/hilos.h"

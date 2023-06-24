@@ -1,6 +1,6 @@
 /*Standard Library*/
-#include "stdio.h"
-#include "string.h"
+#include <stdio.h>
+#include <string.h>
 /*File Header*/
 #include "cadenas.h"
 
@@ -34,7 +34,7 @@ char letraMinuscula(char valor)
 
 void cadenaMayuscula(char* cadena, char* cadenaMayusc)
 {
-  int i;
+  unsigned long i;
   for (i = 0; i < strlen(cadena); i++)
   {
     cadenaMayusc[i] = letraMayuscula(cadena[i]);
@@ -43,7 +43,7 @@ void cadenaMayuscula(char* cadena, char* cadenaMayusc)
 
 void cadenaMinuscula(char* cadena, char* cadenaMinusc)
 {
-  int i;
+  unsigned long i;
   for (i = 0; i < strlen(cadena); i++)
   {
     cadenaMinusc[i] = letraMinuscula(cadena[i]);

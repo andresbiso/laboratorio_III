@@ -1,9 +1,9 @@
 /*Standard Library*/
-#include "stdio.h"
-#include "stdlib.h"
-#include "unistd.h"
-#include "string.h"
-#include "pthread.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
+#include <pthread.h>
 /*Headers Library*/
 #include "libCommon/aleatorio.h"
 #include "libCommon/hilos.h"
@@ -69,8 +69,6 @@ void* partidoThread(void* parametro)
   partido* datosThread;
   int opcion;
   int numJugador;
-  int evento;
-  int golesJugador;
   int intentosJugador;
   int ganador;
   int i;
@@ -85,8 +83,6 @@ void* partidoThread(void* parametro)
   datosThread = (partido*)parametro;
   opcion = -1;
   numJugador = 0;
-  evento = EVT_NINGUNO;
-  golesJugador = 0;
   intentosJugador = 0;
   ganador = -1;
   jugadorMensaje = 0;

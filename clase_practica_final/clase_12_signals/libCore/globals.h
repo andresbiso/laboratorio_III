@@ -1,7 +1,7 @@
 #ifndef _GLOBALS_H
 #define _GLOBALS_H
 /*Standard Library*/
-#include "pthread.h"
+#include <pthread.h>
 /*Message Queue*/
 enum destinos
 {

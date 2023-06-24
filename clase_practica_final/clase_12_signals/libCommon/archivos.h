@@ -2,15 +2,15 @@
 #define _ARCHIVOS_H
 #define LARGO_LINEA 100
 int abrirArchivo(char*, char*);
-void escribirArchivo(char*);
+int escribirArchivo(char*);
 int leerStringArchivo(char*);
 int leerNumeroArchivo(int*);
 char* leerLineaArchivo(char*);
-void cerrarArchivo();
+void cerrarArchivo(void);
 int abrirLectura(char*);
 int abrirEscritura(char*);
 int abrirAdicion(char*);
-int esFinArchivo();
+int esFinArchivo(void);
 int limpiarArchivo(char*);
 int renombrarArchivo(char*, char*);
 int backupArchivo(char*, char*);
