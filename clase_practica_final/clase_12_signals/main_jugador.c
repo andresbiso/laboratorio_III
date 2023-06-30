@@ -47,7 +47,6 @@ int main(int argc, char *argv[])
 
   srand(time(0));
 
-  iniciarMutex(&mutex);
   iniciarAttr(&atributos);
   asignarEstadoJoinableAttr(&atributos);
 
@@ -84,7 +83,6 @@ int main(int argc, char *argv[])
 
   free(idHilo);
   free(datosThread);
-  destruirMutex(&mutex);
   destruirAttr(&atributos);
 
   configurarFinalizarMemoriaIni(memoriaIni);
