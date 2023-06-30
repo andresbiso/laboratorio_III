@@ -49,6 +49,7 @@ int main(int argc, char *argv[])
 
   iniciarMutex(&mutex);
   iniciarAttr(&atributos);
+  asignarEstadoJoinableAttr(&atributos);
 
   idColaMensajes = crearColaMensajes();
   borrarMensajes(idColaMensajes);
@@ -78,5 +79,6 @@ int main(int argc, char *argv[])
   liberarMemoria(idMemoria, (char*)memoria);
   liberarColaMensajes(idColaMensajes);
   destruirMutex(&mutex);
+  destruirAttr(&atributos);
   return 0;
 }

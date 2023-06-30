@@ -49,6 +49,7 @@ int main(int argc, char *argv[])
 
   iniciarMutex(&mutex);
   iniciarAttr(&atributos);
+  asignarEstadoJoinableAttr(&atributos);
 
   idColaMensajes = crearColaMensajes();
   memoria = (dato_memoria*)crearMemoria(sizeof(dato_memoria)*cantidadJugadores, &idMemoria);
@@ -84,6 +85,7 @@ int main(int argc, char *argv[])
   free(idHilo);
   free(datosThread);
   destruirMutex(&mutex);
+  destruirAttr(&atributos);
 
   configurarFinalizarMemoriaIni(memoriaIni);
 
