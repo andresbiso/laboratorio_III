@@ -21,7 +21,7 @@ int crearSemaforoMultipleConClave(int idClave, int cantidad)
   */
   if (idSemaforo == -1)
   {
-    printf("Error: no se ha podido crear el semáforo\n");
+    puts("Error: no se ha podido crear el semáforo");
     return 0;
   }
   return idSemaforo;

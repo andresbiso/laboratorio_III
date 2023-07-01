@@ -78,7 +78,7 @@ void* partidoThread(void* parametro)
   msg.longDest = MSG_NADIE;
   msg.intRte = MSG_NADIE;
   msg.intEvento = EVT_NINGUNO;
-  memset(msg.charMensaje,0x00,LARGO_MENSAJE);
+  memset(msg.charMensaje, 0x00, sizeof(char)*LARGO_MENSAJE);
 
   datosThread = (partido*)parametro;
   opcion = -1;
@@ -86,7 +86,7 @@ void* partidoThread(void* parametro)
   intentosJugador = 0;
   ganador = -1;
   jugadorMensaje = 0;
-  memset(nomJugador, 0x00, sizeof(LARGO_NOMBRE));
+  memset(nomJugador, 0x00, sizeof(char)*LARGO_NOMBRE);
 
   for (i = 0; i < cantidadJugadores; i++)
   {

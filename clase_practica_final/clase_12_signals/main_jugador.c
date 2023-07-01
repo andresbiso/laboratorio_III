@@ -26,14 +26,19 @@ pthread_t* idHilo;
 pthread_attr_t atributos;
 jugador* datosThread;
 
-void manejador(int signum)
+void liberarRecursos(void)
+{
+  free(idHilo);
+  free(datosThread);
+  destruirAttr(&atributos);
+}
+
+void manejadorSignals(int signum)
 {
     if (signum == SIGINT)
     {
       puts("Liberando Recursos...");
-      free(idHilo);
-      free(datosThread);
-      destruirAttr(&atributos);
+      liberarRecursos();
       puts("Proceso Finalizado");
       exit(0);
     }
@@ -50,7 +55,7 @@ int main(int argc, char *argv[])
 
   if (argc != 1)
   {
-    printf("Uso: ./jugador\n");
+    puts("Uso: ./jugador");
     return -1;
   }
 
@@ -66,7 +71,7 @@ int main(int argc, char *argv[])
   iniciarAttr(&atributos);
   asignarEstadoJoinableAttr(&atributos);
 
-  crearSignal(SIGINT, manejador);
+  crearSignal(SIGINT, manejadorSignals);
 
   idColaMensajes = crearColaMensajes();
   memoria = (dato_memoria*)crearMemoria(sizeof(dato_memoria)*cantidadJugadores, &idMemoria);
@@ -84,12 +89,12 @@ int main(int argc, char *argv[])
     datosThread[i].idColaMensajes = idColaMensajes;
     datosThread[i].memoria = memoria;
     datosThread[i].nroJugador = i;
-    memset(datosThread[i].nombreJugador, 0x00, sizeof(LARGO_NOMBRE));
+    memset(datosThread[i].nombreJugador, 0x00, sizeof(char)*LARGO_NOMBRE);
     strcpy(datosThread[i].nombreJugador, obtenerNombreJugadorPorNumero(i));
 
     if (!crearThread(&idHilo[i], &atributos, jugadorThread, (void*)&datosThread[i]))
     {
-      printf("Error: No se pude crear el thread\n");
+      puts("Error: No se pude crear el thread");
       return -1;
     }
   }
@@ -99,9 +104,7 @@ int main(int argc, char *argv[])
    joinThread(&idHilo[i]);
   }
 
-  free(idHilo);
-  free(datosThread);
-  destruirAttr(&atributos);
+  liberarRecursos();
 
   configurarFinalizarMemoriaIni(memoriaIni);
 

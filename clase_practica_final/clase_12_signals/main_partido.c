@@ -29,16 +29,21 @@ int idMemoriaIni;
 dato_memoria_ini* memoriaIni;
 pthread_attr_t atributos;
 
-void manejador(int signum)
+void liberarRecursos(void)
+{
+  liberarMemoria(idMemoriaIni, (char*)memoriaIni);
+  liberarMemoria(idMemoria, (char*)memoria);
+  liberarColaMensajes(idColaMensajes);
+  destruirMutex(&mutex);
+  destruirAttr(&atributos);
+}
+
+void manejadorSignals(int signum)
 {
     if (signum == SIGINT)
     {
       puts("Liberando Recursos...");
-      liberarMemoria(idMemoriaIni, (char*)memoriaIni);
-      liberarMemoria(idMemoria, (char*)memoria);
-      liberarColaMensajes(idColaMensajes);
-      destruirMutex(&mutex);
-      destruirAttr(&atributos);
+      liberarRecursos();
       puts("Proceso Finalizado");
       exit(0);
     }
@@ -51,7 +56,7 @@ int main(int argc, char *argv[])
 
   if (argc != 1)
   {
-    printf("Uso: ./partido\n");
+    puts("Uso: ./partido");
     return -1;
   }
 
@@ -69,7 +74,7 @@ int main(int argc, char *argv[])
   iniciarAttr(&atributos);
   asignarEstadoJoinableAttr(&atributos);
 
-  crearSignal(SIGINT, manejador);
+  crearSignal(SIGINT, manejadorSignals);
 
   idColaMensajes = crearColaMensajes();
   borrarMensajes(idColaMensajes);
@@ -87,7 +92,7 @@ int main(int argc, char *argv[])
 
   if (!crearThread(&idHilo, &atributos, partidoThread, (void*)&datosThread))
   {
-    printf("Error: No se pude crear el thread\n");
+    puts("Error: No se pude crear el thread");
     return -1;
   }
 
@@ -95,10 +100,6 @@ int main(int argc, char *argv[])
 
   verificarFinalizarMemoriaIni(memoriaIni, "jugador");
 
-  liberarMemoria(idMemoriaIni, (char*)memoriaIni);
-  liberarMemoria(idMemoria, (char*)memoria);
-  liberarColaMensajes(idColaMensajes);
-  destruirMutex(&mutex);
-  destruirAttr(&atributos);
+  liberarRecursos();
   return 0;
 }

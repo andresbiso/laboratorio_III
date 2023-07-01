@@ -17,14 +17,14 @@ void* crearMemoriaConClaveRuta(int size, int* extIdMemoria, int clave, const cha
   /*IPC_CREAT: crea la memoria si no existe*/
   if (idMemoria == -1)
   {
-    printf("Error: no se ha podido conseguir id para la memoria compartida\n");
+    puts("Error: no se ha podido conseguir id para la memoria compartida");
     return 0;
   }
   ptrMemoria = (void *)shmat(idMemoria, (char*)0, 0);
 
   if (ptrMemoria == 0)
   {
-    printf("Error: no se ha podido conseguir memoria compartida\n");
+    puts("Error: no se ha podido conseguir memoria compartida");
     return 0;
   }
   *extIdMemoria = idMemoria;

@@ -65,7 +65,7 @@ int limpiarArchivo(char* ruta)
 {
   if (!abrirEscritura(ruta))
   {
-    printf("Hubo un error al querer abrir el archivo\n");
+    puts("Hubo un error al querer abrir el archivo");
     return -1;
   }
   cerrarArchivo();
@@ -80,30 +80,30 @@ int renombrarArchivo(char* ruta, char* rutaNuevoNombre)
 int backupArchivo(char* ruta, char* rutaNuevoNombre)
 {
   int cantLineasCopiadas;
-  char* mensaje;
+  char* linea;
   FILE* cfptrBak;
 
   cantLineasCopiadas = 0;
-  mensaje = (char*)malloc((LARGO_LINEA)*sizeof(char));
-  memset(mensaje,0x00,(LARGO_LINEA)*sizeof(char));
+  linea = (char*)malloc(sizeof(char)*LARGO_LINEA);
+  memset(linea,0x00,sizeof(char)*LARGO_LINEA);
 
   if (!abrirLectura(ruta))
   {
-   printf("Hubo un error al querer abrir el archivo\n");
+   puts("Hubo un error al querer abrir el archivo");
    return -1;
   }
 
   if ((cfptrBak=fopen(rutaNuevoNombre,"a"))==0)
   {
-     printf("Hubo un error al querer abrir el archivo de backup\n");
+     puts("Hubo un error al querer abrir el archivo de backup");
      return -1;
   }
 
-  while(leerLineaArchivo(mensaje) != 0)
+  while(leerLineaArchivo(linea) != 0)
   {
-    fprintf(cfptrBak,"%s",mensaje);
+    fprintf(cfptrBak,"%s",linea);
     cantLineasCopiadas++;
-    memset(mensaje,0x00,(LARGO_LINEA)*sizeof(char));
+    memset(linea,0x00,sizeof(char)*LARGO_LINEA);
   }
 
   cerrarArchivo();
@@ -112,7 +112,7 @@ int backupArchivo(char* ruta, char* rutaNuevoNombre)
   {
     printf("Ruta Backup: %s\n", rutaNuevoNombre);
   }
-  free(mensaje);
+  free(linea);
   return 0;
 }
 
@@ -122,7 +122,7 @@ int obtenerTamanioArchivo(char* ruta)
   tamanioArchivo = 0;
   if (!abrirLectura(ruta))
   {
-   printf("Hubo un error al querer abrir el archivo\n");
+   puts("Hubo un error al querer abrir el archivo");
    return -1;
   }
 
@@ -146,7 +146,7 @@ int obtenerUltimaLineaArchivo(char* ruta, char* linea)
 {
   if (!abrirLectura(ruta))
   {
-   printf("Hubo un error al querer abrir el archivo\n");
+   puts("Hubo un error al querer abrir el archivo");
    return -1;
   }
 
@@ -167,12 +167,12 @@ int obtenerTotalLineasArchivo(char* ruta)
   char* linea;
   int cantidadLineas;
   cantidadLineas = 0;
-  linea = (char*)malloc((LARGO_LINEA)*sizeof(char));
-  memset(linea,0x00,(LARGO_LINEA)*sizeof(char));
+  linea = (char*)malloc(sizeof(char)*LARGO_LINEA);
+  memset(linea,0x00,sizeof(char)*LARGO_LINEA);
 
   if (!abrirLectura(ruta))
   {
-   printf("Hubo un error al querer abrir el archivo\n");
+   puts("Hubo un error al querer abrir el archivo");
    return -1;
   }
 

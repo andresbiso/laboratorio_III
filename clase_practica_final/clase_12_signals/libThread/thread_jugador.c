@@ -25,7 +25,7 @@ void* jugadorThread(void* parametro)
   msg.longDest = MSG_NADIE;
   msg.intRte = MSG_NADIE;
   msg.intEvento = EVT_NINGUNO;
-  memset(msg.charMensaje,0x00,LARGO_MENSAJE);
+  memset(msg.charMensaje,0x00,sizeof(char)*LARGO_MENSAJE);
 
   datosThread = (jugador*)parametro;
   golesJugador = 0;

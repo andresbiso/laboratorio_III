@@ -11,7 +11,7 @@ int mostrarMenuPartido(char* nombreJugador)
     while(tecla != TECLA_ENTER)    
     {
       printf("Jugador %s\n", nombreJugador);
-      printf("Presione [Enter] para patear al arco\n");
+      puts("Presione [Enter] para patear al arco");
       tecla = getchar();
     }
     return AC_PATEAR;

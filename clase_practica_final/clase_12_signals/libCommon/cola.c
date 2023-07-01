@@ -13,7 +13,7 @@ int crearColaMensajesConClave(int clave)
   int idColaMensajes = msgget(crearClaveConId(clave), 0600 | IPC_CREAT);
   if (idColaMensajes == -1)
   {
-    printf("Error: no se ha podido obtener identificador para cola de mensajes\n");
+    puts("Error: no se ha podido obtener identificador para cola de mensajes");
   }
   return idColaMensajes;
 }

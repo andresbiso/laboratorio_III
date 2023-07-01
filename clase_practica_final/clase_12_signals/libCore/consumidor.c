@@ -14,14 +14,14 @@ void leerLineas(void)
   char caracter;
   int valorNumerico;
 
-  linea = (char*)malloc((LARGO_LINEA)*sizeof(char));
-  memset(linea,0x00,sizeof(LARGO_LINEA)*sizeof(char));
+  linea = (char*)malloc(sizeof(char)*LARGO_LINEA);
+  memset(linea,0x00,sizeof(char)*LARGO_LINEA);
   while(leerLineaArchivo(linea) != 0)
   {
     sscanf(linea, FORMATO_OUTPUT_ARCHIVO, &caracter, &valorNumerico);
     printf(FORMATO_OUTPUT_PANTALLA, caracter, valorNumerico);
   
-    memset(linea,0x00,sizeof(LARGO_LINEA)*sizeof(char));
+    memset(linea,0x00,sizeof(char)*LARGO_LINEA);
   }
   free(linea);
 }

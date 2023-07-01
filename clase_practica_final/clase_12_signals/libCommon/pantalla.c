@@ -9,7 +9,7 @@ void limpiarPantalla(void)
   i = 0;
   while (i<LINEAS_PANTALLA)
   {
-    printf("\n");
+    puts("");
     i++;
   }
 }
