@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include "time.h"
+#include <time.h>
 #include <pthread.h>
 /*Headers Library*/
 #include "libCommon/memoria.h"

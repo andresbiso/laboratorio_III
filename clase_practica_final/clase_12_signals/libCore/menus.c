@@ -5,21 +5,14 @@
 
 int mostrarMenuPartido(char* nombreJugador)
 {
-    int opcion;
-    opcion = -1;
-
-    while((opcion <= AC_NINGUNA) || (opcion >= AC_MAX))    
+    int tecla;
+    tecla = 0;
+;
+    while(tecla != TECLA_ENTER)    
     {
       printf("Jugador %s\n", nombreJugador);
-      printf("Menu\n");
-      printf("1.Patear al arco\n");
-      printf("Ingresar Opcion:\n");
-      if ((scanf("%d", &opcion) != 1)
-        || (opcion <= AC_NINGUNA)
-        || (opcion >= AC_MAX))
-      {
-        printf("Opcion Invalida!\n");
-      }
+      printf("Presione [Enter] para patear al arco\n");
+      tecla = getchar();
     }
-    return opcion;
+    return AC_PATEAR;
 }
