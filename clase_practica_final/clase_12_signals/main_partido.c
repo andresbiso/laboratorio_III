@@ -5,6 +5,7 @@
 #include <unistd.h>
 #include <time.h>
 #include <pthread.h>
+#include <signal.h>
 /*Headers Library*/
 #include "libCommon/memoria.h"
 #include "libCommon/memoria_ini.h"
@@ -12,6 +13,7 @@
 #include "libCommon/hilos.h"
 #include "libCommon/aleatorio.h"
 #include "libCommon/pantalla.h"
+#include "libCommon/signals.h"
 #include "libCore/defines.h"
 #include "libCore/globals.h"
 #include "libCore/funciones.h"
@@ -20,15 +22,31 @@
 #include "libCore/memoria_core.h"
 #include "libThread/thread_partido.h"
 
+int idColaMensajes;
+int idMemoria;
+dato_memoria* memoria;
+int idMemoriaIni;
+dato_memoria_ini* memoriaIni;
+pthread_attr_t atributos;
+
+void manejador(int signum)
+{
+    if (signum == SIGINT)
+    {
+      puts("Liberando Recursos...");
+      liberarMemoria(idMemoriaIni, (char*)memoriaIni);
+      liberarMemoria(idMemoria, (char*)memoria);
+      liberarColaMensajes(idColaMensajes);
+      destruirMutex(&mutex);
+      destruirAttr(&atributos);
+      puts("Proceso Finalizado");
+      exit(0);
+    }
+}
+
 int main(int argc, char *argv[])
 {
-  int idColaMensajes;
-  int idMemoria;
-  dato_memoria* memoria;
-  int idMemoriaIni;
-  dato_memoria_ini* memoriaIni;
   pthread_t idHilo;
-  pthread_attr_t atributos;
   partido datosThread;
 
   if (argc != 1)
@@ -50,6 +68,8 @@ int main(int argc, char *argv[])
   iniciarMutex(&mutex);
   iniciarAttr(&atributos);
   asignarEstadoJoinableAttr(&atributos);
+
+  crearSignal(SIGINT, manejador);
 
   idColaMensajes = crearColaMensajes();
   borrarMensajes(idColaMensajes);

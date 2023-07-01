@@ -5,6 +5,7 @@
 #include <unistd.h>
 #include <time.h>
 #include <pthread.h>
+#include <signal.h>
 /*Headers Library*/
 #include "libCommon/memoria.h"
 #include "libCommon/memoria_ini.h"
@@ -12,6 +13,7 @@
 #include "libCommon/hilos.h"
 #include "libCommon/aleatorio.h"
 #include "libCommon/pantalla.h"
+#include "libCommon/signals.h"
 #include "libCore/defines.h"
 #include "libCore/globals.h"
 #include "libCore/funciones.h"
@@ -20,16 +22,30 @@
 #include "libCore/memoria_core.h"
 #include "libThread/thread_jugador.h"
 
+pthread_t* idHilo;
+pthread_attr_t atributos;
+jugador* datosThread;
+
+void manejador(int signum)
+{
+    if (signum == SIGINT)
+    {
+      puts("Liberando Recursos...");
+      free(idHilo);
+      free(datosThread);
+      destruirAttr(&atributos);
+      puts("Proceso Finalizado");
+      exit(0);
+    }
+}
+
 int main(int argc, char *argv[])
 {
   int idColaMensajes;
   int idMemoria;
   dato_memoria* memoria;
-  int idMemoriaIni;
   dato_memoria_ini* memoriaIni;
-  pthread_t* idHilo;
-  pthread_attr_t atributos;
-  jugador* datosThread;
+  int idMemoriaIni;
   int i;
 
   if (argc != 1)
@@ -49,6 +65,8 @@ int main(int argc, char *argv[])
 
   iniciarAttr(&atributos);
   asignarEstadoJoinableAttr(&atributos);
+
+  crearSignal(SIGINT, manejador);
 
   idColaMensajes = crearColaMensajes();
   memoria = (dato_memoria*)crearMemoria(sizeof(dato_memoria)*cantidadJugadores, &idMemoria);
