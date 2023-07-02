@@ -53,9 +53,7 @@ int partidoAcciones(int opcion, int idColaMensajes, int numJugador)
   switch (opcion) {
     case AC_PATEAR:
       evento = obtenerNumeroAleatorio(EVENTO_MIN, EVENTO_MAX);
-      lockMutex(&mutex);
       enviarMensaje(idColaMensajes, MSG_JUGADOR + numJugador, MSG_PARTIDO, evento, "");
-      unlockMutex(&mutex);
       usleep(100 * 1000);
       break;
     default:
@@ -101,9 +99,7 @@ void* partidoThread(void* parametro)
 
   while(1)
   {
-    lockMutex(&mutex);
     recibirMensaje(datosThread->idColaMensajes, MSG_PARTIDO, &msg);
-    unlockMutex(&mutex);
     usleep(100 * 1000);
 
     numJugador = msg.intRte - MSG_JUGADOR;
@@ -140,10 +136,8 @@ void* partidoThread(void* parametro)
       printf("Jugador %s: ganó el partido con %d goles\n", nomJugador, leerGoles(datosThread->memoria, ganador));
       for (i = 0; i < cantidadJugadores; i++)
       {
-        lockMutex(&mutex);
         escribirFinPartido(datosThread->memoria, i, 1);
         enviarMensaje(datosThread->idColaMensajes, MSG_JUGADOR + i, MSG_PARTIDO, EVT_NINGUNO, "");
-        unlockMutex(&mutex);
         usleep(100 * 1000);
       }
       break;

@@ -34,7 +34,6 @@ void liberarRecursos(void)
   liberarMemoria(idMemoriaIni, (char*)memoriaIni);
   liberarMemoria(idMemoria, (char*)memoria);
   liberarColaMensajes(idColaMensajes);
-  destruirMutex(&mutex);
   destruirAttr(&atributos);
 }
 
@@ -70,7 +69,6 @@ int main(int argc, char *argv[])
 
   srand(time(0));
 
-  iniciarMutex(&mutex);
   iniciarAttr(&atributos);
   asignarEstadoJoinableAttr(&atributos);
 
