@@ -149,21 +149,22 @@ void* partidoThread(void* parametro)
       break;
     }
 
+    for(i = 0; i < cantidadJugadores - 1; i++)
+    {
+      if (leerIntentos(datosThread->memoria, i) > leerIntentos(datosThread->memoria, i+1))
+      {
+        jugadorMensaje = 1;
+      } else {
+        jugadorMensaje = 0;
+      }
+    }
+
     intentosJugador = leerIntentos(datosThread->memoria, jugadorMensaje);
     strcpy(nomJugador, obtenerNombreJugadorPorNumero(jugadorMensaje));
     intentosJugador++;
     printf("Intento Nº %d\n", intentosJugador);
     opcion = mostrarMenuPartido(nomJugador);
     partidoAcciones(opcion, datosThread->idColaMensajes, jugadorMensaje);
-
-    if (jugadorMensaje < (cantidadJugadores - 1))
-    {
-      jugadorMensaje++;
-    }
-    else
-    {
-      jugadorMensaje = 0;
-    }
 
     usleep(INTERVALO_PARTIDO_MS * 1000);
   }
