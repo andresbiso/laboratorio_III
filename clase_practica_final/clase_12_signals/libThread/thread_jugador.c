@@ -42,9 +42,8 @@ void* jugadorThread(void* parametro)
       break;
     }
 
-    lockMutex(&mutex);
     recibirMensaje(datosThread->idColaMensajes, MSG_JUGADOR + datosThread->nroJugador, &msg);
-    unlockMutex(&mutex);
+    usleep(100 * 1000);
 
     intentosJugador = leerIntentos(datosThread->memoria, datosThread->nroJugador);
     intentosJugador++;

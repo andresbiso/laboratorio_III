@@ -56,6 +56,7 @@ int partidoAcciones(int opcion, int idColaMensajes, int numJugador)
       lockMutex(&mutex);
       enviarMensaje(idColaMensajes, MSG_JUGADOR + numJugador, MSG_PARTIDO, evento, "");
       unlockMutex(&mutex);
+      usleep(100 * 1000);
       break;
     default:
       break;

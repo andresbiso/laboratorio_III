@@ -30,6 +30,7 @@ void liberarRecursos(void)
 {
   free(idHilo);
   free(datosThread);
+  destruirMutex(&mutex);
   destruirAttr(&atributos);
 }
 
@@ -68,6 +69,7 @@ int main(int argc, char *argv[])
 
   srand(time(0));
 
+  iniciarMutex(&mutex);
   iniciarAttr(&atributos);
   asignarEstadoJoinableAttr(&atributos);
 
