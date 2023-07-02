@@ -1,7 +1,7 @@
 # partido
 PARTIDO(1) partido 1.0.0  
 **Autor:** Andrés Isaac Biso  
-**Fecha:** 20/06/2023  
+**Fecha:** 02/07/2023  
 
 ## NOMBRE
 partido
@@ -21,7 +21,7 @@ partido
 # jugador
 JUGADOR(1) jugador 1.0.0  
 **Autor:** Andrés Isaac Biso  
-**Fecha:** 20/06/2023  
+**Fecha:** 02/07/2023  
 
 ## NOMBRE
 jugador
