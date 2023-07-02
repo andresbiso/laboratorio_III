@@ -1,4 +1,4 @@
-CC=gcc-13
+CC=gcc-4.1
 
 CFLAGS = -Wall -Werror -O3 -std=gnu89 -pedantic-errors -pthread
 HEADERS = -I./
