@@ -48,10 +48,32 @@ int recibirMensaje(int idColaMensajes, long rLongDest, mensaje* rMsg)
   memset(msg, 0x00, sizeof(mensaje));
   /*(struct msgbuf*)&msg*/
   res = msgrcv(idColaMensajes, msg, sizeof(msg->intRte)+sizeof(msg->intEvento)+sizeof(msg->charMensaje), rLongDest, 0);
-  rMsg->longDest = msg->longDest;
-  rMsg->intRte = msg->intRte;
-  rMsg->intEvento = msg->intEvento;
-  strcpy(rMsg->charMensaje, msg->charMensaje);
+  if (res >= 0)
+  {
+    rMsg->longDest = msg->longDest;
+    rMsg->intRte = msg->intRte;
+    rMsg->intEvento = msg->intEvento;
+    strcpy(rMsg->charMensaje, msg->charMensaje);
+  }
+  free(msg);
+  return res;
+}
+
+int recibirMensajeSinEspera(int idColaMensajes, long rLongDest, mensaje* rMsg)
+{
+  mensaje* msg;
+  int res;
+  msg = (mensaje*)malloc(sizeof(mensaje));
+  memset(msg, 0x00, sizeof(mensaje));
+  /*(struct msgbuf*)&msg*/
+  res = msgrcv(idColaMensajes, msg, sizeof(msg->intRte)+sizeof(msg->intEvento)+sizeof(msg->charMensaje), rLongDest, IPC_NOWAIT);
+  if (res >= 0)
+  {
+    rMsg->longDest = msg->longDest;
+    rMsg->intRte = msg->intRte;
+    rMsg->intEvento = msg->intEvento;
+    strcpy(rMsg->charMensaje, msg->charMensaje);
+  }
   free(msg);
   return res;
 }

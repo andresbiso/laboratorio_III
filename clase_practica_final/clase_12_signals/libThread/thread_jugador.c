@@ -16,21 +16,18 @@
 
 void* jugadorThread(void* parametro)
 {
-  mensaje msg;
+  mensaje* msg;
   jugador* datosThread;
   int golesJugador;
   int intentosJugador;
   int finPartido;
 
-  msg.longDest = MSG_NADIE;
-  msg.intRte = MSG_NADIE;
-  msg.intEvento = EVT_NINGUNO;
-  memset(msg.charMensaje,0x00,sizeof(char)*LARGO_MENSAJE);
-
   datosThread = (jugador*)parametro;
   golesJugador = 0;
   intentosJugador = 0;
   finPartido = 0;
+
+  msg = (mensaje*)malloc(sizeof(mensaje));
 
   while(1)
   {
@@ -41,18 +38,28 @@ void* jugadorThread(void* parametro)
       printf("Jugador %s: finalizó de jugar\n", datosThread->nombreJugador);
       break;
     }
+    
+    memset(msg, 0x00, sizeof(mensaje));
+    msg->longDest = MSG_NADIE;
+    msg->intRte = MSG_NADIE;
+    msg->intEvento = EVT_NINGUNO;
 
-    recibirMensaje(datosThread->idColaMensajes, MSG_JUGADOR + datosThread->nroJugador, &msg);
+    lockMutex(&mutex);
+    recibirMensajeSinEspera(datosThread->idColaMensajes, MSG_JUGADOR + datosThread->nroJugador, msg);
+    unlockMutex(&mutex);
     usleep(100 * 1000);
 
-    intentosJugador = leerIntentos(datosThread->memoria, datosThread->nroJugador);
-    intentosJugador++;
-    lockMutex(&mutex);
-    escribirIntentos(datosThread->memoria, datosThread->nroJugador, intentosJugador);
-    unlockMutex(&mutex);
-    printf("Jugador %s: intento -> %d\n", datosThread->nombreJugador, intentosJugador);
+    if (msg->intEvento != EVT_NINGUNO)
+    {
+      intentosJugador = leerIntentos(datosThread->memoria, datosThread->nroJugador);
+      intentosJugador++;
+      lockMutex(&mutex);
+      escribirIntentos(datosThread->memoria, datosThread->nroJugador, intentosJugador);
+      unlockMutex(&mutex);
+      printf("Jugador %s: intento -> %d\n", datosThread->nombreJugador, intentosJugador);
+    }
   
-    switch(msg.intEvento)
+    switch(msg->intEvento)
     {
       case EVT_NINGUNO:
         break;
@@ -94,5 +101,6 @@ void* jugadorThread(void* parametro)
 
     usleep(INTERVALO_JUGADOR_MS * 1000);
   }
+  free(msg);
   return 0;
 }
