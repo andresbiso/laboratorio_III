@@ -1,5 +1,5 @@
 /*Standard Library*/
-#include "stdio.h"
+#include <stdio.h>
 /*Headers Library*/
 #include "libCommon/memoria.h"
 #include "libCommon/pantalla.h"

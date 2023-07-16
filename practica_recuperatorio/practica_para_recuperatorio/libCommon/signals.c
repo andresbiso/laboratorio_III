@@ -1,6 +1,6 @@
 /*Standard Library*/
-#include "stdio.h"
-#include "signal.h"
+#include <stdio.h>
+#include <signal.h>
 /*File Header*/
 #include "signals.h"
 
@@ -9,7 +9,7 @@ void manejador(int signum)
 {
     if (signum == SIGINT)
     {
-        printf("Señal Capturada");
+        puts("señal capturada");
     }
 }
 crearSignal(SIGINT, manejador);
@@ -23,7 +23,7 @@ void (*crearSignal(int numSignal, void (*manejador)(int)))(int)
 Ejemplo:
 #include <unistd.h>
 pid_t getpid(void);
-printf("sending SIGUSR1 to pid %d\n", (int) getpid());
+printf("sending SIGUSR1 to pid %d\n", (int)getpid());
 enviarSignal(getpid(), SIGUSR1);
 */
 /*Signals configurables: SIGUSR1, SIGUSR2*/
@@ -41,6 +41,11 @@ crearAlarma(10);
 unsigned int crearAlarma(unsigned int segundos)
 {
     return alarm(segundos);
+}
+
+unsigned int cancelarAlarma(void)
+{
+    return alarm(0);
 }
 
 void (*ignorarSignal(int numSignal))(int)

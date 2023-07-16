@@ -1,7 +1,7 @@
 #ifndef _MEMORIA_CORE_H
 #define _MEMORIA_CORE_H
 /*Headers Library*/
-#include "libCore/defines.h"
+#include "defines.h"
 struct tipo_dato_memoria
 {
   int intentos;

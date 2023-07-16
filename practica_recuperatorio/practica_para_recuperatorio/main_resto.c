@@ -1,9 +1,9 @@
 /*Standard Library*/
-#include "stdio.h"
-#include "stdlib.h"
-#include "string.h"
-#include "unistd.h"
-#include "time.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <time.h>
 /*Headers Library*/
 #include "libCommon/semaforos.h"
 #include "libCommon/aleatorio.h"
@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
 
   if (argc != 1)
   {
-    printf("Uso: ./resto\n");
+    puts("Uso: ./resto");
     return -1;
   }
 
@@ -63,12 +63,12 @@ int main(int argc, char *argv[])
   for (i = 0; i < CANT_COMIDAS; i++)
   {
     printf("Comida %d\n", i + 1);
-    printf("Ingrese descripción: \n");
+    puts("Ingrese descripción:");
     scanf("%19s", comidas[i].descripcion);
-    printf("\n");
-    printf("Ingrese precio: \n");
+    puts("");
+    puts("Ingrese precio:");
     scanf("%d", &comidas[i].precio);
-    printf("\n");
+    puts("");
     comidas[i].total = 0;
   }
 
@@ -80,8 +80,8 @@ int main(int argc, char *argv[])
     }
     else
     {
-      printf("Se alcanzó máximo de órdenes\n");
-      printf("Cerrando Resto\n");
+      puts("Se alcanzó máximo de órdenes");
+      puts("Cerrando Resto");
       break;
     }
     comidaElegida = mostrarMenu(comidas);

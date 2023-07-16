@@ -1,7 +1,6 @@
 #ifndef _GLOBALS_H
 #define _GLOBALS_H
 /*Headers Library*/
-#include "libCommon/archivos.h"
 #include "defines.h"
 enum menu
 {

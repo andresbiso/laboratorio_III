@@ -4,7 +4,7 @@
 #include <string.h>
 /*Headers Library*/
 #include "libCommon/archivos.h"
-#include "libCore/defines.h"
+#include "defines.h"
 /*File Header*/
 #include "consumidor.h"
 

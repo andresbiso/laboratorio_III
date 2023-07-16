@@ -4,8 +4,8 @@
 #include <string.h>
 /*Headers Library*/
 #include "libCommon/archivos.h"
-#include "libCore/defines.h"
-#include "libCore/funciones.h"
+#include "defines.h"
+#include "funciones.h"
 /*File Header*/
 #include "productor.h"
 

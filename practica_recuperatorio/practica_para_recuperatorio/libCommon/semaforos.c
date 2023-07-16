@@ -1,7 +1,7 @@
 /*Standard Library*/
-#include "stdio.h"
-#include "sys/ipc.h"
-#include "sys/sem.h"
+#include <stdio.h>
+#include <sys/ipc.h>
+#include <sys/sem.h>
 /*Headers Library*/
 #include "claves.h"
 /*File Header*/
@@ -11,7 +11,7 @@ int crearSemaforoMultipleConClave(int idClave, int cantidad)
 {
   key_t clave;
   int idSemaforo;
-  clave = crearClave(idClave);
+  clave = crearClaveConId(idClave);
   idSemaforo = semget(clave, cantidad, 0600|IPC_CREAT);
   /*
    0600: permiso de lectura y escritura para el owner
@@ -21,7 +21,7 @@ int crearSemaforoMultipleConClave(int idClave, int cantidad)
   */
   if (idSemaforo == -1)
   {
-    printf("Error: no se ha podido crear el semáforo\n");
+    puts("Error: no se ha podido crear el semáforo");
     return 0;
   }
   return idSemaforo;
@@ -37,7 +37,7 @@ int crearSemaforoConClave(int idClave)
   return crearSemaforoMultipleConClave(idClave, SEM_CANT_DEFAULT);
 }
 
-int crearSemaforo()
+int crearSemaforo(void)
 {
   return crearSemaforoConClave(CLAVE_BASE);
 }

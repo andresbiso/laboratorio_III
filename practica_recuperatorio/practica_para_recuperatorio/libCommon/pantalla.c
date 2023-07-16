@@ -1,15 +1,15 @@
 /*Standard Library*/
-#include "stdio.h"
+#include <stdio.h>
 /*File Header*/
 #include "pantalla.h"
 
-void limpiarPantalla()
+void limpiarPantalla(void)
 {
   int i;
   i = 0;
   while (i<LINEAS_PANTALLA)
   {
-    printf("\n");
+    puts("");
     i++;
   }
 }

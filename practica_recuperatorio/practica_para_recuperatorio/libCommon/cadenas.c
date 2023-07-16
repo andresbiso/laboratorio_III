@@ -1,6 +1,6 @@
 /*Standard Library*/
-#include "stdio.h"
-#include "string.h"
+#include <stdio.h>
+#include <string.h>
 /*File Header*/
 #include "cadenas.h"
 
@@ -8,9 +8,10 @@ char letraMayuscula(char valor)
 {
   const int delta = 'a' - 'A';
   /* Devuelve 32 en decimal
-  que es la diferencia entre 'a'
-  que es en ASCII decimal 97
-  y 'A' que es en ASCII decimal 65 */
+  ** que es la diferencia entre 'a'
+  ** que es en ASCII decimal 97
+  ** y 'A' que es en ASCII decimal 65
+  */
   if (valor <= 'z' && valor >= 'a')
   {
     valor -= delta;
@@ -22,9 +23,10 @@ char letraMinuscula(char valor)
 {
   const int delta = 'a' - 'A';
   /* Devuelve 32 en decimal
-  que es la diferencia entre 'a'
-  que es en ASCII decimal 97
-  y 'A' que es en ASCII decimal 65 */
+  ** que es la diferencia entre 'a'
+  ** que es en ASCII decimal 97
+  ** y 'A' que es en ASCII decimal 65
+  */
   if (valor >= 'A' && valor <= 'Z')
   {
     valor += delta;
@@ -34,7 +36,7 @@ char letraMinuscula(char valor)
 
 void cadenaMayuscula(char* cadena, char* cadenaMayusc)
 {
-  int i;
+  unsigned long i;
   for (i = 0; i < strlen(cadena); i++)
   {
     cadenaMayusc[i] = letraMayuscula(cadena[i]);
@@ -43,7 +45,7 @@ void cadenaMayuscula(char* cadena, char* cadenaMayusc)
 
 void cadenaMinuscula(char* cadena, char* cadenaMinusc)
 {
-  int i;
+  unsigned long i;
   for (i = 0; i < strlen(cadena); i++)
   {
     cadenaMinusc[i] = letraMinuscula(cadena[i]);
@@ -62,8 +64,9 @@ char* unirCadenasConDelimitador(char* destino, char* origen, char* delimitador)
   return unirCadenas(destino, origen);
 }
 
-/*Retorna 0 cuando no puede seguir separando la cadena*/
-/*se suele utilizar con un while(token != null)*/
+/* Retorna 0 cuando no puede seguir separando la cadena
+** se suele utilizar con un while(token != null)
+*/
 char* separarCadenaConDelimitador(char* cadena, char* delimitador)
 {
   if (cadena != 0)
@@ -76,11 +79,12 @@ char* separarCadenaConDelimitador(char* cadena, char* delimitador)
   }
 }
 
-/*Ejemplo: podemos utilizar esta función para*/
-/*crear una estructura array=(char**)malloc(sizeof(char*)*count)*/
-/*y luego separar el string y asignarlo a cada parte del array*/
-/*array[i]=(char*)malloc(sizeof(char)*strlen(token))*/
-/*sprintf(array[i],"%s\n", token)*/
+/* Ejemplo: podemos utilizar esta función para
+** crear una estructura array=(char**)malloc(sizeof(char*)*count)
+** y luego separar el string y asignarlo a cada parte del array
+** array[i]=(char*)malloc(sizeof(char)*strlen(token))
+** sprintf(array[i],"%s\n", token)
+*/
 int contarSeparacionesCadena(char* cadena, char* delimitador)
 {
   int contador;

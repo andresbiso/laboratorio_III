@@ -1,5 +1,6 @@
 #ifndef _MENUS_H
 #define _MENUS_H
+/*File Header*/
 #include "globals.h"
 enum acciones_menu
 {

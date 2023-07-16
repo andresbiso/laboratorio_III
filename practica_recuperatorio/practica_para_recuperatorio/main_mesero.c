@@ -1,9 +1,9 @@
 /*Standard Library*/
-#include "stdio.h"
-#include "stdlib.h"
-#include "string.h"
-#include "unistd.h"
-#include "time.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <time.h>
 /*Headers Library*/
 #include "libCommon/semaforos.h"
 #include "libCommon/aleatorio.h"
@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
 
   if (argc != 2)
   {
-    printf("Uso: ./mesero [1-3]\n");
+    puts("Uso: ./mesero [1-3]");
     return -1;
   }
 
@@ -48,7 +48,7 @@ int main(int argc, char *argv[])
 
   if (meseroElegido < 1 || meseroElegido > 3)
   {
-    printf("Ingrese 1, 2 o 3\n");
+    puts("Ingrese 1, 2 o 3");
     return 0;
   }
 
@@ -67,7 +67,7 @@ int main(int argc, char *argv[])
     esperarSemaforo(idSemaforo);
     if (abrirLectura(rutaArchivo))
     {
-      leerOrdenes(meseroElegido);
+      leerOrdenes();
       cerrarArchivo();
       limpiarArchivo(rutaArchivo);
     }

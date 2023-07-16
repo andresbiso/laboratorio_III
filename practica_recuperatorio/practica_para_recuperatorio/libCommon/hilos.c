@@ -1,27 +1,36 @@
 /*Standard Library*/
-#include "pthread.h"
+#include <pthread.h>
 /*File Header*/
 #include "hilos.h"
 
-void iniciarMutex(pthread_mutex_t* mutex)
+int iniciarMutex(pthread_mutex_t* mutex)
 {
-  pthread_mutex_init(mutex, 0);
+  return pthread_mutex_init(mutex, 0);
 }
 
-void destruirMutex(pthread_mutex_t* mutex)
+int destruirMutex(pthread_mutex_t* mutex)
 {
-  pthread_mutex_destroy(mutex);
+  return pthread_mutex_destroy(mutex);
 }
 
-void iniciarAttr(pthread_attr_t* atributos)
+int iniciarAttr(pthread_attr_t* atributos)
 {
-  pthread_attr_init(atributos);
-  pthread_attr_setdetachstate(atributos, PTHREAD_CREATE_JOINABLE);
+  return pthread_attr_init(atributos);
 }
 
-void joinThread(pthread_t* hilo)
+int destruirAttr(pthread_attr_t* atributos)
 {
-  pthread_join(*hilo, 0);
+  return pthread_attr_destroy(atributos);
+}
+
+int asignarEstadoJoinableAttr(pthread_attr_t* atributos)
+{
+  return pthread_attr_setdetachstate(atributos, PTHREAD_CREATE_JOINABLE);
+}
+
+int joinThread(pthread_t* hilo)
+{
+  return pthread_join(*hilo, 0);
 }
 
 /*Ejemplo uso: joinThreadValorSalida(&idHilo, (void*)&valorDevuelto)*/
@@ -33,19 +42,19 @@ void joinThread(pthread_t* hilo)
 /*En vez de return utilizamos la siguiente función:*/
 /*pthread_exit((void*)0);*/
 /*Donde esta el 0 podemos indicar cualquier valor de salida*/
-void joinThreadValorSalida(pthread_t* hilo, char* valorDevuelto)
+int joinThreadValorSalida(pthread_t* hilo, char* valorDevuelto)
 {
-  pthread_join(*hilo, (void**)valorDevuelto);
+  return pthread_join(*hilo, (void**)valorDevuelto);
 }
 
-void lockMutex(pthread_mutex_t* mutex)
+int lockMutex(pthread_mutex_t* mutex)
 {
-  pthread_mutex_lock(mutex);
+  return pthread_mutex_lock(mutex);
 }
 
-void unlockMutex(pthread_mutex_t* mutex)
+int unlockMutex(pthread_mutex_t* mutex)
 {
-  pthread_mutex_unlock(mutex);
+  return pthread_mutex_unlock(mutex);
 }
 
 int crearThread(pthread_t* hilo, pthread_attr_t* atributos, void* (*funcionThread)(void*), void* arg)

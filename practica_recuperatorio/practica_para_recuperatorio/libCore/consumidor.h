@@ -1,4 +1,4 @@
 #ifndef _CONSUMIDOR_H
 #define _CONSUMIDOR_H
-void leerOrdenes();
+void leerOrdenes(void);
 #endif

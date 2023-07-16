@@ -7,7 +7,7 @@
 int crearSemaforoMultipleConClave(int, int);
 int crearSemaforoMultiple(int);
 int crearSemaforoConClave(int);
-int crearSemaforo();
+int crearSemaforo(void);
 int iniciarSemaforoMultiple(int, int, int);
 int iniciarSemaforo(int, int);
 int levantarSemaforoMultiple(int, int);
