@@ -49,6 +49,10 @@ int validarGanador(partido* datosThread)
           golesGanador = golesJugador;
           posicionGanador = j;
         }
+        else if (posicionGanador != j && golesJugador == golesGanador) 
+        {
+          return -1;
+        }
       }
       return posicionGanador;
     }

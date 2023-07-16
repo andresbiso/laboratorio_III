@@ -43,6 +43,11 @@ unsigned int crearAlarma(unsigned int segundos)
     return alarm(segundos);
 }
 
+unsigned int cancelarAlarma(void)
+{
+    return alarm(0);
+}
+
 void (*ignorarSignal(int numSignal))(int)
 {
     return crearSignal(numSignal, SIG_IGN);

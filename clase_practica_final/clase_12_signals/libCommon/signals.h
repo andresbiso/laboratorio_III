@@ -1,5 +1,6 @@
 #ifndef _SIGNALS_H
 #define _SIGNALS_H
+#define TIEMPO_ALARMA_DEFAULT 15
 /*Standard Library*/
 #include <unistd.h>
 #include <signal.h>
@@ -8,6 +9,7 @@
 void (*crearSignal(int, void (*)(int)))(int);
 int enviarSignal(pid_t, int);
 unsigned int crearAlarma(unsigned int);
+unsigned int cancelarAlarma(void);
 void (*ignorarSignal(int numSignal))(int);
 void (*restaurarSignal(int numSignal))(int);
 #endif

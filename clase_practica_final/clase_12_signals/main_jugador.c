@@ -36,7 +36,7 @@ void liberarRecursos(void)
 
 void manejadorSignals(int signum)
 {
-    if (signum == SIGINT)
+    if (signum == SIGINT || signum == SIGALRM)
     {
       puts("Liberando Recursos...");
       liberarRecursos();
@@ -74,11 +74,14 @@ int main(int argc, char *argv[])
   asignarEstadoJoinableAttr(&atributos);
 
   crearSignal(SIGINT, manejadorSignals);
+  crearSignal(SIGALRM, manejadorSignals);
 
   idColaMensajes = crearColaMensajes();
   memoria = (dato_memoria*)crearMemoria(sizeof(dato_memoria)*cantidadJugadores, &idMemoria);
   memoriaIni = crearMemoriaIni(&idMemoriaIni);
+  crearAlarma(TIEMPO_ALARMA_DEFAULT);
   verificarMemoriaIni(memoriaIni, "partido");
+  cancelarAlarma();
 
   limpiarPantalla();
   printf("Cantidad Jugadores %d\n", cantidadJugadores);
