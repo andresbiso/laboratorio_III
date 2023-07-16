@@ -52,8 +52,8 @@ int main(int argc, char *argv[])
     return 0;
   }
 
-  rutaArchivo = (char*)malloc((LARGO_RUTA+1)*sizeof(char));
-  memset(rutaArchivo,0x00,sizeof(rutaArchivo));
+  rutaArchivo = (char*)malloc(sizeof(char)*LARGO_RUTA);
+  memset(rutaArchivo,0x00,sizeof(char)*LARGO_RUTA);
   strcpy(rutaArchivo, obtenerRutaArchivoMesero(meseroElegido));
 
   idSemaforo = crearSemaforo();

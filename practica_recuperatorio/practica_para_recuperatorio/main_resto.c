@@ -26,9 +26,9 @@ int main(int argc, char *argv[])
   dato_memoria_ini* memoriaIni;
 
   /*Custom*/
-  int comidaElegida;
-  char rutaArchivo[LARGO_RUTA];
   comida* comidas;
+  char* rutaArchivo;
+  int comidaElegida;
   int totalComida;
   int meseroAleatorio;
   int i;
@@ -55,8 +55,9 @@ int main(int argc, char *argv[])
   configurarMemoriaIni(memoriaIni);
 
   comidas = (comida*)malloc(3*sizeof(comida));
-  memset(comidas,0x00,3*sizeof(comidas));
-  memset(rutaArchivo,0x00,LARGO_LINEA*sizeof(char));
+  memset(comidas,0x00,3*sizeof(comida));
+  rutaArchivo = (char*)malloc(sizeof(char)*LARGO_RUTA);
+  memset(rutaArchivo,0x00,sizeof(char)*LARGO_RUTA);
 
   limpiarPantalla();
 
@@ -104,12 +105,13 @@ int main(int argc, char *argv[])
     }
     levantarSemaforo(idSemaforo);
 
-    memset(rutaArchivo,0x00,sizeof(rutaArchivo));
+    memset(rutaArchivo,0x00,sizeof(char)*LARGO_RUTA);
     usleep(INTERVALO_RESTO_MS * 1000);
   }
 
   liberarMemoria(idMemoriaIni, (char*)memoriaIni);
   eliminarSemaforo(idSemaforo);
   free(comidas);
+  free(rutaArchivo);
   return 0;
 }
