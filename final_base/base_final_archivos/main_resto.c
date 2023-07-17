@@ -28,6 +28,7 @@ int main(int argc, char *argv[])
   /*Custom*/
   comida* comidas;
   char* rutaArchivo;
+  char* entrada;
   int comidaElegida;
   int totalComida;
   int meseroAleatorio;
@@ -58,17 +59,47 @@ int main(int argc, char *argv[])
   memset(comidas,0x00,3*sizeof(comida));
   rutaArchivo = (char*)malloc(sizeof(char)*LARGO_RUTA);
   memset(rutaArchivo,0x00,sizeof(char)*LARGO_RUTA);
+  entrada = (char*)malloc(sizeof(char)*LARGO_LINEA);
+  memset(entrada,0x00,sizeof(char)*LARGO_LINEA);
 
   limpiarPantalla();
 
   for (i = 0; i < CANT_COMIDAS; i++)
   {
-    printf("Comida %d\n", i + 1);
-    puts("Ingrese descripción:");
-    scanf("%19s", comidas[i].descripcion);
+    while(strcmp(comidas[i].descripcion, "") == 0)
+    {
+      printf("Comida %d\n", i + 1);
+      puts("Ingrese descripción:");
+      if (fgets(entrada, sizeof(entrada), stdin) != 0)
+      {
+        if (sscanf(entrada, "%s", comidas[i].descripcion) != 1)
+        {
+          puts("Valor Inválido!");
+        }
+      }
+      else
+      {
+        puts("Valor Inválido!");
+      }
+    }
     puts("");
-    puts("Ingrese precio:");
-    scanf("%d", &comidas[i].precio);
+    memset(entrada,0x00,sizeof(char)*LARGO_LINEA);
+    while(comidas[i].precio == 0)
+    {
+      printf("Comida %d\n", i + 1);
+      puts("Ingrese precio:");
+      if(fgets(entrada, sizeof(entrada), stdin) != 0)
+      {
+        if (sscanf(entrada, "%d", &comidas[i].precio) != 1)
+        {
+          puts("Valor Inválido!");
+        }
+      }
+      else
+      {
+        puts("Valor Inválido!");
+      }
+    }
     puts("");
     comidas[i].total = 0;
   }
@@ -113,5 +144,6 @@ int main(int argc, char *argv[])
   eliminarSemaforo(idSemaforo);
   free(comidas);
   free(rutaArchivo);
+  free(entrada);
   return 0;
 }
