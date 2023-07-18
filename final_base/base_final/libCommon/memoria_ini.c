@@ -1,8 +1,8 @@
 /*Standard Library*/
 #include <stdio.h>
 /*Headers Library*/
-#include "libCommon/memoria.h"
-#include "libCommon/pantalla.h"
+#include "memoria.h"
+#include "pantalla.h"
 /*File Header*/
 #include "memoria_ini.h"
 

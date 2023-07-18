@@ -2,7 +2,6 @@
 #define _SIGNALS_H
 #define TIEMPO_ALARMA_DEFAULT 15
 /*Standard Library*/
-#include <unistd.h>
 #include <signal.h>
 /*declare crearSignal as function (int, pointer to function (int) returning void)*/
 /*returning pointer to function (int) returning voi*/
