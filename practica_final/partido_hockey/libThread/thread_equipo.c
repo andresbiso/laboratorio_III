@@ -14,17 +14,22 @@
 /*File Header*/
 #include "thread_equipo.h"
 
+int calcularDestinoJugador(equipo* datosThread)
+{
+  return MSG_EQUIPO + ((datosThread->nroEquipo - 1) * cantidadJugadoresEquipo) + datosThread->nroJugador;
+}
+
 void* equipoThread(void* parametro)
 {
   mensaje* msg;
   equipo* datosThread;
-  int golesequipo;
-  int intentosequipo;
+  int golesEquipo;
+  int intentosEquipo;
   int finPartido;
 
   datosThread = (equipo*)parametro;
-  golesequipo = 0;
-  intentosequipo = 0;
+  golesEquipo = 0;
+  intentosEquipo = 0;
   finPartido = 0;
 
   msg = (mensaje*)malloc(sizeof(mensaje));
@@ -45,53 +50,46 @@ void* equipoThread(void* parametro)
     msg->intEvento = EVT_NINGUNO;
 
     lockMutex(&mutex);
-    recibirMensajeSinEspera(datosThread->idColaMensajes, MSG_EQUIPO + ((datosThread->nroEquipo - 1) * cantidadJugadoresEquipo) + datosThread->nroJugador , msg);
+    recibirMensajeSinEspera(datosThread->idColaMensajes, calcularDestinoJugador(datosThread), msg);
     unlockMutex(&mutex);
     usleep(100 * 1000);
 
     if (msg->intEvento != EVT_NINGUNO)
     {
-      intentosequipo = leerIntentos(datosThread->memoria, datosThread->nroequipo);
-      intentosequipo++;
+      intentosEquipo = leerIntentos(datosThread->memoria, datosThread->nroEquipo);
+      intentosEquipo++;
       lockMutex(&mutex);
-      escribirIntentos(datosThread->memoria, datosThread->nroequipo, intentosequipo);
+      escribirIntentos(datosThread->memoria, datosThread->nroEquipo, intentosEquipo);
       unlockMutex(&mutex);
-      printf("equipo %s: intento -> %d\n", datosThread->nombreequipo, intentosequipo);
+      printf("equipo %s: intento -> %d\n", datosThread->nroEquipo, intentosEquipo);
     }
   
     switch(msg->intEvento)
     {
       case EVT_NINGUNO:
         break;
+      case EVT_PATEAR:
+        break;
       case EVT_GOL:
-        printf("equipo %s: metió gol\n", datosThread->nombreequipo);
-        golesequipo = leerGoles(datosThread->memoria, datosThread->nroequipo);
-        golesequipo++;
+        printf("equipo %d: jugador %d metió gol\n", datosThread->nroEquipo, datosThread->nroJugador);
+        golesEquipo = leerGoles(datosThread->memoria, datosThread->nroEquipo);
+        golesEquipo++;
+        if (datosThread->nroJugador == NUM_ARQUERO)
+        {
+          puts("¡Gol de arquero vale doble!");
+          golesEquipo++;
+        }
         lockMutex(&mutex);
-        escribirGoles(datosThread->memoria, datosThread->nroequipo, golesequipo);
-        enviarMensaje(datosThread->idColaMensajes, MSG_PARTIDO, MSG_equipo + datosThread->nroequipo, EVT_GOL, "");
+        escribirGoles(datosThread->memoria, datosThread->nroEquipo, golesEquipo);
+        enviarMensaje(datosThread->idColaMensajes, MSG_PARTIDO, calcularDestinoJugador(datosThread), EVT_GOL, "");
         unlockMutex(&mutex);
         usleep(100 * 1000);
-        printf("equipo %s: total goles -> %d\n", datosThread->nombreequipo, golesequipo);
+        printf("equipo %d: total goles -> %d\n", datosThread->nroEquipo, golesEquipo);
         break;
       case EVT_FUERA:
-        printf("equipo %s: fuera\n", datosThread->nombreequipo);
+        printf("equipo %d: jugador %d fuera\n", datosThread->nroEquipo, datosThread->nroJugador);
         lockMutex(&mutex);
-        enviarMensaje(datosThread->idColaMensajes, MSG_PARTIDO, MSG_equipo + datosThread->nroequipo, EVT_FUERA, "");
-        unlockMutex(&mutex);
-        usleep(100 * 1000);
-        break;
-      case EVT_PALO:
-        printf("equipo %s: palo\n", datosThread->nombreequipo);
-        lockMutex(&mutex);
-        enviarMensaje(datosThread->idColaMensajes, MSG_PARTIDO, MSG_equipo + datosThread->nroequipo, EVT_PALO, "");
-        unlockMutex(&mutex);
-        usleep(100 * 1000);
-        break;
-      case EVT_ATAJA:
-        printf("equipo %s: atajado\n", datosThread->nombreequipo);
-        lockMutex(&mutex);
-        enviarMensaje(datosThread->idColaMensajes, MSG_PARTIDO, MSG_equipo + datosThread->nroequipo, EVT_ATAJA, "");
+        enviarMensaje(datosThread->idColaMensajes, MSG_PARTIDO, calcularDestinoJugador(datosThread), EVT_FUERA, "");
         unlockMutex(&mutex);
         usleep(100 * 1000);
         break;

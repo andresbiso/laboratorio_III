@@ -27,10 +27,10 @@ EQUIPO(1) equipo 1.0.0
 equipo
 
 ## OPCIONES
-**equipo**
+**equipo [1-2]**
 
 ## EJEMPLOS
-**./equipo**
+**./equipo 1**
 
 ## VALORES DE SALIDA
 **0**

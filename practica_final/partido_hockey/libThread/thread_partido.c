@@ -15,6 +15,11 @@
 /*File Header*/
 #include "thread_partido.h"
 
+int calcularDestinoJugador(int nroEquipo, int nroJugador)
+{
+  return MSG_EQUIPO + ((nroEquipo - 1) * cantidadJugadoresEquipo) + nroJugador;
+}
+
 int validarGanador(partido* datosThread)
 {
   int i;
@@ -47,14 +52,14 @@ int validarGanador(partido* datosThread)
   return -1;
 }
 
-int partidoAcciones(int opcion, int idColaMensajes, int numEquipo, int numJugador)
+int partidoAcciones(int opcion, int idColaMensajes, int nroEquipo, int nroJugador)
 {
   int evento;
   evento = -1;
   switch (opcion) {
     case AC_PATEAR:
       evento = obtenerNumeroAleatorio(EVENTO_MIN, EVENTO_MAX);
-      enviarMensaje(idColaMensajes, MSG_EQUIPO + numEquipo * cantidadJugadoresEquipo + numJugador, MSG_PARTIDO, evento, "");
+      enviarMensaje(idColaMensajes, calcularDestinoJugador(nroEquipo, nroJugador), MSG_PARTIDO, EVT_PATEAR, "");
       usleep(100 * 1000);
       break;
     default:
@@ -68,29 +73,28 @@ void* partidoThread(void* parametro)
   mensaje* msg;
   partido* datosThread;
   int opcion;
-  int numequipo;
-  int intentosequipo;
+  int nroEquipo;
+  int nroJugador;
+  int intentosEquipo;
   int ganador;
   int i;
   int equipoMensaje;
-  char nomequipo[LARGO_NOMBRE];
 
   datosThread = (partido*)parametro;
   opcion = -1;
-  numequipo = 0;
-  intentosequipo = 0;
+  nroEquipo = 1;
+  nroJugador = 1;
+  intentosEquipo = 0;
   ganador = -1;
   equipoMensaje = 0;
-  memset(nomequipo, 0x00, sizeof(char)*LARGO_NOMBRE);
 
   msg = (mensaje*)malloc(sizeof(mensaje));
 
-  intentosequipo = leerIntentos(datosThread->memoria, 0);
-  strcpy(nomequipo, obtenerNombreequipoPorNumero(0));
-  intentosequipo++;
-  printf("Intento Nº %d\n", intentosequipo);
-  opcion = mostrarMenuPartido(nomequipo);
-  partidoAcciones(opcion, datosThread->idColaMensajes, 0);
+  intentosEquipo = leerIntentos(datosThread->memoria, 0);
+  intentosEquipo++;
+  printf("Intento Nº %d\n", intentosEquipo);
+  opcion = mostrarMenuPartido(nroEquipo, nroJugador);
+  partidoAcciones(opcion, datosThread->idColaMensajes, nroEquipo, nroJugador);
 
   while(1)
   {
@@ -102,7 +106,7 @@ void* partidoThread(void* parametro)
     recibirMensajeSinEspera(datosThread->idColaMensajes, MSG_PARTIDO, msg);
     usleep(100 * 1000);
 
-    numequipo = msg->intRte - MSG_equipo;
+    numequipo = msg->intRte - MSG_EQUIPO;
     strcpy(nomequipo, obtenerNombreequipoPorNumero(numequipo));
 
     switch(msg->intEvento)

@@ -12,6 +12,7 @@ enum destinos
 enum eventos
 {
   EVT_NINGUNO, /*0*/
+  EVT_PATEAR,
   EVT_GOL,
   EVT_FUERA
 };

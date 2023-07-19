@@ -5,13 +5,13 @@
 /*File Header*/
 #include "menus.h"
 
-int mostrarMenuPartido(char* nombreequipo)
+int mostrarMenuPartido(int nroEquipo, int nroJugador)
 {
     int tecla;
     tecla = 0;
     while(tecla != TECLA_ENTER)    
     {
-      printf("equipo %s\n", nombreequipo);
+      printf("equipo %d: jugador %d\n", nroEquipo, nroJugador);
       tecla = solicitarCaracter("Presione [Enter] para patear al arco");
     }
     return AC_PATEAR;
