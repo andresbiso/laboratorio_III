@@ -20,6 +20,24 @@ int calcularDestinoJugador(int nroEquipo, int nroJugador)
   return MSG_EQUIPO + ((nroEquipo - 1) * cantidadJugadoresEquipo) + nroJugador;
 }
 
+int calcularRemitenteJugador(int remitente)
+{
+  int jugadorEquipo;
+  int jugador;
+  jugadorEquipo = remitente - MSG_EQUIPO;
+  jugador = jugadorEquipo % cantidadJugadoresEquipo;
+  return jugador;
+}
+
+int calcularRemitenteEquipo(int remitente)
+{
+  int jugadorEquipo;
+  int equipo;
+  jugadorEquipo = remitente - MSG_EQUIPO;
+  equipo = jugadorEquipo / cantidadJugadoresEquipo;
+  return equipo;
+}
+
 int validarGanador(partido* datosThread)
 {
   int i;
@@ -54,18 +72,14 @@ int validarGanador(partido* datosThread)
 
 int partidoAcciones(int opcion, int idColaMensajes, int nroEquipo, int nroJugador)
 {
-  int evento;
-  evento = -1;
   switch (opcion) {
-    case AC_PATEAR:
-      evento = obtenerNumeroAleatorio(EVENTO_MIN, EVENTO_MAX);
+    case AC_PATEAR: 
       enviarMensaje(idColaMensajes, calcularDestinoJugador(nroEquipo, nroJugador), MSG_PARTIDO, EVT_PATEAR, "");
       usleep(100 * 1000);
       break;
     default:
       break;
   }
-  return evento;
 }
 
 void* partidoThread(void* parametro)

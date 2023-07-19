@@ -17,8 +17,8 @@
 #define FORMATO_OUTPUT_PANTALLA "LETRA:%c\tNUMERO:%d\n"
 #define FORMATO_OUTPUT_ARCHIVO "%c\t%d\n"
 /*Custom*/
-#define EVENTO_MIN 1
-#define EVENTO_MAX 2
+#define EVENTO_MIN 2
+#define EVENTO_MAX 3
 #define LARGO_NOMBRE 100
 #define MAX_GOLES 5
 #define CANTIDAD_EQUIPOS 2

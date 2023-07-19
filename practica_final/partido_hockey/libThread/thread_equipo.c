@@ -19,6 +19,26 @@ int calcularDestinoJugador(equipo* datosThread)
   return MSG_EQUIPO + ((datosThread->nroEquipo - 1) * cantidadJugadoresEquipo) + datosThread->nroJugador;
 }
 
+int calcularDestinoArquero(equipo* datosThread)
+{
+  int otroEquipo;
+  otroEquipo = 1;
+  if (datosThread->nroEquipo < cantidadEquipos)
+  {
+    otroEquipo = datosThread->nroEquipo + 1;
+  }
+  return MSG_EQUIPO + ((otroEquipo - 1) * cantidadJugadoresEquipo) + NUM_ARQUERO;
+}
+
+int calcularRemitenteEquipo(int remitente)
+{
+  int jugadorEquipo;
+  int equipo;
+  jugadorEquipo = remitente - MSG_EQUIPO;
+  equipo = jugadorEquipo / cantidadJugadoresEquipo;
+  return equipo;
+}
+
 void* equipoThread(void* parametro)
 {
   mensaje* msg;
@@ -26,6 +46,7 @@ void* equipoThread(void* parametro)
   int golesEquipo;
   int intentosEquipo;
   int finPartido;
+  int eventoPatear;
 
   datosThread = (equipo*)parametro;
   golesEquipo = 0;
@@ -69,29 +90,44 @@ void* equipoThread(void* parametro)
       case EVT_NINGUNO:
         break;
       case EVT_PATEAR:
+        printf("Soy el jugador %d y voy a disparar al arco\n", datosThread->nroJugador);
+        eventoPatear = obtenerNumeroAleatorio(EVENTO_MIN, EVENTO_MAX);
+        switch(eventoPatear)
+        {
+          case EVT_GOL:
+            printf("equipo %d: jugador %d metió gol\n", datosThread->nroEquipo, datosThread->nroJugador);
+            golesEquipo = leerGoles(datosThread->memoria, datosThread->nroEquipo);
+            golesEquipo++;
+            if (datosThread->nroJugador == NUM_ARQUERO)
+            {
+              puts("¡Gol de arquero vale doble!");
+              golesEquipo++;
+            }
+            lockMutex(&mutex);
+            escribirGoles(datosThread->memoria, datosThread->nroEquipo, golesEquipo);
+            enviarMensaje(datosThread->idColaMensajes, MSG_PARTIDO, calcularDestinoJugador(datosThread), EVT_GOL, "");
+            enviarMensaje(datosThread->idColaMensajes, calcularDestinoArquero(datosThread), calcularDestinoJugador(datosThread), EVT_GOL, "");
+            unlockMutex(&mutex);
+            usleep(100 * 1000);
+            printf("equipo %d: total goles -> %d\n", datosThread->nroEquipo, golesEquipo);
+            break;
+          case EVT_FUERA:
+            printf("equipo %d: jugador %d fuera\n", datosThread->nroEquipo, datosThread->nroJugador);
+            lockMutex(&mutex);
+            enviarMensaje(datosThread->idColaMensajes, MSG_PARTIDO, calcularDestinoJugador(datosThread), EVT_FUERA, "");
+            enviarMensaje(datosThread->idColaMensajes, calcularDestinoArquero(datosThread), calcularDestinoJugador(datosThread), EVT_FUERA, "");
+            unlockMutex(&mutex);
+            usleep(100 * 1000);
+            break;
+          default:
+            break;
+        }
         break;
       case EVT_GOL:
-        printf("equipo %d: jugador %d metió gol\n", datosThread->nroEquipo, datosThread->nroJugador);
-        golesEquipo = leerGoles(datosThread->memoria, datosThread->nroEquipo);
-        golesEquipo++;
-        if (datosThread->nroJugador == NUM_ARQUERO)
-        {
-          puts("¡Gol de arquero vale doble!");
-          golesEquipo++;
-        }
-        lockMutex(&mutex);
-        escribirGoles(datosThread->memoria, datosThread->nroEquipo, golesEquipo);
-        enviarMensaje(datosThread->idColaMensajes, MSG_PARTIDO, calcularDestinoJugador(datosThread), EVT_GOL, "");
-        unlockMutex(&mutex);
-        usleep(100 * 1000);
-        printf("equipo %d: total goles -> %d\n", datosThread->nroEquipo, golesEquipo);
+        printf("Soy el arquero del equipo %d y recibí un gol", datosThread->nroEquipo);
         break;
       case EVT_FUERA:
-        printf("equipo %d: jugador %d fuera\n", datosThread->nroEquipo, datosThread->nroJugador);
-        lockMutex(&mutex);
-        enviarMensaje(datosThread->idColaMensajes, MSG_PARTIDO, calcularDestinoJugador(datosThread), EVT_FUERA, "");
-        unlockMutex(&mutex);
-        usleep(100 * 1000);
+        printf("El equipo %d safo", calcularRemitenteEquipo(msg->intRte));
         break;
       default:
         break;
